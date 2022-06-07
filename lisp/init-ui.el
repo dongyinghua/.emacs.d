@@ -1,3 +1,45 @@
+;; -*- lexical-binding: t -*-
+
+;; 显示行号
+;; (global-linum-mode 1)
+;; 用linum-mode的话会和viusal-fill-column-mode冲突，导致行号显示不出来而且移动光标会出现行号一闪就消失的情况
+(global-display-line-numbers-mode)
+
+;;修改行间距
+(setq-default line-spacing 0.15)
+
+;;隐藏开始界面
+(setq inhibit-startup-screen 1)
+
+;; 启动最大化
+;; 以函数调用的方式写在配置文件中，就可以在启动时执行这些函数
+;; (toggle-frame-maximized)
+;; Start maximised (cross-platf)
+;; (add-hook 'window-setup-hook 'toggle-frame-maximized t)
+;; 使用下面这种配置方法可以保证在使用emacs server和client时，也能保证在启动的时候窗口最大化
+;; 问题的关键在于frame
+(add-to-list 'default-frame-alist '(fullscreen . maximized))
+
+;;eldoc-mode 显示函数或变量的信息
+
+;; ===========================================================================
+;; major-mode和minor-mode的区别
+;; Major Mode通常是定义对于一种文件类型编辑的核心规则，例如语法高亮、缩进、快捷键绑定等。
+;; 而 Minor Mode 是除去 Major Mode 所提供的核心功能以外的额外编辑功能（辅助功能）。
+;; 看一种文件类型的major-mode用快捷键“C-h m”
+;; ===========================================================================
+
+;; 关闭工具栏和右侧滑动
+;; 正数表示t，非正数表示nil
+;; 注：不知道为什么最基本的emacs不识别nil，就算用nil赋值，其值依旧是t
+(tool-bar-mode -1)
+(scroll-bar-mode -1)
+
+;; 修改光标样式，“C-h v”查看详细内容
+;; 我们需要区分 setq 与 setq-default ： setq 设置当前缓冲区（Buffer）中的变量值， setq-default 设 置的为全局的变量的值（具体内容可以在 StackOverflow 找到）。下面是一个例子，用于 设置光标样式的方法。
+;; https://stackoverflow.com/questions/18172728/the-difference-between-setq-and-setq-default-in-emacs-lisp
+(setq-default cursor-type 'bar)
+
 ;;doom-modeline
 (use-package doom-modeline
   :ensure t
@@ -180,13 +222,19 @@
   (setq doom-modeline-after-update-env-hook nil)
   )
 
+;;doom-themes
+;;🔗https://github.com/doomemacs/themes
 (use-package doom-themes
   :ensure t
   :config
   ;; Global settings (defaults)
   (setq doom-themes-enable-bold t    ; if nil, bold is universally disabled
     doom-themes-enable-italic t) ; if nil, italics is universally disabled
-  (load-theme 'doom-one t)
+
+  ;; 比较好看的doom-theme：
+  ;; doom-one、doom-xcode、doom-horizon、doom-molokai、doom-gruvbox、doom-monokai-pro
+  ;; doom-opera感觉像是莫兰迪色系
+  (load-theme 'doom-opera t)
 
   ;; Enable flashing mode-line on errors
   (doom-themes-visual-bell-config)
@@ -196,6 +244,19 @@
   (setq doom-themes-treemacs-theme "doom-atom") ; use "doom-colors" for less minimal icon theme
   (doom-themes-treemacs-config)
   ;; Corrects (and improves) org-mode's native fontification.
-  (doom-themes-org-config))
+  (doom-themes-org-config)
+
+  ;; Emacs背景虚化
+  ;; emacs-china：https://emacs-china.org/t/emacs-mac-port/15056/3
+  ;; (set-face-background 'default "mac:windowBackgroundColor")
+  ;; 如果下面关于背景虚化的配置代码没有放在use-package里，就会出现modeline中的图标之间出现间隙
+  ;; 原因（只是猜测）可能是因为使用use-package来配置doom-themes，如果单独设置背景虚化，可能会出问题
+  (dolist (f (face-list)) (set-face-stipple f "alpha:60%"))
+  (setq face-remapping-alist (append face-remapping-alist '((default my/default-blurred))))
+  (defface my/default-blurred
+    '((t :inherit 'default :stipple "alpha:60%"))
+    "Like 'default but blurred."
+    :group 'my)
+  )
 
 (provide 'init-ui)
