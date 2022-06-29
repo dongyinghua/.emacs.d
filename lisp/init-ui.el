@@ -251,12 +251,13 @@
   ;; (set-face-background 'default "mac:windowBackgroundColor")
   ;; 如果下面关于背景虚化的配置代码没有放在use-package里，就会出现modeline中的图标之间出现间隙
   ;; 原因（只是猜测）可能是因为使用use-package来配置doom-themes，如果单独设置背景虚化，可能会出问题
-  (dolist (f (face-list)) (set-face-stipple f "alpha:60%"))
-  (setq face-remapping-alist (append face-remapping-alist '((default my/default-blurred))))
-  (defface my/default-blurred
-    '((t :inherit 'default :stipple "alpha:60%"))
-    "Like 'default but blurred."
-    :group 'my)
+  ;;(dolist (f (face-list)) (set-face-stipple f "alpha:60%"))
+  ;(setq face-remapping-alist
+  ;  (append face-remapping-alist '((default my/default-blurred))))
+  ;(defface my/default-blurred
+  ;  '((t :inherit 'default :stipple "alpha:60%"))
+  ;  "Like 'default but blurred."
+  ;  :group 'my)
   )
 
 (provide 'init-ui)

@@ -1,4 +1,6 @@
-;; -*- lexical-binding: t -*-
+;; init-org.el --- Initialize org configurations. -*- lexical-binding: t -*-
+
+(require 'init-const)
 
 (use-package org
   :bind
@@ -14,15 +16,15 @@
   (setenv "PATH" (concat (getenv "PATH") ":/Library/TeX/texbin/"))
   (setq exec-path (append exec-path '("/Library/TeX/texbin/")))
 
+
   ;;使用 XeLaTeX 程序进行编译转换
   (setq org-latex-compiler "xelatex")
 
   ;; To speed up startup, don't put to init section
   (setq org-modules nil)     ;; Faster loading
 
-  ;;(setq org-hide-macro-markers t)
-  ;;(setq org-hide-leading-stars t)
-  ;;(setq org-hidden-keywords t)
+  (setq org-image-actual-width nil)
+  ;;(org-display-inline-images t)
 
   ;;org-mode for GTD
   ;;todo dependencies
@@ -61,7 +63,7 @@
 
   ;; 设置任务流程
   (setq org-todo-keywords
-    '((sequence "TODO(t)" "DOING(i)" "HANGUP(h)" "|" "DONE(d)" "CANCEL(c)"))
+    '((sequence "DOING(i)" "TODO(t)" "HANGUP(h)" "|" "DONE(d)" "CANCEL(c)"))
     org-todo-keyword-faces '(("TODO" . (:foreground "#F4606C" :weight blod))
                               ("DOING" . (:foreground "#19CAAD" :weight blod))
                               ("HANGUP" . (:foreground "#F4606C" :weight bold))
@@ -76,19 +78,19 @@
   ;;(add-hook org-capture-mode-hook 'evil-mode)
   )
 
-(use-package org-superstar ;; "prettier" bullets
-  :hook (org-mode . org-superstar-mode)
-  :config
-  ;; Make leading stars truly invisible, by rendering them as spaces!
-  (setq org-superstar-leading-bullet ?\s
-    org-superstar-leading-fallback ?\s
-    org-hide-leading-stars nil
-    org-superstar-todo-bullet-alist
-    '(("TODO" . 9744)
-       ("[ ]"  . 9744)
-       ("DONE" . 9745)
-       ("[X]"  . 9745))))
-
+;; Prettify UI
+(use-package org-superstar
+  :ensure t
+  :if (and (display-graphic-p) (char-displayable-p ?◉))
+  :hook (org-mode . org-superstar-mode))
+(use-package org-fancy-priorities
+  :ensure t
+  :diminish
+  :hook (org-mode . org-fancy-priorities-mode)
+  :init (setq org-fancy-priorities-list
+          (if (and (display-graphic-p) (char-displayable-p ?🅐))
+            '("🅐" "🅑" "🅒" "🅓")
+            '("HIGH" "MEDIUM" "LOW" "OPTIONAL"))))
 ;; ---------------------------------------------------------------------------
 ;;（造轮子）定义了一个函数可以循环org-mode的emphasis-markers的可见性。
 ;; emphasis-markers就是org-mode轻语言的标记符号，比如说*、-等。
@@ -206,6 +208,7 @@
 
 
 (use-package org-roam-ui
+  :ensure t
   :after org-roam
   ;;normally we'd recommend hooking orui after org-roam, but since org-roam does not have
   ;;a hookable mode anymore, you're advised to pick something yourself

@@ -196,17 +196,17 @@ Supports exporting consult-grep to wgrep, file to wdeired, and consult-location 
     )
   ;;此处加“#”的目的是为了标记后边是函数，也可以不加
   (add-hook 'text-mode-hook 'toggle-truncate-lines-off)
+  ;;在所有从text-mode衍生出来的mode中使用visual-fill-column-mode
+  (add-hook 'text-mode-hook 'visual-fill-column-mode)
 
   :config
   (global-visual-fill-column-mode)
+  (setq visual-fill-column-enable-sensible-window-split t)
   (setq-default visual-fill-column-center-text t)
   (advice-add 'text-scale-adjust :after #'visual-fill-column-adjust)
-  ;;(setq-local fill-column 180)
+  ;;(setq-default fill-column 180)
   ;;visual-fill-column-extra-text-width可以调节文本在中间时，文本两边距屏幕边缘的距离
   (setq-default visual-fill-column-extra-text-width '(10 . 10))
-
-  ;;在所有从text-mode衍生出来的mode中使用visual-fill-column-mode
-  (add-hook 'text-mode-hook 'visual-fill-column-mode)
   )
 
 ;; ---------------------------------------------------------------------------

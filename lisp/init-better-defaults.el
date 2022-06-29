@@ -9,7 +9,6 @@
 (setq electric-pair-pairs '(
                              (?\{ . ?\})
                              (?\“ . ?\”)
-                             (?\< . ?\>)
                              ))
 
 ;;Emacs 有一个自带的包来高亮括号，那就是 show-paren-mode，但它只会在编辑器的
