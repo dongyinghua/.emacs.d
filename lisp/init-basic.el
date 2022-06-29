@@ -1,5 +1,7 @@
 ;; -*- lexical-binding: t -*-
-;;init-better-defaults.el # 增强内置功能
+;;init-basic.el # 增强内置功能
+
+(server-start)
 
 ;;简化Emacs需要用户确认命令是否执行时的“yes or no”
 (fset 'yes-or-no-p 'y-or-n-p)
@@ -24,9 +26,6 @@
 (global-hungry-delete-mode t)
 (setq hungry-delete-join-reluctantly nil)
 
-;;tab键补全
-(setq tab-always-indent 'complete)
-
 ;;modeline上显示我的所有的按键和执行的命令
 ;;(keycast-mode t)
 
@@ -35,15 +34,6 @@
 
 ;;minibuffer模糊查找
 (setq completion-styles '(orderless))
-
-;;Emacs Server
-;; define function to shutdown emacs server instance
-(defun server-shutdown ()
-  "Save buffers, Quit, and Shutdown (kill) server"
-  (interactive)
-  (save-some-buffers)
-  (kill-emacs)
-  )
 
 ;;历史文件
 (use-package recentf
@@ -58,4 +48,4 @@
 ;;使用下面的配置文件将删除功能配置成与其他图形界面的编辑器相同，即当你选中一段文字之后输入一个字符会替换掉你选中部分的文字。
 (delete-selection-mode t)
 
-(provide 'init-better-defaults)
+(provide 'init-basic)

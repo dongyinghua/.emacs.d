@@ -1,5 +1,8 @@
 ;; -*- lexical-binding: t -*-
 ;;子龙山人的镜像速度快，但是package的版本可能落后于官方源
+
+(require 'init-funcs)
+
 (use-package package
   :config
   (setq package-archives '(("gnu"   . "http://elpa.zilongshanren.com/gnu/")
@@ -19,90 +22,6 @@
   )
 
 ;; ---------------------------------------------------------------------------
-;;company
-;;放弃使用auto-complete，转用company
-;;“C-n”和“C-p”来在补全提示栏中选择补全项
-(use-package company
-  :config
-  (global-company-mode)
-  (setq company-minimum-prefix-length 1)
-  (setq company-idle-delay 0)
-  )
-
-;; ---------------------------------------------------------------------------
-
-
-;; ---------------------------------------------------------------------------
-;;vertico、orderless、marginalia、embark、consult和embark-consult的组合
-;;可以很好的替代ivy和helm
-;;minibuffer的增强
-;;增强 minibuffer 补全：vertico 和 Orderless
-(use-package vertico ;;所有的minibuffer都适用
-  :ensure t
-  :config
-  (vertico-mode t)
-  )
-
-;;配置 Marginalia 增强 minubuffer 的 annotation
-(use-package marginalia
-  :ensure t
-  :config
-  (marginalia-mode t)
-  )
-
-;;minibuffer action 和自适应的 context menu：Embark
-(use-package embark
-  :ensure t
-  :init
-  ;;可以实现不用记快捷键，在minibuffer就能执行命令
-  (setq prefix-help-command 'embark-prefix-help-command)
-  :bind ("C-;" . embark-act)
-  )
-
-;;增强文件内搜索和跳转函数定义：Consult
-(use-package consult
-  :ensure t
-  :bind
-  ;;consult-line搜索
-  ("C-s" . consult-line)
-  ;;找到代码中自定义和函数或者使用的packages（前提是用use-package）
-  ("C-c i" . consult-imenu)
-  ("C-x C-r" . consult-recent-file)
-  )
-
-;; ---------------------------------------------------------------------------
-;;从Emacs打开电脑文件
-;;1. 用快捷键"C-x C-f"先选定一个文件或文件夹，然后按快捷键“C-;”；
-;;2. 就会看到*Embark Actions*中有consult-directory-externally这一项；
-;;3. 接着按“E”就会打开这个文件或文件夹。
-;;注：子龙山人是在Windows平台上配置的，有些语句在macOS上不需要可以不用管
-(defun consult-directory-externally (file)
-  "Open FILE externally using the default application of the system."
-  (interactive "fOpen externally: ")
-  (if (and (eq system-type 'windows-nt)
-        (fboundp 'w32-shell-execute))
-    (shell-command-to-string (encode-coding-string (replace-regexp-in-string "/" "\\\\"(format "explorer.exe %s" (file-name-directory (expand-file-name file)))) 'gbk))
-    (call-process (pcase system-type
-                    ('darwin "open")
-                    ('cygwin "cygstart")
-                    (_ "xdg-open"))
-      nil 0 nil
-      (file-name-directory (expand-file-name file)))
-    )
-  )
-
-;;将自定义的函数加到embark-act中
-;;注意“with-eval-after-load”和“eval-after-load”在使用上的区别：
-;;使用“with-eval-after-load”时，(define-key embark-file-map (kbd "E") #'consult-directory-externally)不用加单引号，而使用“eval-after-load”时则需要加单引号
-;;以下两种方式的效果应该是一样的
-;;(with-eval-after-load 'embark
-;;    (define-key embark-file-map (kbd "E") #'consult-directory-externally))
-;;以下面的语句为例，解释一下“eval-after-load”的作用
-;;“eval-after-load”表示在加载embark之后再执行后边的语句
-(eval-after-load 'embark
-  '(define-key embark-file-map (kbd "E") #'consult-directory-externally))
-
-;; ---------------------------------------------------------------------------
 
 ;; ---------------------------------------------------------------------------
 ;;使用ripgrep来进行搜索（是在“~/.emacs”目录下搜索的）
@@ -120,68 +39,6 @@
 ;;4. 有Grep和Find功能的consult命令（consult-ripgrep、consult-find、consult-locate等），可以利用在minibuffer中使用“#”筛选检索或查找的结果
 ;; ---------------------------------------------------------------------------
 
-;; ---------------------------------------------------------------------------
-;;增强 embark 和 consult，批量搜索替换大杀器
-;;使用步骤：
-;;1. 先使用consult-ripgrep查找一个字符串（英文），比如说是“hello”；
-;;2. 输完之后不做其他操作，然后按快捷键“C-c C-e”；
-;;3. 按完之后会列出你这个目录下所有包含“hello”的搜索信息；
-;;4. 接着使用命令“M-x query-replace-regexp”（批量替换功能），对文本进行替换；
-;;5. 最后按快捷键“C-c C-c”完成替换。
-;;⚠️：
-;;1. 可以替换ivy
-;;2. 这套流程也适合在当前buffer里的批量替换，只不过一开始需要用快捷键“C-s”来查找
-(use-package embark-consult :ensure t)
-
-(use-package wgrep
-  :ensure t
-  :config
-  (setq wgrep-auto-save-buffer t))
-
-;;add-hook的用法：
-;;在一个mode加载完后加载另一个mode，也就是挂钩
-(eval-after-load 'consult
-  '(eval-after-load 'embark
-     '(progn
-        (require 'embark-consult)
-        (add-hook 'embark-collect-mode-hook #'consult-preview-at-point-mode))))
-
-(defun embark-export-write()
-  "Export the current vertico results to a writable buffer if possible.
-Supports exporting consult-grep to wgrep, file to wdeired, and consult-location to occur-edit"
-  (interactive)
-  (require 'embark)
-  (require 'wgrep)
-  (pcase-let ((`(,type . ,candidates)
-                (run-hook-with-args-until-success 'embark-candidate-collectors)))
-    (pcase type
-      ('consult-grep (let ((embark-after-export-hook #'wgrep-change-to-wgrep-mode))
-                       (embark-export)))
-      ('file (let ((embark-after-export-hook #'wdired-change-to-wdired-mode))
-               (embark-export)))
-      ('consult-location (let ((embark-after-export-hook #'occur-edit-mode))
-                           (embark-export)))
-      (x (user-error "embark category %S doesn't support writable export" x)))
-    )
-  )
-(define-key minibuffer-local-map (kbd "C-c C-e") 'embark-export-write)
-
-;; ---------------------------------------------------------------------------
-
-(eval-after-load 'consult
-  (progn
-    (setq
-      consult-narrow-key "<"
-      consult-line-numbers-widen t
-      consult-async-min-input 2
-      consult-async-refresh-delay  0.15
-      consult-async-input-throttle 0.2
-      consult-async-input-debounce 0.1)
-    )
-  )
-
-;; ---------------------------------------------------------------------------
-
 
 ;; ---------------------------------------------------------------------------
 ;;visual-fill-column-mode
@@ -189,11 +46,7 @@ Supports exporting consult-grep to wgrep, file to wdeired, and consult-location 
 (use-package visual-fill-column
   :ensure t
   :init
-  ;;在所有由text-mode衍生出来的mode中禁用toggle-truncate-lines
-  (defun toggle-truncate-lines-off()
-    (interactive)
-    (setq truncate-lines nil)
-    )
+
   ;;此处加“#”的目的是为了标记后边是函数，也可以不加
   (add-hook 'text-mode-hook 'toggle-truncate-lines-off)
   ;;在所有从text-mode衍生出来的mode中使用visual-fill-column-mode
@@ -236,4 +89,5 @@ Supports exporting consult-grep to wgrep, file to wdeired, and consult-location 
 ;; markdown
 (use-package markdown-mode
   :ensure t)
+
 (provide 'init-packages)

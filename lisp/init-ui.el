@@ -260,4 +260,7 @@
   ;  :group 'my)
   )
 
+;; 高亮显示当前行
+(global-hl-line-mode 1)
+
 (provide 'init-ui)
