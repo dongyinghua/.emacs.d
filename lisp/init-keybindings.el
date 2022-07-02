@@ -54,4 +54,7 @@
 (with-eval-after-load 'embark
   (define-key embark-file-map (kbd "E") #'consult-directory-externally))
 
+(global-set-key (kbd "C-c p f") 'project-find-file)
+(global-set-key (kbd "C-c p s") 'consult-ripgrep)
+
 (provide 'init-keybindings)

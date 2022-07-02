@@ -3,25 +3,40 @@
 
 (require 'init-funcs)
 
-(use-package package
-  :config
-  (setq package-archives '(("gnu"   . "http://elpa.zilongshanren.com/gnu/")
-                            ("melpa" . "http://elpa.zilongshanren.com/melpa/")))
-  (package-initialize)
 
-  ;;防止反复调用 package-refresh-contents 会影响加载速度
-  (when (not package-archive-contents)
-    (package-refresh-contents)
-    )
-  )
+
+;;ustc（中科大）的镜像
+(setq package-archives '(("gnu" . "http://mirrors.ustc.edu.cn/elpa/gnu/")
+                         ("melpa" . "http://mirrors.ustc.edu.cn/elpa/melpa/")
+                         ("nongnu" . "http://mirrors.ustc.edu.cn/elpa/nongnu/")))
+
+;; 子龙山人（emacs-china）的镜像
+;;(setq package-archives '(("gnu"   . "http://1.15.88.122/gnu/")
+;;                          ("melpa" . "http://1.15.88.122/melpa/")
+;;                          ("nongnu" . "http://1.15.88.122/nongnu/")))
+
+;;防止反复调用 package-refresh-contents 会影响加载速度
+(when (not package-archive-contents)
+  (package-refresh-contents))
 
 ;; Initialize packages
 (unless (bound-and-true-p package--initialized) ; To avoid warnings in 27
   (setq package-enable-at-startup nil)          ; To prevent initializing twice
-  (package-initialize)
-  )
+  (package-initialize))
 
-;; ---------------------------------------------------------------------------
+;;; 这个配置一定要配置在 use-package 的初始化之前，否则无法正常安装
+(assq-delete-all 'org package--builtins)
+(assq-delete-all 'org package--builtin-versions)
+
+;; Setup `use-package'
+;; (package-installed-p 'use-package) 如果没有安装use-package，就返回nil
+(unless (package-installed-p 'use-package)
+  (package-refresh-contents)
+  (package-install 'use-package))
+
+;; 以后在使用use-package的时候就不用加ensure了
+(require 'use-package-ensure)
+(setq use-package-always-ensure t)
 
 ;; ---------------------------------------------------------------------------
 ;;使用ripgrep来进行搜索（是在“~/.emacs”目录下搜索的）
@@ -83,11 +98,12 @@
   ;;下面的代码可以将 insert state map 中的快捷键清空，使其可以回退（Fallback）到 Emacs State 中，
   ;;这样我们之前的 Emacs State 里面定义的 C-w 等快捷键就不会被 evil insert minor mode state 所覆盖。
   (setcdr evil-insert-state-map nil)
-  (define-key evil-insert-state-map [escape] 'evil-normal-state)
-  )
+  (define-key evil-insert-state-map [escape] 'evil-normal-state))
 
 ;; markdown
 (use-package markdown-mode
   :ensure t)
+
+(use-package restart-emacs)
 
 (provide 'init-packages)

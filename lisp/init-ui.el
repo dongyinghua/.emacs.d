@@ -40,13 +40,16 @@
 ;; https://stackoverflow.com/questions/18172728/the-difference-between-setq-and-setq-default-in-emacs-lisp
 (setq-default cursor-type 'bar)
 
-;;doom-modeline
+;; 彩虹猫nyan-mode应该在doom-modeline-mode后运行
+(use-package nyan-mode
+  :hook (doom-modeline-mode . nyan-mode))
+
+;; doom-modeline
+;; 这里的执行顺序非常重要，doom-modeline-mode 的激活时机一定要在设置global-mode-string 之后‘
 (use-package doom-modeline
   :ensure t
-  :init (doom-modeline-mode 1)
+  :init (doom-modeline-mode t)
   :config
-  ;;彩虹猫nyan cat
-  (nyan-mode t)
 
   ;; If non-nil, cause imenu to see `doom-modeline' declarations.
   ;; This is done by adjusting `lisp-imenu-generic-expression' to
@@ -56,10 +59,11 @@
 
   ;; How tall the mode-line should be. It's only respected in GUI.
   ;; If the actual char height is larger, it respects the actual height.
+  ;; ⚠️doom-modeline-height如果不设置成0的话，doom-modeline-bar-width就不会起作用（仅猜测）
   (setq doom-modeline-height 0)
 
   ;; How wide the mode-line bar should be. It's only respected in GUI.
-  (setq doom-modeline-bar-width 4)
+  (setq doom-modeline-bar-width 6)
 
   ;; Whether to use hud instead of default bar. It's only respected in GUI.
   (setq doom-modeline-hud nil)

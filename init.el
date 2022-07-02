@@ -10,7 +10,7 @@
 
 ;;(require 'cl-lib)
 
-;; Emacs Basic Settings (Better Defaults)
+;; Emacs Basic Settings (Emacs内置功能的配置)
 (require 'init-basic)
 ;; Custom Functions
 (require 'init-funcs)

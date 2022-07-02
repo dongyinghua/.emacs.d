@@ -3,6 +3,8 @@
 (require 'init-const)
 
 (use-package org
+  :ensure t
+  :pin melpa
   :bind
   ("C-c a" . org-agenda)
   ("C-c x" . org-capture)
@@ -15,7 +17,6 @@
   ;; https://apple.stackexchange.com/questions/277928/error-auctex-cannot-find-a-working-tex-distribution-macos-sierra
   (setenv "PATH" (concat (getenv "PATH") ":/Library/TeX/texbin/"))
   (setq exec-path (append exec-path '("/Library/TeX/texbin/")))
-
 
   ;;使用 XeLaTeX 程序进行编译转换
   (setq org-latex-compiler "xelatex")
@@ -41,6 +42,7 @@
                               ("~/Documents/Org/GTD/Schedule.org" :maxlevel . 3)))
 
   ;; 添加每次打开时可添加的任务类型
+  ;; 快捷键“C-c x”
   (setq org-capture-templates
     '(("i" "Inbox" entry
         (file+headline "~/Documents/Org/GTD/Inbox.org" "Tasks")
@@ -75,8 +77,28 @@
                               (?B . warning)
                               (?C . success)))
 
+  ;; need repeat task and properties
+  (setq org-log-done t)
+  (setq org-log-into-drawer t)
+
+  (setq org-agenda-span 'day)
   ;;(add-hook org-capture-mode-hook 'evil-mode)
+
+  (setq org-agenda-custom-commands
+    '(("i" "重要且紧急的事" ;; 不显示没有加org-todo-keywords以及keyword是DONE的任务
+        ((tags-todo "+PRIORITY=\"A\"")))
+       ;; ...other commands here
+       ))
   )
+
+(use-package org-contrib
+  :pin nongnu
+  :config
+  ;; 对于需要重复完成的任务很有帮助
+  (require 'org-checklist)
+  )
+
+
 
 ;; Prettify UI
 (use-package org-superstar
@@ -102,7 +124,7 @@
 ;;   (revert-buffer nil t nil))
 ;; (global-set-key (kbd "C-c c") 'org-cycling-emphasis-markers)
 
-;; 但是有个更好的插件可以解决我这个需求：org-appear，这就属于“造轮子”了
+;; 但是有个更好的插件可以解决我这个需求：org-appear，以上就属于“造轮子”了
 ;; Github：https://github.com/awth13/org-appear
 ;; emacs-china：https://emacs-china.org/t/org-mode/16826
 (use-package org-appear

@@ -3,8 +3,8 @@
 ;;; nevertheless, you probably don't want to edit it.
 ;;; -*- End Of Bookmark File Format Version Stamp -*-
 (("org-capture-last-stored"
- (filename . "~/Documents/Org/org-roam-directory/2022060711_设置路由器当无线交换机使用.org")
+ (filename . "~/Documents/Org/org-roam-directory/2022070123_周报和月报.org")
  (front-context-string)
- (rear-context-string . ": 设置路由器当无线交换机使用\n")
- (position . 102))
+ (rear-context-string . "\n#+title: 周报和月报\n")
+ (position . 94))
 )
