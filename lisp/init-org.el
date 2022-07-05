@@ -1,4 +1,11 @@
-;; init-org.el --- Initialize org configurations. -*- lexical-binding: t -*-
+;;; init-org.el --- Initialize org configurations. -*- lexical-binding: t -*-
+
+;;; Commentary:
+;;
+;; Org configurations.
+;;
+
+;;; Code:
 
 (require 'init-const)
 
@@ -10,6 +17,7 @@
   ("C-c x" . org-capture)
   ("C-c b" . org-switchb)
   ("C-c C-f a" . consul-org-agenda)
+  ("C-c r" . org-refile)
   :config
   ;;org-mode缩进
   (setq org-startup-indented t)
@@ -39,7 +47,9 @@
 
   (setq org-refile-targets '(("~/Documents/Org/GTD/Projects.org" :maxlevel . 3)
                               ("~/Documents/Org/GTD/TODOs.org" :maxlevel . 3)
-                              ("~/Documents/Org/GTD/Schedule.org" :maxlevel . 3)))
+                              ("~/Documents/Org/GTD/Schedule.org" :maxlevel . 3)
+                              ("~/Documents/Org/GTD/Inbox.org" :maxlevel . 3)
+                              ))
 
   ;; 添加每次打开时可添加的任务类型
   ;; 快捷键“C-c x”
@@ -64,8 +74,10 @@
     )
 
   ;; 设置任务流程
+  ;; This is achieved by adding special markers ‘!’ (for a timestamp)
+  ;; or ‘@’ (for a note with timestamp) in parentheses after each keyword.
   (setq org-todo-keywords
-    '((sequence "DOING(i)" "TODO(t)" "HANGUP(h)" "|" "DONE(d)" "CANCEL(c)"))
+    '((sequence "DOING(i)" "TODO(t)" "HANGUP(h@/!)" "|" "DONE(d!)" "CANCEL(c@)"))
     org-todo-keyword-faces '(("TODO" . (:foreground "#F4606C" :weight blod))
                               ("DOING" . (:foreground "#19CAAD" :weight blod))
                               ("HANGUP" . (:foreground "#F4606C" :weight bold))
@@ -196,12 +208,12 @@
        ("m" "monthly report" plain "* %?"
          :target (file+head "%<%Y-%m-%d-%a>-月报.org"
                    "#+title: %<%Y-%m-%d-%a>-月报\n")
-         :unnarrowed t)
-       ("M" "regular meeting" plain
-         "* Mini Talk\n\n * Academic Report\n\n * Key Points"
-         :target (file+head "%<%Y-%m-%d-%a>-例会.org"
-                   "#+title: %<%Y-%m-%d-%a>-例会\n")
          :unnarrowed t))
+       ;;("M" "regular meeting" plain
+       ;;  "* Mini Talk\n\n * Academic Report\n\n * Key Points"
+       ;;  :target (file+head "%<%Y-%m-%d-%a>-例会.org"
+       ;;            "#+title: %<%Y-%m-%d-%a>-例会\n")
+       ;;  :unnarrowed t))
     )
 
 
@@ -213,16 +225,16 @@
   ;;网页抓取
   (setq org-roam-capture-ref-templates
     '(("D" "Default" plain "\n"
-        :target (file+head "${slug}.org" "#+title: ${title}\n#+roam_key: ${ref}\n\n")
+        :target (file+head "${slug}.org" "#+title: ${title}\n\n")
         ;; :immediate-finish t
         :unnarrowed t)
        ("a" "Annotation" plain "%U ${body}\n"
-         :target (file+head "${slug}.org" "#+title: ${title}\n#+roam_key: ${ref}\n\n")
+         :target (file+head "${slug}.org" "#+title: ${title}\n\n")
          ;; :immediate-finish t
          :unnarrowed t)
        ("r" "Reference" plain
-         "* FIRST PASS\n\n** Category\nWhat type of paper is this? A measurement paper? An analysis of an existing system? A description of a research prototype?\n\n** Context\nWhich other papers is it related to? Which theoretical bases were used to analyze the problem?\n\n** Correctness\nDo the assumptions appear to be valid?\n\n** Contribution\nWhat are the paper’s main contributions?\n\nodes** Clarity\nIs the paper well written?\n\n* SECOND PASS\n\n* THIRD PASS\n\n"
-         :target (file+head "${slug}.org" "#+title: ${title}\n#+roam_key: ${ref}\n\n")
+         "* FIRST PASS\n* Category\nWhat type of paper is this? A measurement paper? An analysis of an existing system? A description of a research prototype?\n\n** Context\nWhich other papers is it related to? Which theoretical bases were used to analyze the problem?\n\n** Correctness\nDo the assumptions appear to be valid?\n\n** Contribution\nWhat are the paper’s main contributions?\n\n** Clarity\nIs the paper well written?\n\n* SECOND PASS\n\n* THIRD PASS\n\n"
+         :target (file+head "${slug}.org" "#+title: ${title}\n\n")
          :unnarrowed t)
        )
     )
@@ -255,3 +267,6 @@
   (org-zotxt-mode))
 
 (provide 'init-org)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; init-org.el ends here

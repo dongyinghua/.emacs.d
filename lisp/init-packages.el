@@ -1,9 +1,13 @@
-;; -*- lexical-binding: t -*-
-;;子龙山人的镜像速度快，但是package的版本可能落后于官方源
+;;; init-package.el --- Initialize package configurations. -*- lexical-binding: t -*-
+
+;;; Commentary:
+;;
+;; Emacs Package management configurations.
+;;
+
+;;; Code:
 
 (require 'init-funcs)
-
-
 
 ;;ustc（中科大）的镜像
 (setq package-archives '(("gnu" . "http://mirrors.ustc.edu.cn/elpa/gnu/")
@@ -24,7 +28,7 @@
   (setq package-enable-at-startup nil)          ; To prevent initializing twice
   (package-initialize))
 
-;;; 这个配置一定要配置在 use-package 的初始化之前，否则无法正常安装
+;; 这个配置一定要配置在 use-package 的初始化之前，否则无法正常安装
 (assq-delete-all 'org package--builtins)
 (assq-delete-all 'org package--builtin-versions)
 
@@ -39,30 +43,10 @@
 (setq use-package-always-ensure t)
 
 ;; ---------------------------------------------------------------------------
-;;使用ripgrep来进行搜索（是在“~/.emacs”目录下搜索的）
-;;ripgrep使用Rust语言编写的
-;;consult-ripgrep
-;;直接执行“M-x consult-ripgrep”会报错，说找不到“rg”。
-;;解决办法：
-;;1. 在网站“https://github.com/BurntSushi/ripgrep/releases”中下载对应macOS的压缩包（-apple-darwin.tar.gz）；
-;;2. 下载完后解压，然后在压缩包中会找到一个可执行文件rg；
-;;3. 将压缩包中的可执行文件rg复制到目录“/opt/homebrew/Cellar/emacs-mac/emacs-28.1-mac-9.0/libexec/emacs/28.1/aarch64-apple-darwin21.4.0”中。
-;;⚠️
-;;1. 执行rg的时候macOS会提示这个可执行文件未收到信任，这个时候直接全部信任就行了，应该不会出现什么问题。
-;;2. rg文件的复制目录可能不完全一样，只要总体上的位置对就行
-;;3. consult-ripgrep不支持中文查找
-;;4. 有Grep和Find功能的consult命令（consult-ripgrep、consult-find、consult-locate等），可以利用在minibuffer中使用“#”筛选检索或查找的结果
-;; ---------------------------------------------------------------------------
-
-
-;; ---------------------------------------------------------------------------
 ;;visual-fill-column-mode
 ;;https://codeberg.org/joostkremers/visual-fill-column
 (use-package visual-fill-column
-  :ensure t
   :init
-
-  ;;此处加“#”的目的是为了标记后边是函数，也可以不加
   (add-hook 'text-mode-hook 'toggle-truncate-lines-off)
   ;;在所有从text-mode衍生出来的mode中使用visual-fill-column-mode
   (add-hook 'text-mode-hook 'visual-fill-column-mode)
@@ -81,7 +65,6 @@
 
 ;;代码格式.editorconfig
 (use-package editorconfig
-  :ensure t
   :config
   (editorconfig-mode 1))
 
@@ -92,7 +75,6 @@
 
 ;;evil模式
 (use-package evil
-  :ensure t
   :config
   (evil-mode 1)
   ;;下面的代码可以将 insert state map 中的快捷键清空，使其可以回退（Fallback）到 Emacs State 中，
@@ -106,4 +88,11 @@
 
 (use-package restart-emacs)
 
+(use-package which-key
+  :hook (after-init . which-key-mode)
+  :config (setq which-key-idle-delay 0))
+
 (provide 'init-packages)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; init-packages.el ends here

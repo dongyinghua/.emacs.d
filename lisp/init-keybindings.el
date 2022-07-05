@@ -1,4 +1,12 @@
-;; -*- lexical-binding: t -*-
+;;; init-keybindings.el -*- lexical-binding: t -*-
+
+;;; Commentary:
+;;
+;; seagle0128的配置中没有单独设置一个init-keybindings.el
+;; TODO: 以后有机会参照seagle0128的配置把对快捷键的配置重新整理一下
+;;
+
+;;; Code:
 
 (require 'init-funcs)
 
@@ -19,12 +27,6 @@
 ;;delete-frame
 (global-set-key (kbd "s-w") 'delete-frame)
 
-;;;;“C-x C-h”可以看到所有以“C-x”开头的快捷键
-;;“C-c”是Emacs给用户保留的快捷键前缀，“C-x”是给系统的
-;;尽量全部用“C-c”作为自定义快捷键的前缀，这样既可以用embark来直接在minibuffer中执行命令
-;;“C-c C-h”可以查看以“C-c”为前缀的快捷键，然后在embark加持下，就可以选择快捷键来直接执行命令
-;;同理“C-x C-h”也可以用这种方式
-
 (global-set-key (kbd "C-c e") 'editorconfig-format-buffer)
 
 ;;下面的这些函数可以让你找到不同函数，变量以及快捷键所定义的文件位置。
@@ -41,20 +43,10 @@
 
 (global-set-key (kbd "C-c C-e b") 'eval-buffer)
 
-(define-key minibuffer-local-map (kbd "C-c C-e") 'embark-export-write)
-
-;;将自定义的函数加到embark-act中
-;;注意“with-eval-after-load”和“eval-after-load”在使用上的区别：
-;;使用“with-eval-after-load”时，(define-key embark-file-map (kbd "E") #'consult-directory-externally)不用加单引号，而使用“eval-after-load”时则需要加单引号
-;;以下两种方式的效果应该是一样的
-;;(with-eval-after-load 'embark
-;;    (define-key embark-file-map (kbd "E") #'consult-directory-externally))
-;;以下面的语句为例，解释一下“eval-after-load”的作用
-;;“eval-after-load”表示在加载embark之后再执行后边的语句
-(with-eval-after-load 'embark
-  (define-key embark-file-map (kbd "E") #'consult-directory-externally))
-
 (global-set-key (kbd "C-c p f") 'project-find-file)
 (global-set-key (kbd "C-c p s") 'consult-ripgrep)
 
 (provide 'init-keybindings)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; init-keybindings.el ends here

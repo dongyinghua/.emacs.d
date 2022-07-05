@@ -1,5 +1,12 @@
+;;; init.tools.el --- Initialize special tools configurations.
 ;; -*- lexical-binding: t -*-
+
+;;; Commentary:
+;;
 ;; init-tools.el 放置一些需要从网上下载package并手动放到.emacs.d中的插件
+;;
+
+;;;Code:
 
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/tools/awesome-tab"))
 
@@ -35,3 +42,6 @@ Other buffer group by `awesome-tab-get-group-name' with project name."
       (awesome-tab-get-group-name (current-buffer))))))
 
 (provide 'init-tools)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; init-tools.el ends here

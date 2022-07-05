@@ -1,4 +1,11 @@
-;; -*- lexical-binding: t -*-
+;;; init-ui.el --- Better lookings and appearances. -*- lexical-binding: t -*-
+
+;;; Commentary:
+;;
+;; Visual (UI) configurations for better lookings and appearances.
+;;
+
+;;; Code:
 
 ;; 显示行号
 ;; (global-linum-mode 1)
@@ -41,8 +48,32 @@
 (setq-default cursor-type 'bar)
 
 ;; 彩虹猫nyan-mode应该在doom-modeline-mode后运行
+;; https://github.com/TeMPOraL/nyan-mode
 (use-package nyan-mode
-  :hook (doom-modeline-mode . nyan-mode))
+  :hook (doom-modeline-mode . nyan-mode)
+  :config
+  ;;nyan-animate-nyancat - t to have it animated, nil for a static version.
+  (setq nyan-animate-nyancat t)
+  ;; nyan-animation-frame-interval
+  ;; number of seconds between animation frames. Accepts fractional values.
+  (setq nyan-animation-frame-interval 0.4)
+
+  ;; nyan-bar-length
+  ;; length of nyan-mode bar, in 8px-wide units.
+  (setq nyan-bar-length 24)
+
+  ;; nyan-cat-face-number - choose a cat face for the console mode.
+  (setq nyan-cat-face-number 1)
+
+  ;; nyan-wavy-trail
+  ;; t to make the trail wavy; works even better when animation is enabled!
+  (setq nyan-wavy-trail t)
+
+  ;; nyan-minimum-window-width
+  ;; minimum width of the window, below which Nyan Mode will be disabled.
+  ;; This is important because Nyan Mode will otherwise push out more relevant information from the modelilne.
+  (setq nyan-minimum-window-width 64)
+  )
 
 ;; doom-modeline
 ;; 这里的执行顺序非常重要，doom-modeline-mode 的激活时机一定要在设置global-mode-string 之后‘
@@ -59,11 +90,11 @@
 
   ;; How tall the mode-line should be. It's only respected in GUI.
   ;; If the actual char height is larger, it respects the actual height.
-  ;; ⚠️doom-modeline-height如果不设置成0的话，doom-modeline-bar-width就不会起作用（仅猜测）
+  ;; If ‘doom-modeline-height’ is <= 0 the modeline will have default height.
   (setq doom-modeline-height 0)
 
   ;; How wide the mode-line bar should be. It's only respected in GUI.
-  (setq doom-modeline-bar-width 6)
+  (setq doom-modeline-bar-width 4)
 
   ;; Whether to use hud instead of default bar. It's only respected in GUI.
   (setq doom-modeline-hud nil)
@@ -100,7 +131,7 @@
   ;; If you are experiencing the laggy issue, especially while editing remote files
   ;; with tramp, please try `file-name' style.
   ;; Please refer to https://github.com/bbatsov/projectile/issues/657.
-  (setq doom-modeline-buffer-file-name-style 'auto)
+  (setq doom-modeline-buffer-file-name-style 'file-name)
 
   ;; Whether display icons in the mode-line.
   ;; While using the server mode in GUI, should set the value explicitly.
@@ -268,3 +299,6 @@
 (global-hl-line-mode 1)
 
 (provide 'init-ui)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; init-ui.el ends here

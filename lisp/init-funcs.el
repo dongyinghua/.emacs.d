@@ -1,7 +1,12 @@
-;; -*- lexical-binding: t -*-
-;; init-funcs: 自定义函数
+;;; init-funcs.el --- Define functions. -*- lexical-binding: t -*-
 
-;; ---------------------------------------------------------------------------
+;;; Commentary:
+;;
+;; Define functions.
+;;
+
+;;; Code:
+
 ;; init-keybindings.el
 ;;快速打开配置文件
 (defun open-init-file()
@@ -12,9 +17,6 @@
   (interactive)
   (find-file "~/.emacs.d/lisp/init-org.el"))
 
-;; ---------------------------------------------------------------------------
-
-;; ---------------------------------------------------------------------------
 ;; init-basic.el
 ;;Emacs Server
 ;; define function to shutdown emacs server instance
@@ -25,10 +27,8 @@
   (kill-emacs)
   )
 
-;; ---------------------------------------------------------------------------
-
-;; ---------------------------------------------------------------------------
 ;; init-packages.el
+;; 增强 embark 和 consult，批量搜索替换大杀器
 (defun embark-export-write()
   "Export the current vertico results to a writable buffer if possible.
 Supports exporting consult-grep to wgrep, file to wdeired, and consult-location to occur-edit"
@@ -49,9 +49,6 @@ Supports exporting consult-grep to wgrep, file to wdeired, and consult-location 
   )
 
 ;;从Emacs打开电脑文件
-;;1. 用快捷键"C-x C-f"先选定一个文件或文件夹，然后按快捷键“C-;”；
-;;2. 就会看到*Embark Actions*中有consult-directory-externally这一项；
-;;3. 接着按“E”就会打开这个文件或文件夹。
 ;;注：子龙山人是在Windows平台上配置的，有些语句在macOS上不需要可以不用管
 (defun consult-directory-externally (file)
   "Open FILE externally using the default application of the system."
@@ -74,9 +71,6 @@ Supports exporting consult-grep to wgrep, file to wdeired, and consult-location 
   (setq truncate-lines nil)
   )
 
-;; ---------------------------------------------------------------------------
-
-;; ---------------------------------------------------------------------------
 ;; init-font.el
 (defun s-font()
   (interactive)
@@ -92,6 +86,7 @@ Supports exporting consult-grep to wgrep, file to wdeired, and consult-location 
   (setq face-font-rescale-alist '(("monospace" . 1.0) ("WenQuanYi" . 1.23)))
   )
 
-;; ---------------------------------------------------------------------------
-
 (provide 'init-funcs)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; init-funcs.el ends here

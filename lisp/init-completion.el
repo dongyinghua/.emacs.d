@@ -1,12 +1,21 @@
-;; -*- lexical-binding: t -*-
+;;; init-company.el --- Initialize company configurations. -*- lexical-binding: t -*-
+
+;;; Commentary
+;;
+;; Auto-completion configurations.
+;;
+
+;;; Code:
+
+(require 'init-funcs)
 
 ;; ---------------------------------------------------------------------------
 ;;company
 ;;放弃使用auto-complete，转用company
 ;;“C-n”和“C-p”来在补全提示栏中选择补全项
 (use-package company
+  :hook (after-init . global-company-mode)
   :config
-  (global-company-mode)
   (setq company-minimum-prefix-length 1)
   (setq company-idle-delay 0))
 
@@ -15,11 +24,8 @@
 ;;tab键补全
 (setq tab-always-indent 'complete)
 
-;; ---------------------------------------------------------------------------
-;;vertico、orderless、marginalia、embark、consult和embark-consult的组合
-;;可以很好的替代ivy和helm
-;;minibuffer的增强
-;;增强 minibuffer 补全：vertico 和 Orderless
+;; minibuffer的增强
+;; 增强 minibuffer 补全：vertico 和 Orderless
 (use-package vertico ;;所有的minibuffer都适用
   :ensure t
   :config
@@ -30,7 +36,7 @@
   :ensure t
   :config (setq completion-styles '(orderless)))
 
-;;配置 Marginalia 增强 minubuffer 的 annotation
+;; 配置 Marginalia 增强 minubuffer 的 annotation
 (use-package marginalia
   :ensure t
   :config
@@ -57,28 +63,24 @@
   ("C-x C-r" . consult-recent-file)
   )
 
+(define-key minibuffer-local-map (kbd "C-c C-e") 'embark-export-write)
+
+;;将自定义的函数加到embark-act中
+(with-eval-after-load 'embark
+  (define-key embark-file-map (kbd "E") #'consult-directory-externally))
+
 ;; ---------------------------------------------------------------------------
 
 ;; ---------------------------------------------------------------------------
 ;;增强 embark 和 consult，批量搜索替换大杀器
-;;使用步骤：
-;;1. 先使用consult-ripgrep查找一个字符串（英文），比如说是“hello”；
-;;2. 输完之后不做其他操作，然后按快捷键“C-c C-e”；
-;;3. 按完之后会列出你这个目录下所有包含“hello”的搜索信息；
-;;4. 接着使用命令“M-x query-replace-regexp”（批量替换功能），对文本进行替换；
-;;5. 最后按快捷键“C-c C-c”完成替换。
-;;⚠️：
-;;1. 可以替换ivy
-;;2. 这套流程也适合在当前buffer里的批量替换，只不过一开始需要用快捷键“C-s”来查找
-(use-package embark-consult :ensure t)
+(use-package embark-consult
+  :ensure t)
 
 (use-package wgrep
   :ensure t
   :config
   (setq wgrep-auto-save-buffer t))
 
-;;add-hook的用法：
-;;在一个mode加载完后加载另一个mode，也就是挂钩
 (eval-after-load 'consult
   '(eval-after-load 'embark
      '(progn
@@ -107,3 +109,6 @@
   )
 
 (provide 'init-completion)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; init-completion.el ends here

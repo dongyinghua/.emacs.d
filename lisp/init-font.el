@@ -1,6 +1,12 @@
-;; -*- lexical-binding: t -*-
+;;; init-font.el --- Initialize font configurations. -*- lexical-binding: t -*-
+
+;;; Commentary
+;;
 ;; 问题：在当前shell下运行emacs 出现 fontset 'tty' does not exist.
 ;; 解决办法：https://www.programminghunter.com/article/25811307569/
+;;
+
+;;;Code:
 
 (require 'init-funcs)
 
@@ -13,3 +19,6 @@
   (s-font))
 
 (provide 'init-font)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; init-font.el ends here

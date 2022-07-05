@@ -1,5 +1,12 @@
-;; -*- lexical-binding: t -*-
-;;init-basic.el 增强Emacs内置功能
+;;; init-basic.el --- Better default configurations. -*- lexical-binding: t -*-
+;; 增强Emacs内置功能
+
+;;; Commentary:
+;;
+;; Better defaults.
+;;
+
+;;; Code:
 
 (server-start)
 
@@ -34,9 +41,10 @@
 
 ;;历史文件
 (use-package recentf
+  :ensure nil
   :config
-  (recentf-mode 1)
-  (setq recentf-max-menu-item 10))
+  (recentf-mode t)
+  (setq recentf-max-menu-item 30))
 
 ;;让鼠标滚动更好用
 (setq mouse-wheel-scroll-amount '(1 ((shift) . 1) ((control) . nil)))
@@ -46,7 +54,7 @@
 (delete-selection-mode t)
 
 ;; 下面的代码可以使 Emacs 自动加载外部修改过的文件。
-(global-auto-revert-mode 1)
+(global-auto-revert-mode t)
 
 ;; 也许你并不喜欢听到错误时的“哔哔”的警告提示音，使用下面的代码你可以关闭 Emacs 中的警告音
 (setq ring-bell-function 'ignore)
@@ -84,3 +92,6 @@
     ))
 
 (provide 'init-basic)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; init-basic.el ends here
