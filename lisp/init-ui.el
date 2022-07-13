@@ -29,12 +29,6 @@
 
 ;;eldoc-mode 显示函数或变量的信息
 
-;; ===========================================================================
-;; major-mode和minor-mode的区别
-;; Major Mode通常是定义对于一种文件类型编辑的核心规则，例如语法高亮、缩进、快捷键绑定等。
-;; 而 Minor Mode 是除去 Major Mode 所提供的核心功能以外的额外编辑功能（辅助功能）。
-;; 看一种文件类型的major-mode用快捷键“C-h m”
-;; ===========================================================================
 
 ;; 关闭工具栏和右侧滑动
 ;; 正数表示t，非正数表示nil
@@ -268,6 +262,7 @@
 
   ;; 比较好看的doom-theme：
   ;; doom-one、doom-xcode、doom-horizon、doom-molokai、doom-gruvbox、doom-monokai-pro
+  ;; doom-henna
   ;; doom-opera感觉像是莫兰迪色系
   (load-theme 'doom-opera t)
 
@@ -297,6 +292,13 @@
 
 ;; 高亮显示当前行
 (global-hl-line-mode 1)
+
+;; Display ugly ^L page breaks as tidy horizontal lines
+;; 快捷键“C-q C-l”
+;; https://www.emacswiki.org/emacs/PageBreaks
+(use-package page-break-lines
+  :diminish
+  :hook (after-init . global-page-break-lines-mode))
 
 (provide 'init-ui)
 

@@ -7,6 +7,8 @@
 
 ;;; Code:
 
+(require 'init-custom)
+
 ;; init-keybindings.el
 ;;快速打开配置文件
 (defun open-init-file()
@@ -86,6 +88,98 @@ Supports exporting consult-grep to wgrep, file to wdeired, and consult-location 
   (setq face-font-rescale-alist '(("monospace" . 1.0) ("WenQuanYi" . 1.23)))
   )
 
+(defun avy-action-embark (pt)
+  (unwind-protect
+    (save-excursion
+      (goto-char pt)
+      (embark-act))
+    (select-window
+      (cdr (ring-ref avy-ring 0))))
+  t)
+
+
+;; Refer to https://github.com/seagle0128/.emacs.d/blob/master/lisp/init-funcs.el
+(defun icon-displayable-p ()
+  "Return non-nil if icons are displayable."
+  (and centaur-icon
+    (or (display-graphic-p) (daemonp))
+    (or (featurep 'all-the-icons)
+      (require 'all-the-icons nil t))))
+
+(defun centaur-set-variable (variable value &optional no-save)
+  "Set the VARIABLE to VALUE, and return VALUE.
+  Save to `custom-file' if NO-SAVE is nil."
+  (customize-set-variable variable value)
+  (when (and (not no-save)
+          (file-writable-p custom-file))
+    (with-temp-buffer
+      (insert-file-contents custom-file)
+      (goto-char (point-min))
+      (while (re-search-forward
+               (format "^[\t ]*[;]*[\t ]*(setq %s .*)" variable)
+               nil t)
+        (replace-match (format "(setq %s '%s)" variable value) nil nil))
+      (write-region nil nil custom-file)
+      (message "Saved %s (%s) to %s" variable value custom-file))))
+
+;; Pakcage repository (ELPA)
+(defun set-package-archives (archives &optional refresh async no-save)
+  "Set the package archives (ELPA).
+REFRESH is non-nil, will refresh archive contents.
+ASYNC specifies whether to perform the downloads in the background.
+Save to `custom-file' if NO-SAVE is nil."
+  (interactive
+    (list
+      (intern
+        (ivy-read "Select package archives: "
+          (mapcar #'car centaur-package-archives-alist)
+          :preselect (symbol-name centaur-package-archives)))))
+  ;; Set option
+  (centaur-set-variable 'centaur-package-archives archives no-save)
+
+  ;; Refresh if need
+  (and refresh (package-refresh-contents async))
+
+  (message "Set package archives to `%s'" archives))
+(defalias 'centaur-set-package-archives #'set-package-archives)
+
+;; Refer to https://emacs-china.org/t/elpa/11192
+(defun centaur-test-package-archives (&optional no-chart)
+  "Test connection speed of all package archives and display on chart.
+Not displaying the chart if NO-CHART is non-nil.
+Return the fastest package archive."
+  (interactive)
+
+  (let* ((durations (mapcar
+                      (lambda (pair)
+                        (let ((url (concat (cdr (nth 2 (cdr pair)))
+                                     "archive-contents"))
+                               (start (current-time)))
+                          (message "Fetching %s..." url)
+                          (ignore-errors
+                            (url-copy-file url null-device t))
+                          (float-time (time-subtract (current-time) start))))
+                      centaur-package-archives-alist))
+          (fastest (car (nth (cl-position (apply #'min durations) durations)
+                          centaur-package-archives-alist))))
+
+    Display on chart
+    (when (and (not no-chart)
+            (require 'chart nil t)
+            (require 'url nil t))
+      (chart-bar-quickie
+        'horizontal
+        "Speed test for the ELPA mirrors"
+        (mapcar (lambda (p) (symbol-name (car p))) centaur-package-archives-alist)
+        "ELPA"
+        (mapcar (lambda (d) (* 1e3 d)) durations) "ms"))
+
+    (message "`%s' is the fastest package archive" fastest)
+
+    ;; Return the fastest
+    fastest))
+
+
 (provide 'init-funcs)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

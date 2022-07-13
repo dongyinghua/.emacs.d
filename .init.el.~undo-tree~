@@ -1,0 +1,29 @@
+(undo-tree-save-format-version . 1)
+"d32454431f1638cfd40f276f1b9568124e7fdf2a"
+[nil nil nil nil (25293 25420 550757 0) 0 nil]
+([nil nil ((#(";;===========================================================================
+
+;;===========================================================================
+
+;;使用 M-x shell 来学习命令行操作，可以参考 https://missing.csail.mit.edu/2020/ 来学习，living in Emacs。" 0 2 (fontified t face font-lock-comment-delimiter-face) 2 78 (fontified t face font-lock-comment-face) 78 79 (fontified t) 79 81 (fontified t face font-lock-comment-delimiter-face) 81 157 (fontified t face font-lock-comment-face) 157 158 (fontified t) 158 160 (fontified t face font-lock-comment-delimiter-face) 160 176 (fontified t face font-lock-comment-face) 176 243 (fontified t face font-lock-comment-face)) . 1658) (undo-tree-id22 . -176) (undo-tree-id23 . -78) (undo-tree-id24 . -243) (undo-tree-id25 . -243) (undo-tree-id26 . -243) (undo-tree-id27 . -243) (undo-tree-id28 . -243) (undo-tree-id29 . -243) (undo-tree-id30 . -243) (undo-tree-id31 . -243) (t 25291 34559 398428 834000)) nil (25293 25568 467724 0) 0 nil])
+([nil nil ((#("
+
+" 0 2 (fontified t)) . 1656) (undo-tree-id12 . -2) (undo-tree-id13 . -2) (undo-tree-id14 . -2) (undo-tree-id15 . -2) (undo-tree-id16 . -2) (undo-tree-id17 . -2) (undo-tree-id18 . -2) (undo-tree-id19 . -2) (undo-tree-id20 . -2) (undo-tree-id21 . -2) 1658) nil (25293 25568 467716 0) 0 nil])
+([nil nil ((#(";; Package Management
+(require 'init-packages)" 0 3 (fontified t face font-lock-comment-delimiter-face) 3 22 (fontified t face font-lock-comment-face) 22 23 (fontified t) 23 30 (fontified t face font-lock-keyword-face) 30 32 (fontified t) 32 45 (fontified t face font-lock-constant-face) 45 46 (fontified t)) . 1391) (undo-tree-id7 . -46) (undo-tree-id8 . -22) (undo-tree-id9 . -46) (undo-tree-id10 . -46) (undo-tree-id11 . -46)) nil (25293 25568 467709 0) 0 nil])
+([nil nil ((#("
+
+" 0 2 (fontified t)) . 1389) (undo-tree-id2 . -2) (undo-tree-id3 . -2) (undo-tree-id4 . -2) (undo-tree-id5 . -2) (undo-tree-id6 . -2) 1391) nil (25293 25568 467705 0) 0 nil])
+([nil nil ((1389 . 1390)) nil (25293 25568 467701 0) 0 nil])
+([nil nil ((#("\\" 0 1 (fontified t)) . -1389) (undo-tree-id1 . -1) 1390) nil (25293 25568 467700 0) 0 nil])
+([nil nil ((1286 . 1287)) nil (25293 25568 467698 0) 0 nil])
+([nil nil ((nil rear-nonsticky nil 1332 . 1333) (nil fontified nil 1332 . 1333) (nil fontified nil 1319 . 1332) (nil fontified nil 1317 . 1319) (nil fontified nil 1310 . 1317) (nil fontified nil 1309 . 1310) (nil fontified nil 1290 . 1309) (nil fontified nil 1287 . 1290) (1287 . 1333)) nil (25293 25568 467697 0) 0 nil])
+([nil nil ((1333 . 1334)) nil (25293 25568 467695 0) 0 nil])
+([nil nil ((1395 . 1396)) nil (25293 25568 467694 0) 0 nil])
+([nil nil ((1397 . 1402) (1396 . 1398)) nil (25293 25568 467693 0) 0 nil])
+([nil nil ((#("i" 0 1 (fontified t)) . -1401) (undo-tree-id0 . -1) 1402) nil (25293 25568 467691 0) 0 nil])
+([nil nil ((1401 . 1414)) nil (25293 25568 467672 0) 0 nil])
+([nil nil ((1414 . 1416)) nil (25293 25568 467667 0) 0 nil])
+([nil nil ((1416 . 1417) (t 25293 25568 471254 508000)) nil (25293 25630 980515 0) 0 nil])
+([nil current ((#("." 0 1 (fontified t face font-lock-constant-face)) . -1416) (undo-tree-id32 . -1) 1417) nil (25293 25630 980511 0) 0 nil])
+nil

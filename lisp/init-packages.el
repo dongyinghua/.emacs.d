@@ -9,15 +9,11 @@
 
 (require 'init-funcs)
 
-;;ustc（中科大）的镜像
-(setq package-archives '(("gnu" . "http://mirrors.ustc.edu.cn/elpa/gnu/")
-                         ("melpa" . "http://mirrors.ustc.edu.cn/elpa/melpa/")
-                         ("nongnu" . "http://mirrors.ustc.edu.cn/elpa/nongnu/")))
-
-;; 子龙山人（emacs-china）的镜像
-;;(setq package-archives '(("gnu"   . "http://1.15.88.122/gnu/")
-;;                          ("melpa" . "http://1.15.88.122/melpa/")
-;;                          ("nongnu" . "http://1.15.88.122/nongnu/")))
+;; 默认 centaur-package-archives 是 ustc
+;; (setq-default centaur-package-archives 'melpa)
+(set-package-archives centaur-package-archives nil nil t)
+;; 或者用如下代码修改镜像
+;;(set-package-archives 'melpa nil nil t)
 
 ;;防止反复调用 package-refresh-contents 会影响加载速度
 (when (not package-archive-contents)
@@ -48,17 +44,17 @@
 (use-package visual-fill-column
   :init
   (add-hook 'text-mode-hook 'toggle-truncate-lines-off)
-  ;;在所有从text-mode衍生出来的mode中使用visual-fill-column-mode
+  ;; 在所有从text-mode衍生出来的mode中使用visual-fill-column-mode
   (add-hook 'text-mode-hook 'visual-fill-column-mode)
 
   :config
   (global-visual-fill-column-mode)
   (setq visual-fill-column-enable-sensible-window-split t)
-  (setq-default visual-fill-column-center-text t)
+  ;;(setq-default visual-fill-column-center-text t)
   (advice-add 'text-scale-adjust :after #'visual-fill-column-adjust)
-  ;;(setq-default fill-column 180)
-  ;;visual-fill-column-extra-text-width可以调节文本在中间时，文本两边距屏幕边缘的距离
-  (setq-default visual-fill-column-extra-text-width '(10 . 10))
+  (setq-default fill-column 95)
+  ;; visual-fill-column-extra-text-width可以调节文本在中间时，文本两边距屏幕边缘的距离
+  ;;(setq-default visual-fill-column-extra-text-width '(10 . 10))
   )
 
 ;; ---------------------------------------------------------------------------
@@ -77,8 +73,8 @@
 (use-package evil
   :config
   (evil-mode 1)
-  ;;下面的代码可以将 insert state map 中的快捷键清空，使其可以回退（Fallback）到 Emacs State 中，
-  ;;这样我们之前的 Emacs State 里面定义的 C-w 等快捷键就不会被 evil insert minor mode state 所覆盖。
+  ;; 下面的代码可以将 insert state map 中的快捷键清空，使其可以回退（Fallback）到 Emacs State 中，
+  ;; 这样我们之前的 Emacs State 里面定义的 C-w 等快捷键就不会被 evil insert minor mode state 所覆盖。
   (setcdr evil-insert-state-map nil)
   (define-key evil-insert-state-map [escape] 'evil-normal-state))
 
@@ -88,9 +84,51 @@
 
 (use-package restart-emacs)
 
-(use-package which-key
-  :hook (after-init . which-key-mode)
-  :config (setq which-key-idle-delay 0))
+;;(use-package which-key
+;;  :hook (after-init . which-key-mode)
+;;  :config (setq which-key-idle-delay 0))
+
+;; https://github.com/DarwinAwardWinner/amx
+(use-package amx
+  :ensure t
+  :hook (after-init . amx-mode))
+
+;; https://github.com/abo-abo/ace-window
+(use-package ace-window
+  :bind (("C-x o" . 'ace-window)))
+
+(use-package mwim
+  :bind
+  ("C-a" . mwim-beginning-of-code-or-line)
+  ("C-e" . mwim-end-of-code-or-line))
+
+(use-package undo-tree
+  :init (global-undo-tree-mode)
+  :config
+  (setq undo-tree-visualizer-timestamps t)
+  (setq undo-tree-visualizer-diff t)
+  )
+
+;; https://github.com/Malabarba/smart-mode-line
+;;(use-package smart-mode-line
+;;  :config (sml/setup))
+
+;; https://github.com/io12/good-scroll.el
+(use-package good-scroll
+  :hook (after-init . good-scroll-mode))
+
+;; https://github.com/abo-abo/avy
+(use-package avy
+  :ensure t
+  :config
+  (setq avy-timeout-seconds 2)
+  (setf (alist-get ?e avy-dispatch-alist) 'avy-action-embark)
+  :bind
+  (("C-c '" . avy-goto-char-timer)
+    ("M-g l" . avy-goto-line)
+    ("M-g w" . avy-goto-word-1)
+    ("M-g o" . avy-org-goto-heading-timer))
+  )
 
 (provide 'init-packages)
 

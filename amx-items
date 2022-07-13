@@ -1,0 +1,53 @@
+
+;; ----- amx-history -----
+(
+ prettify-symbols-mode
+ eval-buffer
+ query-replace-regexp
+ org-roam-dailies-goto-date
+ describe-personal-keybindings
+ windmove-display-default-keybindings
+ backward-page
+)
+
+;; ----- amx-data -----
+(
+ (marginalia-mode . 2)
+ (ace-window . 3)
+ (ace-window-display-mode . 1)
+ (undo-tree-mode . 4)
+ (undo-tree-visualizer-toggle-timestamps . 1)
+ (eval-buffer . 87)
+ (package-install . 2)
+ (smart-mode-line-enable . 6)
+ (good-scroll-mode . 4)
+ (bookmark-delete . 5)
+ (remember . 3)
+ (avy-goto-line . 2)
+ (avy-goto-char . 6)
+ (avy-goto-word-0 . 3)
+ (avy-goto-word-1-above . 1)
+ (avy-isearch . 2)
+ (avy-copy-line . 1)
+ (avy-move-region . 1)
+ (which-key-mode . 1)
+ (avy-goto-char-timer . 1)
+ (org-display-inline-images . 1)
+ (package-delete . 5)
+ (buffer-menu . 1)
+ (list-packages . 1)
+ (hydra-posframe-enable . 2)
+ (posframe-hide-all . 1)
+ (posframe-benchmark . 1)
+ (comment-line . 1)
+ (linum-mode . 4)
+ (line-number-mode . 2)
+ (org-hydra/body . 2)
+ (query-replace-regexp . 6)
+ (global-page-break-lines-mode . 2)
+ (backward-page . 1)
+ (windmove-display-default-keybindings . 1)
+ (describe-personal-keybindings . 1)
+ (org-roam-dailies-goto-date . 1)
+ (prettify-symbols-mode . 5)
+)

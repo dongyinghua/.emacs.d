@@ -46,8 +46,8 @@
 ;;minibuffer action 和自适应的 context menu：Embark
 (use-package embark
   :ensure t
-  :init
-  ;;可以实现不用记快捷键，在minibuffer就能执行命令
+  :config
+  ;; 可以实现不用记快捷键，在minibuffer就能执行命令
   (setq prefix-help-command 'embark-prefix-help-command)
   :bind ("C-;" . embark-act)
   )
@@ -60,8 +60,7 @@
   ("C-s" . consult-line)
   ;;找到代码中自定义和函数或者使用的packages（前提是用use-package）
   ("C-c i" . consult-imenu)
-  ("C-x C-r" . consult-recent-file)
-  )
+  ("C-x C-r" . consult-recent-file))
 
 (define-key minibuffer-local-map (kbd "C-c C-e") 'embark-export-write)
 

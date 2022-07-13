@@ -19,6 +19,10 @@
   ("C-c C-f a" . consul-org-agenda)
   ("C-c r" . org-refile)
   :config
+  ;;
+  ;; Add new template
+  (add-to-list 'org-structure-template-alist '("n" . "note"))
+
   ;;org-mode缩进
   (setq org-startup-indented t)
 
@@ -110,22 +114,30 @@
   (require 'org-checklist)
   )
 
-
-
 ;; Prettify UI
-(use-package org-superstar
-  :ensure t
-  :if (and (display-graphic-p) (char-displayable-p ?◉))
-  :hook (org-mode . org-superstar-mode))
-(use-package org-fancy-priorities
-  :ensure t
-  :diminish
-  :hook (org-mode . org-fancy-priorities-mode)
-  :init (setq org-fancy-priorities-list
-          (if (and (display-graphic-p) (char-displayable-p ?🅐))
-            '("🅐" "🅑" "🅒" "🅓")
-            '("HIGH" "MEDIUM" "LOW" "OPTIONAL"))))
-;; ---------------------------------------------------------------------------
+  (if emacs/>=27p
+      (use-package org-modern
+        :hook ((org-mode . org-modern-mode)
+               (org-agenda-finalize . org-modern-agenda)
+               (org-modern-mode . (lambda ()
+                                    "Adapt `org-modern-mode'."
+                                    ;; Disable Prettify Symbols mode
+                                    (setq prettify-symbols-alist nil)
+                                    (prettify-symbols-mode -1)))))
+    (progn
+      (use-package org-superstar
+        :if (and (display-graphic-p) (char-displayable-p ?◉))
+        :hook (org-mode . org-superstar-mode)
+        :init (setq org-superstar-headline-bullets-list '("◉""○""◈""◇""⁕")))
+      (use-package org-fancy-priorities
+        :diminish
+        :hook (org-mode . org-fancy-priorities-mode)
+        :init (setq org-fancy-priorities-list
+                    (if (and (display-graphic-p) (char-displayable-p ?🅐))
+                        '("🅐" "🅑" "🅒" "🅓")
+                      '("HIGH" "MEDIUM" "LOW" "OPTIONAL"))))))
+
+
 ;;（造轮子）定义了一个函数可以循环org-mode的emphasis-markers的可见性。
 ;; emphasis-markers就是org-mode轻语言的标记符号，比如说*、-等。
 ;; (defun org-cycling-emphasis-markers()
@@ -163,10 +175,10 @@
     )
   )
 
-;; ---------------------------------------------------------------------------
+
 
 
-;; ---------------------------------------------------------------------------
+
 ;; org-roam
 (use-package org-roam
   :ensure t
@@ -260,6 +272,8 @@
   :hook (org-roam-mode . org-roam-bibtex-mode)
   :bind (:map org-mode-map
           (("C-c n a" . orb-note-actions))))
+
+
 
 (use-package zotxt
   :ensure t

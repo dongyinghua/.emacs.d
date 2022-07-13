@@ -3,13 +3,8 @@
 ;;; nevertheless, you probably don't want to edit it.
 ;;; -*- End Of Bookmark File Format Version Stamp -*-
 (("org-refile-last-stored"
- (filename . "~/Documents/Org/GTD/Inbox.org")
- (front-context-string . "** 算法\n*** 理论学习\n*")
- (rear-context-string . "的任务。\n** 整理项目经历\n\n")
- (position . 146))
-("org-capture-last-stored"
- (filename . "~/Documents/Org/org-roam-directory/无人机编队组网关键技术研究.org")
- (front-context-string . "* FIRST PASS\n\n**")
- (rear-context-string . ": 无人机编队组网关键技术研究\n")
- (position . 149))
+ (filename . "~/Documents/Org/GTD/Schedule.org")
+ (front-context-string)
+ (rear-context-string . "3-30 Wed 10:54]\n")
+ (position . 2418))
 )
