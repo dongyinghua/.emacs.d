@@ -18,7 +18,7 @@
   ("C-c b" . org-switchb)
   ("C-c C-f a" . consul-org-agenda)
   ("C-c r" . org-refile)
-    :config
+  :config
   ;; Add new template
   (add-to-list 'org-structure-template-alist '("n" . "note"))
 

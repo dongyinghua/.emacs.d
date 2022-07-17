@@ -1,5 +1,5 @@
 (undo-tree-save-format-version . 1)
-"61be5655eba80a4d3ee61586e4e29c31b2ae2347"
+"0c1a4b9ee7e90c2ee11792f0fb0c24c67dfe82d4"
 [nil nil nil nil (25292 11727 416069 0) 0 nil]
 ([nil nil ((2952 . 3191) (#("(custom-set-faces
  ;; custom-set-faces was added by Custom.
@@ -1010,7 +1010,7 @@
        (use-package)
        (use-package)))
  '(warning-suppress-types '((use-package) (use-package) (use-package) (use-package))))" 0 3054 (fontified nil)) . -34) (t 25298 8426 630675 515000)) nil (25298 8542 522696 0) 0 nil])
-([nil current ((3116 . 3355) (#("(custom-set-faces
+([nil nil ((3116 . 3355) (#("(custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
@@ -1038,4 +1038,291 @@
        (use-package)
        (use-package)))
  '(warning-suppress-types '((use-package) (use-package) (use-package) (use-package))))" 0 3071 (fontified nil)) . -34) (t 25298 8542 527281 562000)) nil (25299 45915 970940 0) 0 nil])
+([nil nil ((3127 . 3432) (#("(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )" 0 239 (fontified nil)) . -3127) (3038 . 3126) (3017 . 3024) (#("   " 0 3 (fontified nil)) . 3017) (2996 . 3003) (#("   " 0 3 (fontified nil)) . 2996) (2975 . 2982) (#("   " 0 3 (fontified nil)) . 2975) (2954 . 2961) (#("   " 0 3 (fontified nil)) . 2954) (#("
+" 0 1 (fontified nil)) . -3022) (3005 . 3008) (2988 . 2991) (2971 . 2974) (2954 . 2957) (3010 . 3011) (2995 . 2996) (#("
+" 0 1 (fontified nil)) . 2995) (2995 . 2996) (#(" " 0 1 (fontified nil)) . -2995) (2981 . 2982) (#("
+" 0 1 (fontified nil)) . 2981) (2981 . 2982) (#(" " 0 1 (fontified nil)) . -2981) (2967 . 2968) (#("
+" 0 1 (fontified nil)) . 2967) (2967 . 2968) (#(" " 0 1 (fontified nil)) . -2967) (2953 . 2954) (#("
+" 0 1 (fontified nil)) . 2953) (2953 . 2954) (#(" " 0 1 (fontified nil)) . -2953) (2935 . 3010) (#(" " 0 1 (fontified nil)) . 2935) (2904 . 2936) (#("
+" 0 1 (fontified nil)) . -2904) (2423 . 2905) (#(" " 0 1 (fontified nil)) . 2423) (2393 . 2424) (#("
+" 0 1 (fontified nil)) . -2393) (300 . 2394) (#(" " 0 1 (fontified nil)) . 300) (34 . 301) (#("(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(custom-safe-themes
+    '(\"a27c00821ccfd5a78b01e4f35dc056706dd9ede09a8b90c6955ae6a390eb1c1e\" \"4f1d2476c290eaa5d9ab9d13b60f2c0f1c8fa7703596fa91b235db7f99a9441b\" \"745d03d647c4b118f671c49214420639cb3af7152e81f132478ed1c649d4597d\" \"fe2539ccf78f28c519541e37dc77115c6c7c2efcec18b970b16e4a4d2cd9891d\" \"266ecb1511fa3513ed7992e6cd461756a895dcc5fef2d378f165fed1c894a78c\" \"333958c446e920f5c350c4b4016908c130c3b46d590af91e1e7e2a0611f1e8c5\" \"0d01e1e300fcafa34ba35d5cf0a21b3b23bc4053d388e352ae6a901994597ab1\" \"5f19cb23200e0ac301d42b880641128833067d341d22344806cdad48e6ec62f6\" \"84b14a0a41bb2728568d40c545280dbe7d6891221e7fbe7c2b1c54a3f5959289\" \"a9a67b318b7417adbedaab02f05fa679973e9718d9d26075c6235b1f0db703c8\" \"1d44ec8ec6ec6e6be32f2f73edf398620bb721afeed50f75df6b12ccff0fbb15\" \"6c98bc9f39e8f8fd6da5b9c74a624cbb3782b4be8abae8fd84cbc43053d7c175\" \"f7fed1aadf1967523c120c4c82ea48442a51ac65074ba544a5aefc5af490893b\" \"c2aeb1bd4aa80f1e4f95746bda040aafb78b1808de07d340007ba898efa484f5\" \"7a7b1d475b42c1a0b61f3b1d1225dd249ffa1abb1b7f726aec59ac7ca3bf4dae\" \"835868dcd17131ba8b9619d14c67c127aa18b90a82438c861358633q1129dda63\" \"4699e3a86b1863bbc695236036158d175a81f0f3ea504e2b7c71f8f7025e19e3\" \"6f4421bf31387397f6710b6f6381c448d1a71944d9e9da4e0057b3fe5d6f2fad\" \"4a5aa2ccb3fa837f322276c060ea8a3d10181fecbd1b74cb97df8e191b214313\" \"e19ac4ef0f028f503b1ccafa7c337021834ce0d1a2bca03fcebc1ef635776bea\" \"1bddd01e6851f5c4336f7d16c56934513d41cc3d0233863760d1798e74809b4b\" \"c4063322b5011829f7fdd7509979b5823e8eea2abf1fe5572ec4b7af1dd78519\" \"e2c926ced58e48afc87f4415af9b7f7b58e62ec792659fcb626e8cba674d2065\" \"846b3dc12d774794861d81d7d2dcdb9645f82423565bfb4dad01204fa322dbd5\" \"97db542a8a1731ef44b60bc97406c1eb7ed4528b0d7296997cbb53969df852d6\" \"0466adb5554ea3055d0353d363832446cd8be7b799c39839f387abb631ea0995\" \"6c531d6c3dbc344045af7829a3a20a09929e6c41d7a7278963f7d3215139f6a7\" \"1d5e33500bc9548f800f9e248b57d1b2a9ecde79cb40c0b1398dec51ee820daf\" \"850bb46cc41d8a28669f78b98db04a46053eca663db71a001b40288a9b36796c\" \"23c806e34594a583ea5bbf5adf9a964afe4f28b4467d28777bcba0d35aa0872e\" \"1704976a1797342a1b4ea7a75bdbb3be1569f4619134341bd5a4c1cfb16abad4\" default))
+ '(package-selected-packages
+    '(dashboard multiple-cursors company-posframe valign org-superstar page-break-lines major-mode-hydra hydra-posframe pretty-hydra hydra undo-tree mwim ace-window amx ivy org-checklist use-package org-mode restart-emacs markdown-mode latex org-appear embark-consult consult wgrep embark marginalia orderless company auctex doom-modeline doom-themes evil editorconfig visual-fill-column hungry-delete nyan-mode zotxt unicode-fonts org-roam-bibtex org-roam-ui org-roam))
+ '(warning-suppress-log-types
+    '((websocket)
+       (use-package)
+       (use-package)
+       (use-package)
+       (use-package)))
+ '(warning-suppress-types '((use-package) (use-package) (use-package) (use-package))))" 0 3081 (fontified nil)) . -34) (undo-tree-id0 . -2754) (t 25299 45915 976022 871000)) nil (25300 6949 583516 0) 0 nil])
+([nil nil ((3138 . 3443) (#("(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(dashboard-heading ((t (:inherit (font-lock-string-face bold))))))" 0 305 (fontified nil)) . -3138) (3049 . 3137) (3028 . 3035) (#("   " 0 3 (fontified nil)) . 3028) (3007 . 3014) (#("   " 0 3 (fontified nil)) . 3007) (2986 . 2993) (#("   " 0 3 (fontified nil)) . 2986) (2965 . 2972) (#("   " 0 3 (fontified nil)) . 2965) (#("
+" 0 1 (fontified nil)) . -3033) (3016 . 3019) (2999 . 3002) (2982 . 2985) (2965 . 2968) (3021 . 3022) (3006 . 3007) (#("
+" 0 1 (fontified nil)) . 3006) (3006 . 3007) (#(" " 0 1 (fontified nil)) . -3006) (2992 . 2993) (#("
+" 0 1 (fontified nil)) . 2992) (2992 . 2993) (#(" " 0 1 (fontified nil)) . -2992) (2978 . 2979) (#("
+" 0 1 (fontified nil)) . 2978) (2978 . 2979) (#(" " 0 1 (fontified nil)) . -2978) (2964 . 2965) (#("
+" 0 1 (fontified nil)) . 2964) (2964 . 2965) (#(" " 0 1 (fontified nil)) . -2964) (2946 . 3021) (#(" " 0 1 (fontified nil)) . 2946) (2915 . 2947) (#("
+" 0 1 (fontified nil)) . -2915) (2423 . 2916) (#(" " 0 1 (fontified nil)) . 2423) (2393 . 2424) (#("
+" 0 1 (fontified nil)) . -2393) (300 . 2394) (#(" " 0 1 (fontified nil)) . 300) (34 . 301) (#("(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(custom-safe-themes
+    '(\"a27c00821ccfd5a78b01e4f35dc056706dd9ede09a8b90c6955ae6a390eb1c1e\" \"4f1d2476c290eaa5d9ab9d13b60f2c0f1c8fa7703596fa91b235db7f99a9441b\" \"745d03d647c4b118f671c49214420639cb3af7152e81f132478ed1c649d4597d\" \"fe2539ccf78f28c519541e37dc77115c6c7c2efcec18b970b16e4a4d2cd9891d\" \"266ecb1511fa3513ed7992e6cd461756a895dcc5fef2d378f165fed1c894a78c\" \"333958c446e920f5c350c4b4016908c130c3b46d590af91e1e7e2a0611f1e8c5\" \"0d01e1e300fcafa34ba35d5cf0a21b3b23bc4053d388e352ae6a901994597ab1\" \"5f19cb23200e0ac301d42b880641128833067d341d22344806cdad48e6ec62f6\" \"84b14a0a41bb2728568d40c545280dbe7d6891221e7fbe7c2b1c54a3f5959289\" \"a9a67b318b7417adbedaab02f05fa679973e9718d9d26075c6235b1f0db703c8\" \"1d44ec8ec6ec6e6be32f2f73edf398620bb721afeed50f75df6b12ccff0fbb15\" \"6c98bc9f39e8f8fd6da5b9c74a624cbb3782b4be8abae8fd84cbc43053d7c175\" \"f7fed1aadf1967523c120c4c82ea48442a51ac65074ba544a5aefc5af490893b\" \"c2aeb1bd4aa80f1e4f95746bda040aafb78b1808de07d340007ba898efa484f5\" \"7a7b1d475b42c1a0b61f3b1d1225dd249ffa1abb1b7f726aec59ac7ca3bf4dae\" \"835868dcd17131ba8b9619d14c67c127aa18b90a82438c861358633q1129dda63\" \"4699e3a86b1863bbc695236036158d175a81f0f3ea504e2b7c71f8f7025e19e3\" \"6f4421bf31387397f6710b6f6381c448d1a71944d9e9da4e0057b3fe5d6f2fad\" \"4a5aa2ccb3fa837f322276c060ea8a3d10181fecbd1b74cb97df8e191b214313\" \"e19ac4ef0f028f503b1ccafa7c337021834ce0d1a2bca03fcebc1ef635776bea\" \"1bddd01e6851f5c4336f7d16c56934513d41cc3d0233863760d1798e74809b4b\" \"c4063322b5011829f7fdd7509979b5823e8eea2abf1fe5572ec4b7af1dd78519\" \"e2c926ced58e48afc87f4415af9b7f7b58e62ec792659fcb626e8cba674d2065\" \"846b3dc12d774794861d81d7d2dcdb9645f82423565bfb4dad01204fa322dbd5\" \"97db542a8a1731ef44b60bc97406c1eb7ed4528b0d7296997cbb53969df852d6\" \"0466adb5554ea3055d0353d363832446cd8be7b799c39839f387abb631ea0995\" \"6c531d6c3dbc344045af7829a3a20a09929e6c41d7a7278963f7d3215139f6a7\" \"1d5e33500bc9548f800f9e248b57d1b2a9ecde79cb40c0b1398dec51ee820daf\" \"850bb46cc41d8a28669f78b98db04a46053eca663db71a001b40288a9b36796c\" \"23c806e34594a583ea5bbf5adf9a964afe4f28b4467d28777bcba0d35aa0872e\" \"1704976a1797342a1b4ea7a75bdbb3be1569f4619134341bd5a4c1cfb16abad4\" default))
+ '(package-selected-packages
+    '(init-persp dashboard multiple-cursors company-posframe valign org-superstar page-break-lines major-mode-hydra hydra-posframe pretty-hydra hydra undo-tree mwim ace-window amx ivy org-checklist use-package org-mode restart-emacs markdown-mode latex org-appear embark-consult consult wgrep embark marginalia orderless company auctex doom-modeline doom-themes evil editorconfig visual-fill-column hungry-delete nyan-mode zotxt unicode-fonts org-roam-bibtex org-roam-ui org-roam))
+ '(warning-suppress-log-types
+    '((websocket)
+       (use-package)
+       (use-package)
+       (use-package)
+       (use-package)))
+ '(warning-suppress-types '((use-package) (use-package) (use-package) (use-package))))" 0 3092 (fontified nil)) . -34) (t 25300 6949 589305 571000)) nil (25300 7058 150574 0) 0 nil])
+([nil nil ((3216 . 3521) (#("(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(dashboard-heading ((t (:inherit (font-lock-string-face bold))))))" 0 305 (fontified nil)) . -3216) (3127 . 3215) (3106 . 3113) (#("   " 0 3 (fontified nil)) . 3106) (3085 . 3092) (#("   " 0 3 (fontified nil)) . 3085) (3064 . 3071) (#("   " 0 3 (fontified nil)) . 3064) (3043 . 3050) (#("   " 0 3 (fontified nil)) . 3043) (#("
+" 0 1 (fontified nil)) . -3111) (3094 . 3097) (3077 . 3080) (3060 . 3063) (3043 . 3046) (3099 . 3100) (3084 . 3085) (#("
+" 0 1 (fontified nil)) . 3084) (3084 . 3085) (#(" " 0 1 (fontified nil)) . -3084) (3070 . 3071) (#("
+" 0 1 (fontified nil)) . 3070) (3070 . 3071) (#(" " 0 1 (fontified nil)) . -3070) (3056 . 3057) (#("
+" 0 1 (fontified nil)) . 3056) (3056 . 3057) (#(" " 0 1 (fontified nil)) . -3056) (3042 . 3043) (#("
+" 0 1 (fontified nil)) . 3042) (3042 . 3043) (#(" " 0 1 (fontified nil)) . -3042) (3024 . 3099) (#(" " 0 1 (fontified nil)) . 3024) (2993 . 3025) (#("
+" 0 1 (fontified nil)) . -2993) (2501 . 2994) (#(" " 0 1 (fontified nil)) . 2501) (2393 . 2502) (#("
+" 0 1 (fontified nil)) . -2393) (300 . 2394) (#(" " 0 1 (fontified nil)) . 300) (34 . 301) (#("(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(custom-safe-themes
+    '(\"a27c00821ccfd5a78b01e4f35dc056706dd9ede09a8b90c6955ae6a390eb1c1e\" \"4f1d2476c290eaa5d9ab9d13b60f2c0f1c8fa7703596fa91b235db7f99a9441b\" \"745d03d647c4b118f671c49214420639cb3af7152e81f132478ed1c649d4597d\" \"fe2539ccf78f28c519541e37dc77115c6c7c2efcec18b970b16e4a4d2cd9891d\" \"266ecb1511fa3513ed7992e6cd461756a895dcc5fef2d378f165fed1c894a78c\" \"333958c446e920f5c350c4b4016908c130c3b46d590af91e1e7e2a0611f1e8c5\" \"0d01e1e300fcafa34ba35d5cf0a21b3b23bc4053d388e352ae6a901994597ab1\" \"5f19cb23200e0ac301d42b880641128833067d341d22344806cdad48e6ec62f6\" \"84b14a0a41bb2728568d40c545280dbe7d6891221e7fbe7c2b1c54a3f5959289\" \"a9a67b318b7417adbedaab02f05fa679973e9718d9d26075c6235b1f0db703c8\" \"1d44ec8ec6ec6e6be32f2f73edf398620bb721afeed50f75df6b12ccff0fbb15\" \"6c98bc9f39e8f8fd6da5b9c74a624cbb3782b4be8abae8fd84cbc43053d7c175\" \"f7fed1aadf1967523c120c4c82ea48442a51ac65074ba544a5aefc5af490893b\" \"c2aeb1bd4aa80f1e4f95746bda040aafb78b1808de07d340007ba898efa484f5\" \"7a7b1d475b42c1a0b61f3b1d1225dd249ffa1abb1b7f726aec59ac7ca3bf4dae\" \"835868dcd17131ba8b9619d14c67c127aa18b90a82438c861358633q1129dda63\" \"4699e3a86b1863bbc695236036158d175a81f0f3ea504e2b7c71f8f7025e19e3\" \"6f4421bf31387397f6710b6f6381c448d1a71944d9e9da4e0057b3fe5d6f2fad\" \"4a5aa2ccb3fa837f322276c060ea8a3d10181fecbd1b74cb97df8e191b214313\" \"e19ac4ef0f028f503b1ccafa7c337021834ce0d1a2bca03fcebc1ef635776bea\" \"1bddd01e6851f5c4336f7d16c56934513d41cc3d0233863760d1798e74809b4b\" \"c4063322b5011829f7fdd7509979b5823e8eea2abf1fe5572ec4b7af1dd78519\" \"e2c926ced58e48afc87f4415af9b7f7b58e62ec792659fcb626e8cba674d2065\" \"846b3dc12d774794861d81d7d2dcdb9645f82423565bfb4dad01204fa322dbd5\" \"97db542a8a1731ef44b60bc97406c1eb7ed4528b0d7296997cbb53969df852d6\" \"0466adb5554ea3055d0353d363832446cd8be7b799c39839f387abb631ea0995\" \"6c531d6c3dbc344045af7829a3a20a09929e6c41d7a7278963f7d3215139f6a7\" \"1d5e33500bc9548f800f9e248b57d1b2a9ecde79cb40c0b1398dec51ee820daf\" \"850bb46cc41d8a28669f78b98db04a46053eca663db71a001b40288a9b36796c\" \"23c806e34594a583ea5bbf5adf9a964afe4f28b4467d28777bcba0d35aa0872e\" \"1704976a1797342a1b4ea7a75bdbb3be1569f4619134341bd5a4c1cfb16abad4\" default))
+ '(package-selected-packages
+    '(persp-mode init-persp dashboard multiple-cursors company-posframe valign org-superstar page-break-lines major-mode-hydra hydra-posframe pretty-hydra hydra undo-tree mwim ace-window amx ivy org-checklist use-package org-mode restart-emacs markdown-mode latex org-appear embark-consult consult wgrep embark marginalia orderless company auctex doom-modeline doom-themes evil editorconfig visual-fill-column hungry-delete nyan-mode zotxt unicode-fonts org-roam-bibtex org-roam-ui org-roam))
+ '(warning-suppress-log-types
+    '((websocket)
+       (use-package)
+       (use-package)
+       (use-package)
+       (use-package)))
+ '(warning-suppress-types '((use-package) (use-package) (use-package) (use-package))))" 0 3103 (fontified nil)) . -34) (t 25300 7058 155145 653000)) nil (25300 7141 960607 0) 0 nil])
+([nil nil ((3245 . 3550) (#("(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(dashboard-heading ((t (:inherit (font-lock-string-face bold))))))" 0 305 (fontified nil)) . -3245) (3156 . 3244) (3135 . 3142) (#("   " 0 3 (fontified nil)) . 3135) (3114 . 3121) (#("   " 0 3 (fontified nil)) . 3114) (3093 . 3100) (#("   " 0 3 (fontified nil)) . 3093) (3072 . 3079) (#("   " 0 3 (fontified nil)) . 3072) (#("
+" 0 1 (fontified nil)) . -3140) (3123 . 3126) (3106 . 3109) (3089 . 3092) (3072 . 3075) (3128 . 3129) (3113 . 3114) (#("
+" 0 1 (fontified nil)) . 3113) (3113 . 3114) (#(" " 0 1 (fontified nil)) . -3113) (3099 . 3100) (#("
+" 0 1 (fontified nil)) . 3099) (3099 . 3100) (#(" " 0 1 (fontified nil)) . -3099) (3085 . 3086) (#("
+" 0 1 (fontified nil)) . 3085) (3085 . 3086) (#(" " 0 1 (fontified nil)) . -3085) (3071 . 3072) (#("
+" 0 1 (fontified nil)) . 3071) (3071 . 3072) (#(" " 0 1 (fontified nil)) . -3071) (3053 . 3128) (#(" " 0 1 (fontified nil)) . 3053) (3022 . 3054) (#("
+" 0 1 (fontified nil)) . -3022) (2501 . 3023) (#(" " 0 1 (fontified nil)) . 2501) (2393 . 2502) (#("
+" 0 1 (fontified nil)) . -2393) (300 . 2394) (#(" " 0 1 (fontified nil)) . 300) (34 . 301) (#("(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(custom-safe-themes
+    '(\"a27c00821ccfd5a78b01e4f35dc056706dd9ede09a8b90c6955ae6a390eb1c1e\" \"4f1d2476c290eaa5d9ab9d13b60f2c0f1c8fa7703596fa91b235db7f99a9441b\" \"745d03d647c4b118f671c49214420639cb3af7152e81f132478ed1c649d4597d\" \"fe2539ccf78f28c519541e37dc77115c6c7c2efcec18b970b16e4a4d2cd9891d\" \"266ecb1511fa3513ed7992e6cd461756a895dcc5fef2d378f165fed1c894a78c\" \"333958c446e920f5c350c4b4016908c130c3b46d590af91e1e7e2a0611f1e8c5\" \"0d01e1e300fcafa34ba35d5cf0a21b3b23bc4053d388e352ae6a901994597ab1\" \"5f19cb23200e0ac301d42b880641128833067d341d22344806cdad48e6ec62f6\" \"84b14a0a41bb2728568d40c545280dbe7d6891221e7fbe7c2b1c54a3f5959289\" \"a9a67b318b7417adbedaab02f05fa679973e9718d9d26075c6235b1f0db703c8\" \"1d44ec8ec6ec6e6be32f2f73edf398620bb721afeed50f75df6b12ccff0fbb15\" \"6c98bc9f39e8f8fd6da5b9c74a624cbb3782b4be8abae8fd84cbc43053d7c175\" \"f7fed1aadf1967523c120c4c82ea48442a51ac65074ba544a5aefc5af490893b\" \"c2aeb1bd4aa80f1e4f95746bda040aafb78b1808de07d340007ba898efa484f5\" \"7a7b1d475b42c1a0b61f3b1d1225dd249ffa1abb1b7f726aec59ac7ca3bf4dae\" \"835868dcd17131ba8b9619d14c67c127aa18b90a82438c861358633q1129dda63\" \"4699e3a86b1863bbc695236036158d175a81f0f3ea504e2b7c71f8f7025e19e3\" \"6f4421bf31387397f6710b6f6381c448d1a71944d9e9da4e0057b3fe5d6f2fad\" \"4a5aa2ccb3fa837f322276c060ea8a3d10181fecbd1b74cb97df8e191b214313\" \"e19ac4ef0f028f503b1ccafa7c337021834ce0d1a2bca03fcebc1ef635776bea\" \"1bddd01e6851f5c4336f7d16c56934513d41cc3d0233863760d1798e74809b4b\" \"c4063322b5011829f7fdd7509979b5823e8eea2abf1fe5572ec4b7af1dd78519\" \"e2c926ced58e48afc87f4415af9b7f7b58e62ec792659fcb626e8cba674d2065\" \"846b3dc12d774794861d81d7d2dcdb9645f82423565bfb4dad01204fa322dbd5\" \"97db542a8a1731ef44b60bc97406c1eb7ed4528b0d7296997cbb53969df852d6\" \"0466adb5554ea3055d0353d363832446cd8be7b799c39839f387abb631ea0995\" \"6c531d6c3dbc344045af7829a3a20a09929e6c41d7a7278963f7d3215139f6a7\" \"1d5e33500bc9548f800f9e248b57d1b2a9ecde79cb40c0b1398dec51ee820daf\" \"850bb46cc41d8a28669f78b98db04a46053eca663db71a001b40288a9b36796c\" \"23c806e34594a583ea5bbf5adf9a964afe4f28b4467d28777bcba0d35aa0872e\" \"1704976a1797342a1b4ea7a75bdbb3be1569f4619134341bd5a4c1cfb16abad4\" default))
+ '(ignored-local-variable-values '((eval progn (pp-buffer) (indent-buffer))))
+ '(package-selected-packages
+    '(persp-mode init-persp dashboard multiple-cursors company-posframe valign org-superstar page-break-lines major-mode-hydra hydra-posframe pretty-hydra hydra undo-tree mwim ace-window amx ivy org-checklist use-package org-mode restart-emacs markdown-mode latex org-appear embark-consult consult wgrep embark marginalia orderless company auctex doom-modeline doom-themes evil editorconfig visual-fill-column hungry-delete nyan-mode zotxt unicode-fonts org-roam-bibtex org-roam-ui org-roam))
+ '(warning-suppress-log-types
+    '((websocket)
+       (use-package)
+       (use-package)
+       (use-package)
+       (use-package)))
+ '(warning-suppress-types '((use-package) (use-package) (use-package) (use-package))))" 0 3181 (fontified nil)) . -34) (t 25300 7141 965252 473000)) nil (25300 7316 917101 0) 0 nil])
+([nil nil ((3234 . 3539) (#("(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(dashboard-heading ((t (:inherit (font-lock-string-face bold))))))" 0 305 (fontified nil)) . -3234) (3145 . 3233) (3124 . 3131) (#("   " 0 3 (fontified nil)) . 3124) (3103 . 3110) (#("   " 0 3 (fontified nil)) . 3103) (3082 . 3089) (#("   " 0 3 (fontified nil)) . 3082) (3061 . 3068) (#("   " 0 3 (fontified nil)) . 3061) (#("
+" 0 1 (fontified nil)) . -3129) (3112 . 3115) (3095 . 3098) (3078 . 3081) (3061 . 3064) (3117 . 3118) (3102 . 3103) (#("
+" 0 1 (fontified nil)) . 3102) (3102 . 3103) (#(" " 0 1 (fontified nil)) . -3102) (3088 . 3089) (#("
+" 0 1 (fontified nil)) . 3088) (3088 . 3089) (#(" " 0 1 (fontified nil)) . -3088) (3074 . 3075) (#("
+" 0 1 (fontified nil)) . 3074) (3074 . 3075) (#(" " 0 1 (fontified nil)) . -3074) (3060 . 3061) (#("
+" 0 1 (fontified nil)) . 3060) (3060 . 3061) (#(" " 0 1 (fontified nil)) . -3060) (3042 . 3117) (#(" " 0 1 (fontified nil)) . 3042) (3011 . 3043) (#("
+" 0 1 (fontified nil)) . -3011) (2501 . 3012) (#(" " 0 1 (fontified nil)) . 2501) (2393 . 2502) (#("
+" 0 1 (fontified nil)) . -2393) (300 . 2394) (#(" " 0 1 (fontified nil)) . 300) (34 . 301) (#("(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(custom-safe-themes
+    '(\"a27c00821ccfd5a78b01e4f35dc056706dd9ede09a8b90c6955ae6a390eb1c1e\" \"4f1d2476c290eaa5d9ab9d13b60f2c0f1c8fa7703596fa91b235db7f99a9441b\" \"745d03d647c4b118f671c49214420639cb3af7152e81f132478ed1c649d4597d\" \"fe2539ccf78f28c519541e37dc77115c6c7c2efcec18b970b16e4a4d2cd9891d\" \"266ecb1511fa3513ed7992e6cd461756a895dcc5fef2d378f165fed1c894a78c\" \"333958c446e920f5c350c4b4016908c130c3b46d590af91e1e7e2a0611f1e8c5\" \"0d01e1e300fcafa34ba35d5cf0a21b3b23bc4053d388e352ae6a901994597ab1\" \"5f19cb23200e0ac301d42b880641128833067d341d22344806cdad48e6ec62f6\" \"84b14a0a41bb2728568d40c545280dbe7d6891221e7fbe7c2b1c54a3f5959289\" \"a9a67b318b7417adbedaab02f05fa679973e9718d9d26075c6235b1f0db703c8\" \"1d44ec8ec6ec6e6be32f2f73edf398620bb721afeed50f75df6b12ccff0fbb15\" \"6c98bc9f39e8f8fd6da5b9c74a624cbb3782b4be8abae8fd84cbc43053d7c175\" \"f7fed1aadf1967523c120c4c82ea48442a51ac65074ba544a5aefc5af490893b\" \"c2aeb1bd4aa80f1e4f95746bda040aafb78b1808de07d340007ba898efa484f5\" \"7a7b1d475b42c1a0b61f3b1d1225dd249ffa1abb1b7f726aec59ac7ca3bf4dae\" \"835868dcd17131ba8b9619d14c67c127aa18b90a82438c861358633q1129dda63\" \"4699e3a86b1863bbc695236036158d175a81f0f3ea504e2b7c71f8f7025e19e3\" \"6f4421bf31387397f6710b6f6381c448d1a71944d9e9da4e0057b3fe5d6f2fad\" \"4a5aa2ccb3fa837f322276c060ea8a3d10181fecbd1b74cb97df8e191b214313\" \"e19ac4ef0f028f503b1ccafa7c337021834ce0d1a2bca03fcebc1ef635776bea\" \"1bddd01e6851f5c4336f7d16c56934513d41cc3d0233863760d1798e74809b4b\" \"c4063322b5011829f7fdd7509979b5823e8eea2abf1fe5572ec4b7af1dd78519\" \"e2c926ced58e48afc87f4415af9b7f7b58e62ec792659fcb626e8cba674d2065\" \"846b3dc12d774794861d81d7d2dcdb9645f82423565bfb4dad01204fa322dbd5\" \"97db542a8a1731ef44b60bc97406c1eb7ed4528b0d7296997cbb53969df852d6\" \"0466adb5554ea3055d0353d363832446cd8be7b799c39839f387abb631ea0995\" \"6c531d6c3dbc344045af7829a3a20a09929e6c41d7a7278963f7d3215139f6a7\" \"1d5e33500bc9548f800f9e248b57d1b2a9ecde79cb40c0b1398dec51ee820daf\" \"850bb46cc41d8a28669f78b98db04a46053eca663db71a001b40288a9b36796c\" \"23c806e34594a583ea5bbf5adf9a964afe4f28b4467d28777bcba0d35aa0872e\" \"1704976a1797342a1b4ea7a75bdbb3be1569f4619134341bd5a4c1cfb16abad4\" default))
+ '(ignored-local-variable-values '((eval progn (pp-buffer) (indent-buffer))))
+ '(package-selected-packages
+    '(persp-mode-projectile-bridge persp-mode init-persp dashboard multiple-cursors company-posframe valign org-superstar page-break-lines major-mode-hydra hydra-posframe pretty-hydra hydra undo-tree mwim ace-window amx ivy org-checklist use-package org-mode restart-emacs markdown-mode latex org-appear embark-consult consult wgrep embark marginalia orderless company auctex doom-modeline doom-themes evil editorconfig visual-fill-column hungry-delete nyan-mode zotxt unicode-fonts org-roam-bibtex org-roam-ui org-roam))
+ '(warning-suppress-log-types
+    '((websocket)
+       (use-package)
+       (use-package)
+       (use-package)
+       (use-package)))
+ '(warning-suppress-types '((use-package) (use-package) (use-package) (use-package))))" 0 3210 (fontified nil)) . -34) (t 25300 7316 921797 405000)) nil (25300 7430 395660 0) 0 nil])
+([nil nil ((3205 . 3510) (#("(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(dashboard-heading ((t (:inherit (font-lock-string-face bold))))))" 0 305 (fontified nil)) . -3205) (3116 . 3204) (3095 . 3102) (#("   " 0 3 (fontified nil)) . 3095) (3074 . 3081) (#("   " 0 3 (fontified nil)) . 3074) (3053 . 3060) (#("   " 0 3 (fontified nil)) . 3053) (3032 . 3039) (#("   " 0 3 (fontified nil)) . 3032) (#("
+" 0 1 (fontified nil)) . -3100) (3083 . 3086) (3066 . 3069) (3049 . 3052) (3032 . 3035) (3088 . 3089) (3073 . 3074) (#("
+" 0 1 (fontified nil)) . 3073) (3073 . 3074) (#(" " 0 1 (fontified nil)) . -3073) (3059 . 3060) (#("
+" 0 1 (fontified nil)) . 3059) (3059 . 3060) (#(" " 0 1 (fontified nil)) . -3059) (3045 . 3046) (#("
+" 0 1 (fontified nil)) . 3045) (3045 . 3046) (#(" " 0 1 (fontified nil)) . -3045) (3031 . 3032) (#("
+" 0 1 (fontified nil)) . 3031) (3031 . 3032) (#(" " 0 1 (fontified nil)) . -3031) (3013 . 3088) (#(" " 0 1 (fontified nil)) . 3013) (2982 . 3014) (#("
+" 0 1 (fontified nil)) . -2982) (2501 . 2983) (#(" " 0 1 (fontified nil)) . 2501) (2393 . 2502) (#("
+" 0 1 (fontified nil)) . -2393) (300 . 2394) (#(" " 0 1 (fontified nil)) . 300) (34 . 301) (#("(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(custom-safe-themes
+    '(\"a27c00821ccfd5a78b01e4f35dc056706dd9ede09a8b90c6955ae6a390eb1c1e\" \"4f1d2476c290eaa5d9ab9d13b60f2c0f1c8fa7703596fa91b235db7f99a9441b\" \"745d03d647c4b118f671c49214420639cb3af7152e81f132478ed1c649d4597d\" \"fe2539ccf78f28c519541e37dc77115c6c7c2efcec18b970b16e4a4d2cd9891d\" \"266ecb1511fa3513ed7992e6cd461756a895dcc5fef2d378f165fed1c894a78c\" \"333958c446e920f5c350c4b4016908c130c3b46d590af91e1e7e2a0611f1e8c5\" \"0d01e1e300fcafa34ba35d5cf0a21b3b23bc4053d388e352ae6a901994597ab1\" \"5f19cb23200e0ac301d42b880641128833067d341d22344806cdad48e6ec62f6\" \"84b14a0a41bb2728568d40c545280dbe7d6891221e7fbe7c2b1c54a3f5959289\" \"a9a67b318b7417adbedaab02f05fa679973e9718d9d26075c6235b1f0db703c8\" \"1d44ec8ec6ec6e6be32f2f73edf398620bb721afeed50f75df6b12ccff0fbb15\" \"6c98bc9f39e8f8fd6da5b9c74a624cbb3782b4be8abae8fd84cbc43053d7c175\" \"f7fed1aadf1967523c120c4c82ea48442a51ac65074ba544a5aefc5af490893b\" \"c2aeb1bd4aa80f1e4f95746bda040aafb78b1808de07d340007ba898efa484f5\" \"7a7b1d475b42c1a0b61f3b1d1225dd249ffa1abb1b7f726aec59ac7ca3bf4dae\" \"835868dcd17131ba8b9619d14c67c127aa18b90a82438c861358633q1129dda63\" \"4699e3a86b1863bbc695236036158d175a81f0f3ea504e2b7c71f8f7025e19e3\" \"6f4421bf31387397f6710b6f6381c448d1a71944d9e9da4e0057b3fe5d6f2fad\" \"4a5aa2ccb3fa837f322276c060ea8a3d10181fecbd1b74cb97df8e191b214313\" \"e19ac4ef0f028f503b1ccafa7c337021834ce0d1a2bca03fcebc1ef635776bea\" \"1bddd01e6851f5c4336f7d16c56934513d41cc3d0233863760d1798e74809b4b\" \"c4063322b5011829f7fdd7509979b5823e8eea2abf1fe5572ec4b7af1dd78519\" \"e2c926ced58e48afc87f4415af9b7f7b58e62ec792659fcb626e8cba674d2065\" \"846b3dc12d774794861d81d7d2dcdb9645f82423565bfb4dad01204fa322dbd5\" \"97db542a8a1731ef44b60bc97406c1eb7ed4528b0d7296997cbb53969df852d6\" \"0466adb5554ea3055d0353d363832446cd8be7b799c39839f387abb631ea0995\" \"6c531d6c3dbc344045af7829a3a20a09929e6c41d7a7278963f7d3215139f6a7\" \"1d5e33500bc9548f800f9e248b57d1b2a9ecde79cb40c0b1398dec51ee820daf\" \"850bb46cc41d8a28669f78b98db04a46053eca663db71a001b40288a9b36796c\" \"23c806e34594a583ea5bbf5adf9a964afe4f28b4467d28777bcba0d35aa0872e\" \"1704976a1797342a1b4ea7a75bdbb3be1569f4619134341bd5a4c1cfb16abad4\" default))
+ '(ignored-local-variable-values '((eval progn (pp-buffer) (indent-buffer))))
+ '(package-selected-packages
+    '(persp-mode-projectile-bridge init-persp dashboard multiple-cursors company-posframe valign org-superstar page-break-lines major-mode-hydra hydra-posframe pretty-hydra hydra undo-tree mwim ace-window amx ivy org-checklist use-package org-mode restart-emacs markdown-mode latex org-appear embark-consult consult wgrep embark marginalia orderless company auctex doom-modeline doom-themes evil editorconfig visual-fill-column hungry-delete nyan-mode zotxt unicode-fonts org-roam-bibtex org-roam-ui org-roam))
+ '(warning-suppress-log-types
+    '((websocket)
+       (use-package)
+       (use-package)
+       (use-package)
+       (use-package)))
+ '(warning-suppress-types '((use-package) (use-package) (use-package) (use-package))))" 0 3199 (fontified nil)) . -34) (t 25300 7430 400663 350000)) nil (25300 7443 669294 0) 0 nil])
+([nil nil ((3216 . 3521) (#("(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(dashboard-heading ((t (:inherit (font-lock-string-face bold))))))" 0 305 (fontified nil)) . -3216) (3127 . 3215) (3106 . 3113) (#("   " 0 3 (fontified nil)) . 3106) (3085 . 3092) (#("   " 0 3 (fontified nil)) . 3085) (3064 . 3071) (#("   " 0 3 (fontified nil)) . 3064) (3043 . 3050) (#("   " 0 3 (fontified nil)) . 3043) (#("
+" 0 1 (fontified nil)) . -3111) (3094 . 3097) (3077 . 3080) (3060 . 3063) (3043 . 3046) (3099 . 3100) (3084 . 3085) (#("
+" 0 1 (fontified nil)) . 3084) (3084 . 3085) (#(" " 0 1 (fontified nil)) . -3084) (3070 . 3071) (#("
+" 0 1 (fontified nil)) . 3070) (3070 . 3071) (#(" " 0 1 (fontified nil)) . -3070) (3056 . 3057) (#("
+" 0 1 (fontified nil)) . 3056) (3056 . 3057) (#(" " 0 1 (fontified nil)) . -3056) (3042 . 3043) (#("
+" 0 1 (fontified nil)) . 3042) (3042 . 3043) (#(" " 0 1 (fontified nil)) . -3042) (3024 . 3099) (#(" " 0 1 (fontified nil)) . 3024) (2993 . 3025) (#("
+" 0 1 (fontified nil)) . -2993) (2501 . 2994) (#(" " 0 1 (fontified nil)) . 2501) (2393 . 2502) (#("
+" 0 1 (fontified nil)) . -2393) (300 . 2394) (#(" " 0 1 (fontified nil)) . 300) (34 . 301) (#("(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(custom-safe-themes
+    '(\"a27c00821ccfd5a78b01e4f35dc056706dd9ede09a8b90c6955ae6a390eb1c1e\" \"4f1d2476c290eaa5d9ab9d13b60f2c0f1c8fa7703596fa91b235db7f99a9441b\" \"745d03d647c4b118f671c49214420639cb3af7152e81f132478ed1c649d4597d\" \"fe2539ccf78f28c519541e37dc77115c6c7c2efcec18b970b16e4a4d2cd9891d\" \"266ecb1511fa3513ed7992e6cd461756a895dcc5fef2d378f165fed1c894a78c\" \"333958c446e920f5c350c4b4016908c130c3b46d590af91e1e7e2a0611f1e8c5\" \"0d01e1e300fcafa34ba35d5cf0a21b3b23bc4053d388e352ae6a901994597ab1\" \"5f19cb23200e0ac301d42b880641128833067d341d22344806cdad48e6ec62f6\" \"84b14a0a41bb2728568d40c545280dbe7d6891221e7fbe7c2b1c54a3f5959289\" \"a9a67b318b7417adbedaab02f05fa679973e9718d9d26075c6235b1f0db703c8\" \"1d44ec8ec6ec6e6be32f2f73edf398620bb721afeed50f75df6b12ccff0fbb15\" \"6c98bc9f39e8f8fd6da5b9c74a624cbb3782b4be8abae8fd84cbc43053d7c175\" \"f7fed1aadf1967523c120c4c82ea48442a51ac65074ba544a5aefc5af490893b\" \"c2aeb1bd4aa80f1e4f95746bda040aafb78b1808de07d340007ba898efa484f5\" \"7a7b1d475b42c1a0b61f3b1d1225dd249ffa1abb1b7f726aec59ac7ca3bf4dae\" \"835868dcd17131ba8b9619d14c67c127aa18b90a82438c861358633q1129dda63\" \"4699e3a86b1863bbc695236036158d175a81f0f3ea504e2b7c71f8f7025e19e3\" \"6f4421bf31387397f6710b6f6381c448d1a71944d9e9da4e0057b3fe5d6f2fad\" \"4a5aa2ccb3fa837f322276c060ea8a3d10181fecbd1b74cb97df8e191b214313\" \"e19ac4ef0f028f503b1ccafa7c337021834ce0d1a2bca03fcebc1ef635776bea\" \"1bddd01e6851f5c4336f7d16c56934513d41cc3d0233863760d1798e74809b4b\" \"c4063322b5011829f7fdd7509979b5823e8eea2abf1fe5572ec4b7af1dd78519\" \"e2c926ced58e48afc87f4415af9b7f7b58e62ec792659fcb626e8cba674d2065\" \"846b3dc12d774794861d81d7d2dcdb9645f82423565bfb4dad01204fa322dbd5\" \"97db542a8a1731ef44b60bc97406c1eb7ed4528b0d7296997cbb53969df852d6\" \"0466adb5554ea3055d0353d363832446cd8be7b799c39839f387abb631ea0995\" \"6c531d6c3dbc344045af7829a3a20a09929e6c41d7a7278963f7d3215139f6a7\" \"1d5e33500bc9548f800f9e248b57d1b2a9ecde79cb40c0b1398dec51ee820daf\" \"850bb46cc41d8a28669f78b98db04a46053eca663db71a001b40288a9b36796c\" \"23c806e34594a583ea5bbf5adf9a964afe4f28b4467d28777bcba0d35aa0872e\" \"1704976a1797342a1b4ea7a75bdbb3be1569f4619134341bd5a4c1cfb16abad4\" default))
+ '(ignored-local-variable-values '((eval progn (pp-buffer) (indent-buffer))))
+ '(package-selected-packages
+    '(init-persp dashboard multiple-cursors company-posframe valign org-superstar page-break-lines major-mode-hydra hydra-posframe pretty-hydra hydra undo-tree mwim ace-window amx ivy org-checklist use-package org-mode restart-emacs markdown-mode latex org-appear embark-consult consult wgrep embark marginalia orderless company auctex doom-modeline doom-themes evil editorconfig visual-fill-column hungry-delete nyan-mode zotxt unicode-fonts org-roam-bibtex org-roam-ui org-roam))
+ '(warning-suppress-log-types
+    '((websocket)
+       (use-package)
+       (use-package)
+       (use-package)
+       (use-package)))
+ '(warning-suppress-types '((use-package) (use-package) (use-package) (use-package))))" 0 3170 (fontified nil)) . -34) (t 25300 7443 674373 511000)) nil (25300 7490 936259 0) 0 nil])
+([nil nil ((3216 . 3521) (#("(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(dashboard-heading ((t (:inherit (font-lock-string-face bold))))))" 0 305 (fontified nil)) . -3216) (3127 . 3215) (3106 . 3113) (#("   " 0 3 (fontified nil)) . 3106) (3085 . 3092) (#("   " 0 3 (fontified nil)) . 3085) (3064 . 3071) (#("   " 0 3 (fontified nil)) . 3064) (3043 . 3050) (#("   " 0 3 (fontified nil)) . 3043) (#("
+" 0 1 (fontified nil)) . -3111) (3094 . 3097) (3077 . 3080) (3060 . 3063) (3043 . 3046) (3099 . 3100) (3084 . 3085) (#("
+" 0 1 (fontified nil)) . 3084) (3084 . 3085) (#(" " 0 1 (fontified nil)) . -3084) (3070 . 3071) (#("
+" 0 1 (fontified nil)) . 3070) (3070 . 3071) (#(" " 0 1 (fontified nil)) . -3070) (3056 . 3057) (#("
+" 0 1 (fontified nil)) . 3056) (3056 . 3057) (#(" " 0 1 (fontified nil)) . -3056) (3042 . 3043) (#("
+" 0 1 (fontified nil)) . 3042) (3042 . 3043) (#(" " 0 1 (fontified nil)) . -3042) (3024 . 3099) (#(" " 0 1 (fontified nil)) . 3024) (2993 . 3025) (#("
+" 0 1 (fontified nil)) . -2993) (2501 . 2994) (#(" " 0 1 (fontified nil)) . 2501) (2393 . 2502) (#("
+" 0 1 (fontified nil)) . -2393) (300 . 2394) (#(" " 0 1 (fontified nil)) . 300) (34 . 301) (#("(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(custom-safe-themes
+    '(\"a27c00821ccfd5a78b01e4f35dc056706dd9ede09a8b90c6955ae6a390eb1c1e\" \"4f1d2476c290eaa5d9ab9d13b60f2c0f1c8fa7703596fa91b235db7f99a9441b\" \"745d03d647c4b118f671c49214420639cb3af7152e81f132478ed1c649d4597d\" \"fe2539ccf78f28c519541e37dc77115c6c7c2efcec18b970b16e4a4d2cd9891d\" \"266ecb1511fa3513ed7992e6cd461756a895dcc5fef2d378f165fed1c894a78c\" \"333958c446e920f5c350c4b4016908c130c3b46d590af91e1e7e2a0611f1e8c5\" \"0d01e1e300fcafa34ba35d5cf0a21b3b23bc4053d388e352ae6a901994597ab1\" \"5f19cb23200e0ac301d42b880641128833067d341d22344806cdad48e6ec62f6\" \"84b14a0a41bb2728568d40c545280dbe7d6891221e7fbe7c2b1c54a3f5959289\" \"a9a67b318b7417adbedaab02f05fa679973e9718d9d26075c6235b1f0db703c8\" \"1d44ec8ec6ec6e6be32f2f73edf398620bb721afeed50f75df6b12ccff0fbb15\" \"6c98bc9f39e8f8fd6da5b9c74a624cbb3782b4be8abae8fd84cbc43053d7c175\" \"f7fed1aadf1967523c120c4c82ea48442a51ac65074ba544a5aefc5af490893b\" \"c2aeb1bd4aa80f1e4f95746bda040aafb78b1808de07d340007ba898efa484f5\" \"7a7b1d475b42c1a0b61f3b1d1225dd249ffa1abb1b7f726aec59ac7ca3bf4dae\" \"835868dcd17131ba8b9619d14c67c127aa18b90a82438c861358633q1129dda63\" \"4699e3a86b1863bbc695236036158d175a81f0f3ea504e2b7c71f8f7025e19e3\" \"6f4421bf31387397f6710b6f6381c448d1a71944d9e9da4e0057b3fe5d6f2fad\" \"4a5aa2ccb3fa837f322276c060ea8a3d10181fecbd1b74cb97df8e191b214313\" \"e19ac4ef0f028f503b1ccafa7c337021834ce0d1a2bca03fcebc1ef635776bea\" \"1bddd01e6851f5c4336f7d16c56934513d41cc3d0233863760d1798e74809b4b\" \"c4063322b5011829f7fdd7509979b5823e8eea2abf1fe5572ec4b7af1dd78519\" \"e2c926ced58e48afc87f4415af9b7f7b58e62ec792659fcb626e8cba674d2065\" \"846b3dc12d774794861d81d7d2dcdb9645f82423565bfb4dad01204fa322dbd5\" \"97db542a8a1731ef44b60bc97406c1eb7ed4528b0d7296997cbb53969df852d6\" \"0466adb5554ea3055d0353d363832446cd8be7b799c39839f387abb631ea0995\" \"6c531d6c3dbc344045af7829a3a20a09929e6c41d7a7278963f7d3215139f6a7\" \"1d5e33500bc9548f800f9e248b57d1b2a9ecde79cb40c0b1398dec51ee820daf\" \"850bb46cc41d8a28669f78b98db04a46053eca663db71a001b40288a9b36796c\" \"23c806e34594a583ea5bbf5adf9a964afe4f28b4467d28777bcba0d35aa0872e\" \"1704976a1797342a1b4ea7a75bdbb3be1569f4619134341bd5a4c1cfb16abad4\" default))
+ '(ignored-local-variable-values '((eval progn (pp-buffer) (indent-buffer))))
+ '(package-selected-packages
+    '(persp-mode init-persp dashboard multiple-cursors company-posframe valign org-superstar page-break-lines major-mode-hydra hydra-posframe pretty-hydra hydra undo-tree mwim ace-window amx ivy org-checklist use-package org-mode restart-emacs markdown-mode latex org-appear embark-consult consult wgrep embark marginalia orderless company auctex doom-modeline doom-themes evil editorconfig visual-fill-column hungry-delete nyan-mode zotxt unicode-fonts org-roam-bibtex org-roam-ui org-roam))
+ '(warning-suppress-log-types
+    '((websocket)
+       (use-package)
+       (use-package)
+       (use-package)
+       (use-package)))
+ '(warning-suppress-types '((use-package) (use-package) (use-package) (use-package))))" 0 3181 (fontified nil)) . -34) (t 25300 7490 941030 163000)) nil (25300 8856 28463 0) 0 nil])
+([nil nil ((3251 . 3556) (#("(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(dashboard-heading ((t (:inherit (font-lock-string-face bold))))))" 0 305 (fontified nil)) . -3251) (3162 . 3250) (3141 . 3148) (#("   " 0 3 (fontified nil)) . 3141) (3120 . 3127) (#("   " 0 3 (fontified nil)) . 3120) (3099 . 3106) (#("   " 0 3 (fontified nil)) . 3099) (3078 . 3085) (#("   " 0 3 (fontified nil)) . 3078) (#("
+" 0 1 (fontified nil)) . -3146) (3129 . 3132) (3112 . 3115) (3095 . 3098) (3078 . 3081) (3134 . 3135) (3119 . 3120) (#("
+" 0 1 (fontified nil)) . 3119) (3119 . 3120) (#(" " 0 1 (fontified nil)) . -3119) (3105 . 3106) (#("
+" 0 1 (fontified nil)) . 3105) (3105 . 3106) (#(" " 0 1 (fontified nil)) . -3105) (3091 . 3092) (#("
+" 0 1 (fontified nil)) . 3091) (3091 . 3092) (#(" " 0 1 (fontified nil)) . -3091) (3077 . 3078) (#("
+" 0 1 (fontified nil)) . 3077) (3077 . 3078) (#(" " 0 1 (fontified nil)) . -3077) (3059 . 3134) (#(" " 0 1 (fontified nil)) . 3059) (3028 . 3060) (#("
+" 0 1 (fontified nil)) . -3028) (2501 . 3029) (#(" " 0 1 (fontified nil)) . 2501) (2393 . 2502) (#("
+" 0 1 (fontified nil)) . -2393) (300 . 2394) (#(" " 0 1 (fontified nil)) . 300) (34 . 301) (#("(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(custom-safe-themes
+    '(\"a27c00821ccfd5a78b01e4f35dc056706dd9ede09a8b90c6955ae6a390eb1c1e\" \"4f1d2476c290eaa5d9ab9d13b60f2c0f1c8fa7703596fa91b235db7f99a9441b\" \"745d03d647c4b118f671c49214420639cb3af7152e81f132478ed1c649d4597d\" \"fe2539ccf78f28c519541e37dc77115c6c7c2efcec18b970b16e4a4d2cd9891d\" \"266ecb1511fa3513ed7992e6cd461756a895dcc5fef2d378f165fed1c894a78c\" \"333958c446e920f5c350c4b4016908c130c3b46d590af91e1e7e2a0611f1e8c5\" \"0d01e1e300fcafa34ba35d5cf0a21b3b23bc4053d388e352ae6a901994597ab1\" \"5f19cb23200e0ac301d42b880641128833067d341d22344806cdad48e6ec62f6\" \"84b14a0a41bb2728568d40c545280dbe7d6891221e7fbe7c2b1c54a3f5959289\" \"a9a67b318b7417adbedaab02f05fa679973e9718d9d26075c6235b1f0db703c8\" \"1d44ec8ec6ec6e6be32f2f73edf398620bb721afeed50f75df6b12ccff0fbb15\" \"6c98bc9f39e8f8fd6da5b9c74a624cbb3782b4be8abae8fd84cbc43053d7c175\" \"f7fed1aadf1967523c120c4c82ea48442a51ac65074ba544a5aefc5af490893b\" \"c2aeb1bd4aa80f1e4f95746bda040aafb78b1808de07d340007ba898efa484f5\" \"7a7b1d475b42c1a0b61f3b1d1225dd249ffa1abb1b7f726aec59ac7ca3bf4dae\" \"835868dcd17131ba8b9619d14c67c127aa18b90a82438c861358633q1129dda63\" \"4699e3a86b1863bbc695236036158d175a81f0f3ea504e2b7c71f8f7025e19e3\" \"6f4421bf31387397f6710b6f6381c448d1a71944d9e9da4e0057b3fe5d6f2fad\" \"4a5aa2ccb3fa837f322276c060ea8a3d10181fecbd1b74cb97df8e191b214313\" \"e19ac4ef0f028f503b1ccafa7c337021834ce0d1a2bca03fcebc1ef635776bea\" \"1bddd01e6851f5c4336f7d16c56934513d41cc3d0233863760d1798e74809b4b\" \"c4063322b5011829f7fdd7509979b5823e8eea2abf1fe5572ec4b7af1dd78519\" \"e2c926ced58e48afc87f4415af9b7f7b58e62ec792659fcb626e8cba674d2065\" \"846b3dc12d774794861d81d7d2dcdb9645f82423565bfb4dad01204fa322dbd5\" \"97db542a8a1731ef44b60bc97406c1eb7ed4528b0d7296997cbb53969df852d6\" \"0466adb5554ea3055d0353d363832446cd8be7b799c39839f387abb631ea0995\" \"6c531d6c3dbc344045af7829a3a20a09929e6c41d7a7278963f7d3215139f6a7\" \"1d5e33500bc9548f800f9e248b57d1b2a9ecde79cb40c0b1398dec51ee820daf\" \"850bb46cc41d8a28669f78b98db04a46053eca663db71a001b40288a9b36796c\" \"23c806e34594a583ea5bbf5adf9a964afe4f28b4467d28777bcba0d35aa0872e\" \"1704976a1797342a1b4ea7a75bdbb3be1569f4619134341bd5a4c1cfb16abad4\" default))
+ '(ignored-local-variable-values '((eval progn (pp-buffer) (indent-buffer))))
+ '(package-selected-packages
+    '(persp-mode init-persp dashboard multiple-cursors company-posframe valign org-superstar page-break-lines major-mode-hydra hydra-posframe pretty-hydra hydra undo-tree mwim ace-window amx ivy org-checklist use-package org-mode restart-emacs markdown-mode latex org-appear embark-consult consult wgrep embark marginalia orderless company auctex doom-modeline doom-themes evil editorconfig visual-fill-column hungry-delete nyan-mode zotxt unicode-fonts org-roam-bibtex org-roam-ui org-roam))
+ '(warning-suppress-log-types
+    '((websocket)
+       (use-package)
+       (use-package)
+       (use-package)
+       (use-package)))
+ '(warning-suppress-types '((use-package) (use-package) (use-package) (use-package))))" 0 3181 (fontified nil)) . -34) (t 25300 8856 33317 922000)) nil (25300 10038 605407 0) 0 nil])
+([nil current ((3251 . 3556) (#("(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(dashboard-heading ((t (:inherit (font-lock-string-face bold))))))" 0 305 (fontified nil)) . -3251) (3162 . 3250) (3141 . 3148) (#("   " 0 3 (fontified nil)) . 3141) (3120 . 3127) (#("   " 0 3 (fontified nil)) . 3120) (3099 . 3106) (#("   " 0 3 (fontified nil)) . 3099) (3078 . 3085) (#("   " 0 3 (fontified nil)) . 3078) (#("
+" 0 1 (fontified nil)) . -3146) (3129 . 3132) (3112 . 3115) (3095 . 3098) (3078 . 3081) (3134 . 3135) (3119 . 3120) (#("
+" 0 1 (fontified nil)) . 3119) (3119 . 3120) (#(" " 0 1 (fontified nil)) . -3119) (3105 . 3106) (#("
+" 0 1 (fontified nil)) . 3105) (3105 . 3106) (#(" " 0 1 (fontified nil)) . -3105) (3091 . 3092) (#("
+" 0 1 (fontified nil)) . 3091) (3091 . 3092) (#(" " 0 1 (fontified nil)) . -3091) (3077 . 3078) (#("
+" 0 1 (fontified nil)) . 3077) (3077 . 3078) (#(" " 0 1 (fontified nil)) . -3077) (3059 . 3134) (#(" " 0 1 (fontified nil)) . 3059) (3028 . 3060) (#("
+" 0 1 (fontified nil)) . -3028) (2501 . 3029) (#(" " 0 1 (fontified nil)) . 2501) (2393 . 2502) (#("
+" 0 1 (fontified nil)) . -2393) (300 . 2394) (#(" " 0 1 (fontified nil)) . 300) (34 . 301) (#("(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(custom-safe-themes
+    '(\"a27c00821ccfd5a78b01e4f35dc056706dd9ede09a8b90c6955ae6a390eb1c1e\" \"4f1d2476c290eaa5d9ab9d13b60f2c0f1c8fa7703596fa91b235db7f99a9441b\" \"745d03d647c4b118f671c49214420639cb3af7152e81f132478ed1c649d4597d\" \"fe2539ccf78f28c519541e37dc77115c6c7c2efcec18b970b16e4a4d2cd9891d\" \"266ecb1511fa3513ed7992e6cd461756a895dcc5fef2d378f165fed1c894a78c\" \"333958c446e920f5c350c4b4016908c130c3b46d590af91e1e7e2a0611f1e8c5\" \"0d01e1e300fcafa34ba35d5cf0a21b3b23bc4053d388e352ae6a901994597ab1\" \"5f19cb23200e0ac301d42b880641128833067d341d22344806cdad48e6ec62f6\" \"84b14a0a41bb2728568d40c545280dbe7d6891221e7fbe7c2b1c54a3f5959289\" \"a9a67b318b7417adbedaab02f05fa679973e9718d9d26075c6235b1f0db703c8\" \"1d44ec8ec6ec6e6be32f2f73edf398620bb721afeed50f75df6b12ccff0fbb15\" \"6c98bc9f39e8f8fd6da5b9c74a624cbb3782b4be8abae8fd84cbc43053d7c175\" \"f7fed1aadf1967523c120c4c82ea48442a51ac65074ba544a5aefc5af490893b\" \"c2aeb1bd4aa80f1e4f95746bda040aafb78b1808de07d340007ba898efa484f5\" \"7a7b1d475b42c1a0b61f3b1d1225dd249ffa1abb1b7f726aec59ac7ca3bf4dae\" \"835868dcd17131ba8b9619d14c67c127aa18b90a82438c861358633q1129dda63\" \"4699e3a86b1863bbc695236036158d175a81f0f3ea504e2b7c71f8f7025e19e3\" \"6f4421bf31387397f6710b6f6381c448d1a71944d9e9da4e0057b3fe5d6f2fad\" \"4a5aa2ccb3fa837f322276c060ea8a3d10181fecbd1b74cb97df8e191b214313\" \"e19ac4ef0f028f503b1ccafa7c337021834ce0d1a2bca03fcebc1ef635776bea\" \"1bddd01e6851f5c4336f7d16c56934513d41cc3d0233863760d1798e74809b4b\" \"c4063322b5011829f7fdd7509979b5823e8eea2abf1fe5572ec4b7af1dd78519\" \"e2c926ced58e48afc87f4415af9b7f7b58e62ec792659fcb626e8cba674d2065\" \"846b3dc12d774794861d81d7d2dcdb9645f82423565bfb4dad01204fa322dbd5\" \"97db542a8a1731ef44b60bc97406c1eb7ed4528b0d7296997cbb53969df852d6\" \"0466adb5554ea3055d0353d363832446cd8be7b799c39839f387abb631ea0995\" \"6c531d6c3dbc344045af7829a3a20a09929e6c41d7a7278963f7d3215139f6a7\" \"1d5e33500bc9548f800f9e248b57d1b2a9ecde79cb40c0b1398dec51ee820daf\" \"850bb46cc41d8a28669f78b98db04a46053eca663db71a001b40288a9b36796c\" \"23c806e34594a583ea5bbf5adf9a964afe4f28b4467d28777bcba0d35aa0872e\" \"1704976a1797342a1b4ea7a75bdbb3be1569f4619134341bd5a4c1cfb16abad4\" default))
+ '(ignored-local-variable-values '((eval progn (pp-buffer) (indent-buffer))))
+ '(package-selected-packages
+    '(company-tabnine rainbow-delimiters persp-mode init-persp dashboard multiple-cursors company-posframe valign org-superstar page-break-lines major-mode-hydra hydra-posframe pretty-hydra hydra undo-tree mwim ace-window amx ivy org-checklist use-package org-mode restart-emacs markdown-mode latex org-appear embark-consult consult wgrep embark marginalia orderless company auctex doom-modeline doom-themes evil editorconfig visual-fill-column hungry-delete nyan-mode zotxt unicode-fonts org-roam-bibtex org-roam-ui org-roam))
+ '(warning-suppress-log-types
+    '((websocket)
+       (use-package)
+       (use-package)
+       (use-package)
+       (use-package)))
+ '(warning-suppress-types '((use-package) (use-package) (use-package) (use-package))))" 0 3216 (fontified nil)) . -34) (t 25300 10038 611221 79000)) nil (25300 10129 884433 0) 0 nil])
 nil

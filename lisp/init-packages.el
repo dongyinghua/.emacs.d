@@ -155,6 +155,14 @@
     ("M-g o" . avy-org-goto-heading-timer))
   )
 
+(use-package tiny)
+
+(use-package highlight-symbol
+  :hook (after-init . highlight-symbol-mode))
+
+(use-package rainbow-delimiters
+  :hook (prog-mode . rainbow-delimiters-mode))
+
 (provide 'init-packages)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

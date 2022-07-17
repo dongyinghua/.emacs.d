@@ -95,14 +95,16 @@
         ("l" org-insert-link)
         ("o" org-open-at-point)
         ("p" org-set-property)
-        ("i d" org-display-inline-images))
+        ("i d" org-display-inline-images)
+        ("R" org-refile))
       "Org Roam"
-      (("r d" org-roam-dailies-goto-date "org-roam dailies")
+      (("r d" org-roam-dailies-goto-date "org roam dailies")
         ("r f" org-roam-node-find)
         ("r i" org-roam-insert-node)
         ("r a" org-roam-alias-add)
         ("r t" org-roam-tag-add)
-        ("r u" org-roam-ui-open)))))
+        ("r u" org-roam-ui-open)
+        ("r r" org-roam-refile)))))
 (global-set-key (kbd "M-SPC") 'hydra-my-org-launcher/body)
 
 (with-no-warnings

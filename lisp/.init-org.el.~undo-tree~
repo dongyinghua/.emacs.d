@@ -1,5 +1,5 @@
 (undo-tree-save-format-version . 1)
-"c3c891fbfa6127999e2747805c23da854e5695b7"
+"6f9b173a163bd2ca29779e269a382c8457497515"
 [nil nil nil nil (25297 34026 354438 0) 0 nil]
 ([nil nil ((3903 . 3906) (t 25297 33150 202500 811000)) nil (25297 37366 717741 0) 0 nil])
 ([nil nil ((3906 . 3910)) nil (25297 37366 717740 0) 0 nil])
@@ -8,5 +8,6 @@
 ([nil nil ((3915 . 3927)) nil (25297 37366 717735 0) 0 nil])
 ([nil nil ((3927 . 3930)) nil (25297 37366 717734 0) 0 nil])
 ([nil nil ((3920 . 3936) (#("valign-fan" 0 10 (fontified t)) . -3920) (undo-tree-id0 . -7) (undo-tree-id1 . -10) 3930) nil (25297 37366 717733 0) 0 nil])
-([nil current ((3936 . 3938)) nil (25297 37366 717707 0) 0 nil])
+([nil nil ((3936 . 3938)) nil (25297 37366 717707 0) 0 nil])
+([nil current ((#("  " 0 2 (fontified t)) . -350) 340 (t 25297 37366 720257 531000)) nil (25300 6837 613734 0) 0 nil])
 nil

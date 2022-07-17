@@ -3,13 +3,13 @@
 [nil nil nil nil (25294 32888 22301 0) 0 nil]
 ([nil nil ((#("'" 0 1 (fontified t)) . -252) (undo-tree-id0 . -1) 253 (t 25294 32782 111985 852000)) nil (25294 32932 736714 0) 0 nil])
 ([nil nil ((#("  (expand-file-name \"tools\" user-emacs-directory)
-" 0 20 (fontified t) 20 27 (fontified t face font-lock-string-face) 27 50 (fontified t)) . 224) (undo-tree-id9 . -2) (undo-tree-id10 . 48) (undo-tree-id11 . -3) (undo-tree-id12 . 2) (undo-tree-id13 . -49) (undo-tree-id14 . -2) (undo-tree-id15 . -2) (undo-tree-id16 . 47) (undo-tree-id17 . -2) (undo-tree-id18 . -2) (undo-tree-id19 . -2) 226 (t 25294 32932 738287 161000)) nil (25294 33207 196012 0) 0 nil])
+" 0 20 (fontified t) 20 27 (face font-lock-string-face fontified t) 27 50 (fontified t)) . 224) (undo-tree-id9 . -2) (undo-tree-id10 . 48) (undo-tree-id11 . -3) (undo-tree-id12 . 2) (undo-tree-id13 . -49) (undo-tree-id14 . -2) (undo-tree-id15 . -2) (undo-tree-id16 . 47) (undo-tree-id17 . -2) (undo-tree-id18 . -2) (undo-tree-id19 . -2) 226 (t 25294 32932 738287 161000)) nil (25294 33207 196012 0) 0 nil])
 ([nil nil ((166 . 167)) nil (25294 33207 195995 0) 0 nil])
 ([nil nil ((#(" " 0 1 (fontified t)) . 166) (undo-tree-id8 . -1) 167) nil (25294 33207 195994 0) 0 nil])
 ([nil nil ((167 . 168)) nil (25294 33207 195992 0) 0 nil])
 ([nil nil ((nil rear-nonsticky nil 217 . 218) (168 . 218)) nil (25294 33207 195991 0) 0 nil])
 ([nil nil ((#("
-" 0 1 (fontified t rear-nonsticky t)) . 217) (undo-tree-id7 . -1) 218) nil (25294 33207 195990 0) 0 nil])
+" 0 1 (rear-nonsticky t fontified t)) . 217) (undo-tree-id7 . -1) 218) nil (25294 33207 195990 0) 0 nil])
 ([nil nil ((#("  " 0 1 (fontified t) 1 2 (fontified t)) . 167) (undo-tree-id4 . -2) (undo-tree-id5 . -1) (undo-tree-id6 . -2) 169) nil (25294 33207 195987 0) 0 nil])
 ([nil nil ((#(" " 0 1 (fontified t)) . 167) (undo-tree-id3 . -1) 168) nil (25294 33207 195984 0) 0 nil])
 ([nil nil ((167 . 170)) nil (25294 33207 195981 0) 0 nil])

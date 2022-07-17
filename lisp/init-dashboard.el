@@ -23,11 +23,9 @@
        (pretty-hydra-title "Dashboard" 'material "dashboard" :height 1.2 :v-adjust -0.2)
        :color pink :quit-key "q")
       ("Navigator"
-        (("U" update-config-and-packages "update" :exit t)
-          ("H" browse-homepage "homepage" :exit t)
+        (("H" browse-homepage "homepage" :exit t)
           ("R" restore-previous-session "recover session" :exit t)
-          ("L" restore-session "list sessions" :exit t)
-          ("S" open-custom-file "settings" :exit t))
+          ("L" restore-session "list sessions" :exit t))
         "Section"
         (("}" dashboard-next-section "next")
           ("{" dashboard-previous-section "previous")
@@ -50,8 +48,6 @@
             ("H" . browse-homepage)
             ("R" . restore-previous-session)
             ("L" . restore-session)
-            ("S" . open-custom-file)
-            ("U" . update-config-and-packages)
             ("q" . quit-dashboard)
             ("h" . dashboard-hydra/body)
             ("?" . dashboard-hydra/body))
@@ -115,14 +111,6 @@
               (all-the-icons-material "restore" :height 1.35 :v-adjust -0.24))
             "Restore" "Restore previous session"
             (lambda (&rest _) (restore-previous-session)))
-          (,(when (icon-displayable-p)
-              (all-the-icons-octicon "tools" :height 1.0 :v-adjust 0.0))
-            "Settings" "Open custom file"
-            (lambda (&rest _) (find-file custom-file)))
-          (,(when (icon-displayable-p)
-              (all-the-icons-material "update" :height 1.35 :v-adjust -0.24))
-            "Update" "Update Centaur Emacs"
-            (lambda (&rest _) (centaur-update)))
           (,(if (icon-displayable-p)
               (all-the-icons-faicon "question" :height 1.2 :v-adjust -0.1)
               "?")
