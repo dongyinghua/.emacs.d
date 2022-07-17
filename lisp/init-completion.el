@@ -9,7 +9,6 @@
 
 (require 'init-funcs)
 
-;; ---------------------------------------------------------------------------
 ;;company
 ;;放弃使用auto-complete，转用company
 ;;“C-n”和“C-p”来在补全提示栏中选择补全项
@@ -19,7 +18,11 @@
   (setq company-minimum-prefix-length 1)
   (setq company-idle-delay 0))
 
-;; ---------------------------------------------------------------------------
+;; org-bars 的文档中说到，如果同时使用 org-bars 和 company-mode，就需要使用company-posframe
+(use-package company-posframe
+  :hook (company-mode . company-posframe-mode)
+  :config
+  (setq company-tooltip-minimum-width 40))
 
 ;;tab键补全
 (setq tab-always-indent 'complete)

@@ -2,9 +2,4 @@
 ;;; This format is meant to be slightly human-readable;
 ;;; nevertheless, you probably don't want to edit it.
 ;;; -*- End Of Bookmark File Format Version Stamp -*-
-(("org-refile-last-stored"
- (filename . "~/Documents/Org/GTD/Schedule.org")
- (front-context-string)
- (rear-context-string . "3-30 Wed 10:54]\n")
- (position . 2418))
-)
+()

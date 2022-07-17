@@ -7,8 +7,14 @@
 
 ;;; Code:
 
+(defcustom dragonli-emacs-tools-file-path
+  (expand-file-name "tools" user-emacs-directory)
+  "This is the path of the thrid-party tools for emacs"
+  :group 'dragonli
+  :type 'string)
+
 
-;; Refer from
+;; Refer from https://github.com/seagle0128/.emacs.d/blob/master/lisp/init-custom.el
 (defcustom centaur-icon (or (display-graphic-p) (daemonp))
   "Display icons or not."
   :group 'centaur
@@ -58,6 +64,12 @@
                               :tag (capitalize (symbol-name name))
                               name)))
                      centaur-package-archives-alist)))
+
+(defcustom centaur-dashboard (not (daemonp))
+  "Display dashboard at startup or not.
+If Non-nil, use dashboard, otherwise will restore previous session."
+  :group 'centaur
+  :type 'boolean)
 
 
 

@@ -12,9 +12,8 @@
 ;;如果不加这句代码的话，就会报错说找不到lisp中的.el文件
 (add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
 
-;; ---------------------------------------------------------------------------
-;; 照搬自
-;; https://github.com/purcell/emacs.d
+
+;; Refer to https://github.com/purcell/emacs.d
 (require 'init-benchmarking)
 
 (defconst *spell-check-support-enabled* nil) ;; Enable with t if you prefer
@@ -29,7 +28,7 @@
   (add-hook 'emacs-startup-hook
             (lambda () (setq gc-cons-threshold normal-gc-cons-threshold))))
 
-;; ---------------------------------------------------------------------------
+
 
 ;; Load `custom.el'
 ;; 通过“M-x customize-group”修改的设置会自动加载到下面这个文件中
@@ -55,6 +54,7 @@
 (require 'init-tools)
 
 (require 'init-ui)
+(require 'init-dashboard)
 
 ;; Key Bindings
 (require 'init-keybindings)
@@ -67,6 +67,6 @@
 
 (require 'init-latex)
 
-
+(require 'init-clipboard)
 
 (provide 'init)

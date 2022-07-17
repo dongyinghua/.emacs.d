@@ -25,6 +25,7 @@
   (package-initialize))
 
 ;; 这个配置一定要配置在 use-package 的初始化之前，否则无法正常安装
+;; 目的是不使用emacs内置的org
 (assq-delete-all 'org package--builtins)
 (assq-delete-all 'org package--builtin-versions)
 
@@ -37,6 +38,31 @@
 ;; 以后在使用use-package的时候就不用加ensure了
 (require 'use-package-ensure)
 (setq use-package-always-ensure t)
+
+
+;; 关于hydra的配置应当写在靠前一点的位置比较保险。
+(use-package hydra
+  :ensure t)
+
+(use-package pretty-hydra
+  :init
+  (cl-defun pretty-hydra-title (title &optional icon-type icon-name
+                              &key face height v-adjust)
+    "Add an icon in the hydra title."
+    (let ((face (or face `(:foreground ,(face-background 'highlight))))
+           (height (or height 1.0))
+           (v-adjust (or v-adjust 0.0)))
+      (concat
+        (when (and (icon-displayable-p) icon-type icon-name)
+          (let ((f (intern (format "all-the-icons-%s" icon-type))))
+            (when (fboundp f)
+              (concat
+                (apply f (list icon-name :face face :height height :v-adjust v-adjust))
+                " "))))
+        (propertize title 'face face))))
+  )
+
+
 
 ;; ---------------------------------------------------------------------------
 ;;visual-fill-column-mode
@@ -54,7 +80,7 @@
   (advice-add 'text-scale-adjust :after #'visual-fill-column-adjust)
   (setq-default fill-column 95)
   ;; visual-fill-column-extra-text-width可以调节文本在中间时，文本两边距屏幕边缘的距离
-  ;;(setq-default visual-fill-column-extra-text-width '(10 . 10))
+  ;;(setq-default visual-fill-column-extra-text-width '(5 . 10))
   )
 
 ;; ---------------------------------------------------------------------------
@@ -64,12 +90,12 @@
   :config
   (editorconfig-mode 1))
 
-;;unicode-fonts
+;; unicode-fonts
 (use-package unicode-fonts
   :config
   (unicode-fonts-setup))
 
-;;evil模式
+;; evil模式
 (use-package evil
   :config
   (evil-mode 1)
@@ -106,8 +132,7 @@
   :init (global-undo-tree-mode)
   :config
   (setq undo-tree-visualizer-timestamps t)
-  (setq undo-tree-visualizer-diff t)
-  )
+  (setq undo-tree-visualizer-diff t))
 
 ;; https://github.com/Malabarba/smart-mode-line
 ;;(use-package smart-mode-line

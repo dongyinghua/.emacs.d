@@ -45,12 +45,12 @@
   :ensure nil
   :config
   (recentf-mode t)
-  (setq recentf-max-menu-item 30)
-  (setq recentf-max-saved-items 30))
+  (setq recentf-max-menu-item 50)
+  (setq recentf-max-saved-items 50))
 
 ;; 让鼠标滚动更好用
-;;(setq mouse-wheel-scroll-amount '(1 ((shift) . 1) ((control) . nil)))
-;;(setq mouse-wheel-progressive-speed nil)
+(setq mouse-wheel-scroll-amount '(1 ((shift) . 1) ((control) . nil)))
+(setq mouse-wheel-progressive-speed nil)
 
 ;; 使用下面的配置文件将删除功能配置成与其他图形界面的编辑器相同，即当你选中一段文字之后输入一个字符会替换掉你选中部分的文字。
 (delete-selection-mode t)
@@ -96,32 +96,31 @@
 (use-package bookmark
   :ensure nil
   :config
-
   ;; Syncing Bookmarks with zsh
-  (defadvice bookmark-write-file
-    (after local-directory-bookmarks-to-zsh-advice activate)
-    (local-directory-bookmarks-to-zsh))
+  ;; (defadvice bookmark-write-file
+  ;;   (after local-directory-bookmarks-to-zsh-advice activate)
+  ;;   (local-directory-bookmarks-to-zsh))
 
-  (defun local-directory-bookmarks-to-zsh ()
-    (interactive)
-    (when (and (require 'tramp nil t)
-            (require 'bookmark nil t))
-      (set-buffer (find-file-noselect "~/.zsh.bmk" t t))
-      (delete-region (point-min) (point-max))
-      (insert "# -*- mode:sh -*-\n")
-      (let (collect-names)
-        (mapc (lambda (item)
-                (let ((name (replace-regexp-in-string "-" "_" (car item)))
-                       (file (cdr (assoc 'filename
-                                    (if (cddr item) item (cadr item))))))
-                  (when (and (not (tramp-tramp-file-p file))
-                          (file-directory-p file))
-                    (setq collect-names (cons (concat "~" name) collect-names))
-                    (insert (format "%s=\"%s\"\n" name (expand-file-name file) name)))))
-          bookmark-alist)
-        (insert ": " (mapconcat 'identity collect-names " ") "\n"))
-      (let ((backup-inhibited t)) (save-buffer))
-      (kill-buffer (current-buffer))))
+  ;; (defun local-directory-bookmarks-to-zsh ()
+  ;;   (interactive)
+  ;;   (when (and (require 'tramp nil t)
+  ;;           (require 'bookmark nil t))
+  ;;     (set-buffer (find-file-noselect "~/.zsh.bmk" t t))
+  ;;     (delete-region (point-min) (point-max))
+  ;;     (insert "# -*- mode:sh -*-\n")
+  ;;     (let (collect-names)
+  ;;       (mapc (lambda (item)
+  ;;               (let ((name (replace-regexp-in-string "-" "_" (car item)))
+  ;;                      (file (cdr (assoc 'filename
+  ;;                                   (if (cddr item) item (cadr item))))))
+  ;;                 (when (and (not (tramp-tramp-file-p file))
+  ;;                         (file-directory-p file))
+  ;;                   (setq collect-names (cons (concat "~" name) collect-names))
+  ;;                   (insert (format "%s=\"%s\"\n" name (expand-file-name file) name)))))
+  ;;         bookmark-alist)
+  ;;       (insert ": " (mapconcat 'identity collect-names " ") "\n"))
+  ;;     (let ((backup-inhibited t)) (save-buffer))
+  ;;     (kill-buffer (current-buffer))))
   )
 
 (provide 'init-basic)

@@ -1,13 +1,13 @@
 
 ;; ----- amx-history -----
 (
- prettify-symbols-mode
  eval-buffer
- query-replace-regexp
- org-roam-dailies-goto-date
- describe-personal-keybindings
- windmove-display-default-keybindings
- backward-page
+ avy-isearch
+ avy-goto-char-timer
+ posframe-benchmark
+ mc/mark-all-like-this
+ list-packages
+ revert-buffer
 )
 
 ;; ----- amx-data -----
@@ -17,8 +17,8 @@
  (ace-window-display-mode . 1)
  (undo-tree-mode . 4)
  (undo-tree-visualizer-toggle-timestamps . 1)
- (eval-buffer . 87)
- (package-install . 2)
+ (eval-buffer . 177)
+ (package-install . 14)
  (smart-mode-line-enable . 6)
  (good-scroll-mode . 4)
  (bookmark-delete . 5)
@@ -27,27 +27,58 @@
  (avy-goto-char . 6)
  (avy-goto-word-0 . 3)
  (avy-goto-word-1-above . 1)
- (avy-isearch . 2)
+ (avy-isearch . 5)
  (avy-copy-line . 1)
  (avy-move-region . 1)
  (which-key-mode . 1)
- (avy-goto-char-timer . 1)
- (org-display-inline-images . 1)
- (package-delete . 5)
+ (avy-goto-char-timer . 2)
+ (org-display-inline-images . 5)
+ (package-delete . 16)
  (buffer-menu . 1)
- (list-packages . 1)
+ (list-packages . 6)
  (hydra-posframe-enable . 2)
  (posframe-hide-all . 1)
- (posframe-benchmark . 1)
+ (posframe-benchmark . 3)
  (comment-line . 1)
  (linum-mode . 4)
  (line-number-mode . 2)
- (org-hydra/body . 2)
+ (org-hydra/body . 9)
  (query-replace-regexp . 6)
  (global-page-break-lines-mode . 2)
  (backward-page . 1)
  (windmove-display-default-keybindings . 1)
  (describe-personal-keybindings . 1)
- (org-roam-dailies-goto-date . 1)
- (prettify-symbols-mode . 5)
+ (org-roam-dailies-goto-date . 4)
+ (prettify-symbols-mode . 11)
+ (unicode-fonts-setup . 4)
+ (org-modern-mode . 30)
+ (org-superstar-mode . 18)
+ (org-indent-mode . 18)
+ (eval-region . 2)
+ (org-num-mode . 20)
+ (consult-ripgrep . 4)
+ (org-roam-node-find . 2)
+ (org-set-property . 2)
+ (customize-group . 1)
+ (valign-mode . 27)
+ (revert-buffer . 33)
+ (company-posframe-mode . 5)
+ (org-bars-mode . 25)
+ (package-list-packages . 2)
+ (org-indent-item . 4)
+ (org-indent-line . 2)
+ (org-indent-region . 2)
+ (org-ctrl-c-star . 1)
+ (org-dynamic-bullets-mode . 8)
+ (org-visual-indent-mode . 4)
+ (emacs-init-time . 3)
+ (org-set-tags-command . 2)
+ (org-roam-node-insert . 4)
+ (undo-tree-hydra/body . 3)
+ (my-org-launcher/body . 1)
+ (quoted-insert . 1)
+ (server-start . 1)
+ (server-shutdown . 1)
+ (mc/mark-all-like-this . 5)
+ (hydra-multiple-cursors/mc/add-cursor-on-click . 1)
 )

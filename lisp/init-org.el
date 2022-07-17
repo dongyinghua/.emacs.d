@@ -18,8 +18,7 @@
   ("C-c b" . org-switchb)
   ("C-c C-f a" . consul-org-agenda)
   ("C-c r" . org-refile)
-  :config
-  ;;
+    :config
   ;; Add new template
   (add-to-list 'org-structure-template-alist '("n" . "note"))
 
@@ -35,27 +34,27 @@
 
   ;; To speed up startup, don't put to init section
   (setq org-modules nil)     ;; Faster loading
+  (setq org-startup-numerated t)
 
   (setq org-image-actual-width nil)
   ;;(org-display-inline-images t)
 
   ;;org-mode for GTD
   ;;todo dependencies
-  (setq alert-default-style 'notifications)
+  ;;(setq alert-default-style 'notifications)
 
   ;;org-agenda
   (setq org-agenda-files '("~/Documents/Org/GTD/Inbox.org"
                             "~/Documents/Org/GTD/Projects.org"
                             "~/Documents/Org/GTD/Schedule.org"
                             "~/Documents/Org/GTD/TODOs.org"))
-
   (setq org-refile-targets '(("~/Documents/Org/GTD/Projects.org" :maxlevel . 3)
                               ("~/Documents/Org/GTD/TODOs.org" :maxlevel . 3)
                               ("~/Documents/Org/GTD/Schedule.org" :maxlevel . 3)
                               ("~/Documents/Org/GTD/Inbox.org" :maxlevel . 3)
                               ))
 
-  ;; 添加每次打开时可添加的任务类型
+  ;; org-capture
   ;; 快捷键“C-c x”
   (setq org-capture-templates
     '(("i" "Inbox" entry
@@ -86,8 +85,7 @@
                               ("DOING" . (:foreground "#19CAAD" :weight blod))
                               ("HANGUP" . (:foreground "#F4606C" :weight bold))
                               ("DONE" . (:foreground "#939391" :weight blod))
-                              ("CANCEL" . (:background "gray" :foreground "black")))
-    )
+                              ("CANCEL" . (:background "gray" :foreground "black"))))
 
   (setq org-priority-faces '((?A . error)
                               (?B . warning)
@@ -105,7 +103,22 @@
         ((tags-todo "+PRIORITY=\"A\"")))
        ;; ...other commands here
        ))
-  )
+
+  ) ; use-package org
+
+;; (use-package org-superstar
+;;   :if (and (display-graphic-p) (char-displayable-p ?◉))
+;;   :hook (org-mode . org-superstar-mode)
+;;   :config
+;;   (setq org-superstar-headline-bullets-list '("▼")) ; no bullets
+;;   (setq org-ellipsis " ▼ ")
+;;   )
+
+;; https://github.com/casouri/valign
+;; 表格对齐
+(use-package valign
+  :hook (org-mode . valign-mode)
+  :config (setq valign-fancy-bar t))
 
 (use-package org-contrib
   :pin nongnu
@@ -113,29 +126,6 @@
   ;; 对于需要重复完成的任务很有帮助
   (require 'org-checklist)
   )
-
-;; Prettify UI
-  (if emacs/>=27p
-      (use-package org-modern
-        :hook ((org-mode . org-modern-mode)
-               (org-agenda-finalize . org-modern-agenda)
-               (org-modern-mode . (lambda ()
-                                    "Adapt `org-modern-mode'."
-                                    ;; Disable Prettify Symbols mode
-                                    (setq prettify-symbols-alist nil)
-                                    (prettify-symbols-mode -1)))))
-    (progn
-      (use-package org-superstar
-        :if (and (display-graphic-p) (char-displayable-p ?◉))
-        :hook (org-mode . org-superstar-mode)
-        :init (setq org-superstar-headline-bullets-list '("◉""○""◈""◇""⁕")))
-      (use-package org-fancy-priorities
-        :diminish
-        :hook (org-mode . org-fancy-priorities-mode)
-        :init (setq org-fancy-priorities-list
-                    (if (and (display-graphic-p) (char-displayable-p ?🅐))
-                        '("🅐" "🅑" "🅒" "🅓")
-                      '("HIGH" "MEDIUM" "LOW" "OPTIONAL"))))))
 
 
 ;;（造轮子）定义了一个函数可以循环org-mode的emphasis-markers的可见性。
@@ -174,9 +164,7 @@
                              )
     )
   )
-
 
-
 
 
 ;; org-roam
@@ -221,11 +209,11 @@
          :target (file+head "%<%Y-%m-%d-%a>-月报.org"
                    "#+title: %<%Y-%m-%d-%a>-月报\n")
          :unnarrowed t))
-       ;;("M" "regular meeting" plain
-       ;;  "* Mini Talk\n\n * Academic Report\n\n * Key Points"
-       ;;  :target (file+head "%<%Y-%m-%d-%a>-例会.org"
-       ;;            "#+title: %<%Y-%m-%d-%a>-例会\n")
-       ;;  :unnarrowed t))
+    ;;("M" "regular meeting" plain
+    ;;  "* Mini Talk\n\n * Academic Report\n\n * Key Points"
+    ;;  :target (file+head "%<%Y-%m-%d-%a>-例会.org"
+    ;;            "#+title: %<%Y-%m-%d-%a>-例会\n")
+    ;;  :unnarrowed t))
     )
 
 

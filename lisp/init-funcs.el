@@ -180,7 +180,151 @@ Return the fastest package archive."
     fastest))
 
 
+;; Functions for org mode.
+
+;; 去除折叠的标题后的省略号，来自 org-bars 的文档。
+;; 用法 (use-package :hook (org-mode . org-no-ellipsis-in-headlines))
+(defun org-no-ellipsis-in-headlines ()
+  "Remove use of ellipsis in headlines.
+See `buffer-invisibility-spec'."
+  (remove-from-invisibility-spec '(outline . t))
+  (add-to-invisibility-spec 'outline))
+
+;; 取消标题前面的 * 号
+;; 用法 (use-package :hook (org-mode . me-org-mode-remove-stars))
+(defun me-org-mode-remove-stars ()
+  (font-lock-add-keywords
+    nil
+    '(("^\\*+ "
+        (0
+          (prog1 nil
+            (put-text-property (match-beginning 0) (match-end 0)
+              'invisible t)))))))
+
+;; Update
+(defun update-config ()
+  "Update Centaur Emacs configurations to the latest version."
+  (interactive)
+  (let ((dir (expand-file-name user-emacs-directory)))
+    (unless (file-exists-p dir)
+      (user-error "\"%s\" doesn't exist" dir))
+
+    (message "Updating configurations...")
+    (cd dir)
+    (shell-command "git pull")
+    (message "Updating configurations...done")))
+(defalias 'centaur-update-config #'update-config)
+
+(defvar centaur--updating-packages nil)
+(defun update-packages (&optional force sync)
+  "Refresh package contents and update all packages.
+If FORCE is non-nil, the updating process will be restarted by force.
+If SYNC is non-nil, the updating process is synchronous."
+  (interactive)
+
+  (if (process-live-p centaur--updating-packages)
+      (when force
+        (kill-process centaur--updating-packages)
+        (setq centaur--updating-packages nil))
+    (setq centaur--updating-packages nil))
+
+  (message "Updating packages...")
+  (unless centaur--updating-packages
+    (if (and (not sync)
+             (require 'async nil t))
+        (setq centaur--updating-packages
+              (async-start
+               `(lambda ()
+                  ,(async-inject-variables "\\`\\(load-path\\)\\'")
+                  (require 'init-funcs)
+                  (require 'init-package)
+                  (upgrade-packages)
+                  (with-current-buffer auto-package-update-buffer-name
+                    (buffer-string)))
+               (lambda (result)
+                 (setq centaur--updating-packages nil)
+                 (message "%s" result)
+                 (message "Updating packages...done"))))
+      (upgrade-packages)
+      (message "Updating packages...done"))))
+(defalias 'centaur-update-packages #'update-packages)
+
+(defvar centaur--updating nil)
+(defun update-config-and-packages(&optional force sync)
+  "Update confgiurations and packages.
+If FORCE is non-nil, the updating process will be restarted by force.
+If SYNC is non-nil, the updating process is synchronous."
+  (interactive "P")
+
+  (if (process-live-p centaur--updating)
+      (when force
+        (kill-process centaur--updating)
+        (setq centaur--updating nil))
+    (setq centaur--updating nil))
+
+  (message "Updating Centaur Emacs...")
+  (unless centaur--updating
+    (if (and (not sync)
+             (require 'async nil t))
+        (setq centaur--updating
+              (async-start
+               `(lambda ()
+                  ,(async-inject-variables "\\`\\(load-path\\)\\'")
+                  (require 'init-funcs)
+                  (require 'init-package)
+                  (update-config)
+                  (update-packages nil t)
+                  (with-current-buffer auto-package-update-buffer-name
+                    (buffer-string)))
+               (lambda (result)
+                 (setq centaur--updating nil)
+                 (message "%s" result)
+                 (message "Updating Centaur Emacs...done"))))
+      (update-config)
+      (update-packages nil t)
+      (message "Updating Centaur Emacs...done"))))
+(defalias 'centaur-update #'update-config-and-packages)
+
+(defun update-all()
+  "Update dotfiles, org files, configurations and packages to the latest."
+  (interactive)
+  (update-org)
+  (update-dotfiles)
+  (update-config-and-packages))
+(defalias 'centaur-update-all #'update-all)
+
+(defun update-dotfiles ()
+  "Update the dotfiles to the latest version."
+  (interactive)
+  (let ((dir (or (getenv "DOTFILES")
+                 (expand-file-name "~/.dotfiles/"))))
+    (if (file-exists-p dir)
+        (progn
+          (message "Updating dotfiles...")
+          (cd dir)
+          (shell-command "git pull")
+          (message "Updating dotfiles...done"))
+      (message "\"%s\" doesn't exist" dir))))
+(defalias 'centaur-update-dotfiles #'update-dotfiles)
+
+(defun update-org ()
+  "Update Org files to the latest version."
+  (interactive)
+  (let ((dir (expand-file-name "~/org/")))
+    (if (file-exists-p dir)
+        (progn
+          (message "Updating org files...")
+          (cd dir)
+          (shell-command "git pull")
+          (message "Updating org files...done"))
+      (message "\"%s\" doesn't exist" dir))))
+(defalias 'centaur-update-org #'update-org)
+
+
+
+
 (provide 'init-funcs)
+
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; init-funcs.el ends here
