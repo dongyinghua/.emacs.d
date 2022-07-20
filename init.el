@@ -52,6 +52,10 @@
 
 (require 'init-tools)
 
+(require 'init-yasnippet)
+(require 'init-lsp)
+(require 'init-projectile)
+
 (require 'init-ui)
 (require 'init-dashboard)
 (require 'init-persp)

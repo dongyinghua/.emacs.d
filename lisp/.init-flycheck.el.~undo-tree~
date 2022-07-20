@@ -1,0 +1,20 @@
+(undo-tree-save-format-version . 1)
+"3c89495fcf0acf7fdb2de556a5806cc974141e71"
+[nil nil nil nil (25302 19635 861268 0) 0 nil]
+([nil nil ((1 . 4) (t 25302 19635 863902 996000)) nil (25302 19742 471772 0) 0 nil])
+([nil nil ((#(";" 0 1 (fontified t face font-lock-comment-delimiter-face)) . -2) (undo-tree-id11 . -1) (undo-tree-id12 . -1) (#(";" 0 1 (fontified t face font-lock-comment-delimiter-face)) . -3) (undo-tree-id13 . -1) (undo-tree-id14 . -1) 4) nil (25302 19742 471770 0) 0 nil])
+([nil nil ((nil rear-nonsticky nil 88 . 89) (nil fontified nil 2 . 89) (2 . 89)) nil (25302 19742 471767 0) 0 nil])
+([nil nil ((89 . 90)) nil (25302 19742 471766 0) 0 nil])
+([nil nil ((90 . 95)) nil (25302 19742 471765 0) 0 nil])
+([nil nil ((#("c" 0 1 (fontified t face font-lock-comment-face)) . -94) (undo-tree-id8 . -1) (undo-tree-id9 . -1) (undo-tree-id10 . -1) 95) nil (25302 19742 471764 0) 0 nil])
+([nil nil ((94 . 95)) nil (25302 19742 471762 0) 0 nil])
+([nil nil ((94 . 104) (#("C" 0 1 (fontified t face font-lock-comment-face)) . -94) (undo-tree-id5 . -1) (undo-tree-id6 . -1) (undo-tree-id7 . -1) 95) nil (25302 19742 471761 0) 0 nil])
+([nil nil ((nil rear-nonsticky nil 149 . 150) (nil fontified nil 90 . 150) (90 . 150)) nil (25302 19742 471758 0) 0 nil])
+([nil nil ((#(";;; Commentary" 0 4 (fontified t face font-lock-comment-face) 4 14 (fontified t face font-lock-comment-face)) . -150) (undo-tree-id0 . -14) (undo-tree-id1 . -14) (undo-tree-id2 . -4) (undo-tree-id3 . -14) (undo-tree-id4 . -14) 164) nil (25302 19742 471756 0) 0 nil])
+([nil nil ((150 . 152)) nil (25302 19742 471734 0) 0 nil])
+([nil nil ((nil rear-nonsticky nil 278 . 279) (nil fontified nil 152 . 279) (152 . 279)) nil (25302 19742 471732 0) 0 nil])
+([nil nil ((279 . 280)) nil (25302 19742 471727 0) 0 nil])
+([nil nil ((151 . 152) (t 25302 19742 473438 51000)) nil (25302 19752 549089 0) 0 nil])
+([nil nil ((nil rear-nonsticky nil 223 . 224) (nil fontified nil 152 . 224) (152 . 224)) nil (25302 19752 549087 0) 0 nil])
+([nil current ((224 . 225)) nil (25302 19752 549083 0) 0 nil])
+nil

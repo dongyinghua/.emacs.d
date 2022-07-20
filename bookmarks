@@ -4,12 +4,12 @@
 ;;; -*- End Of Bookmark File Format Version Stamp -*-
 (("org-refile-last-stored"
  (filename . "~/Documents/Org/GTD/Inbox.org")
- (front-context-string . "** DONE 阅读 org-b")
- (rear-context-string . "tore功能）\n\n* Done\n")
- (position . 556))
+ (front-context-string . "** DOING 整理之前的例会")
+ (rear-context-string . ") 代码检查 flycheck\n")
+ (position . 402))
 ("org-capture-last-stored"
  (filename . "~/Documents/Org/GTD/Inbox.org")
- (front-context-string . "** TODO 学习seagle")
- (rear-context-string . "*** 理论学习\n*** 刷题\n")
- (position . 291))
+ (front-context-string . "** TODO 配置 Emacs")
+ (rear-context-string . "O 配置 Emacs 编程环境\n")
+ (position . 365))
 )

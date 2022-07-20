@@ -11,8 +11,6 @@
 (require 'init-custom)
 
 (add-to-list 'load-path (expand-file-name "awesome-tab" dragonli-emacs-tools-file-path))
-
-
 (add-to-list 'load-path (expand-file-name "org-bars" dragonli-emacs-tools-file-path))
 
 (require 'awesome-tab)

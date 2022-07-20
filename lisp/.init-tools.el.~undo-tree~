@@ -1,5 +1,5 @@
 (undo-tree-save-format-version . 1)
-"a7359b83d22285777ada326d53678c4808af856c"
+"6a6212ed9e79054b8963e271c652559867408e02"
 [nil nil nil nil (25294 31497 207139 0) 0 nil]
 ([nil nil ((1315 . 1323) (#("      " 0 6 (fontified nil)) . 1315) (1306 . 1312) (#("    " 0 4 (fontified nil)) . 1306) (1291 . 1299) (#("    " 0 4 (fontified nil)) . 1291) (1257 . 1263) (#("    " 0 4 (fontified nil)) . 1257) (1238 . 1246) (#("    " 0 4 (fontified nil)) . 1238) (1174 . 1180) (#("    " 0 4 (fontified nil)) . 1174) (1157 . 1165) (#("    " 0 4 (fontified nil)) . 1157) (1121 . 1127) (#("    " 0 4 (fontified nil)) . 1121) (1103 . 1111) (#("    " 0 4 (fontified nil)) . 1103) (1066 . 1072) (#("    " 0 4 (fontified nil)) . 1066) (1049 . 1057) (#("    " 0 4 (fontified nil)) . 1049) (1000 . 1029) (#("          " 0 10 (fontified nil)) . 1000) (955 . 984) (#("          " 0 10 (fontified nil)) . 955) (910 . 939) (#("          " 0 10 (fontified nil)) . 910) (866 . 895) (#("          " 0 10 (fontified nil)) . 866) (821 . 850) (#("          " 0 10 (fontified nil)) . 821) (774 . 803) (#("          " 0 10 (fontified nil)) . 774) (727 . 736) (#("  " 0 2 (fontified nil)) . 727) (667 . 673) (#("    " 0 4 (fontified nil)) . 667) (657 . 661) (649 . 651) (339 . 341) (888 . 894) (#("			" 0 3 (fontified nil)) . -888) (862 . 868) (#("			" 0 3 (fontified nil)) . -862) (836 . 842) (#("			" 0 3 (fontified nil)) . -836) (811 . 817) (#("			" 0 3 (fontified nil)) . -811) (785 . 791) (#("			" 0 3 (fontified nil)) . -785) (757 . 763) (#("			" 0 3 (fontified nil)) . -757) (717 . 719) (#("	" 0 1 (fontified nil)) . -717) 302 (t 25284 19232 892467 816000)) nil (25294 31497 207136 0) 0 nil])
 ([nil nil ((#("
@@ -178,5 +178,19 @@ See `buffer-invisibility-spec'.\"
 
 
 " 0 1 (fontified t face font-lock-comment-face) 1 5 (fontified t)) . 1563) (undo-tree-id0 . -5) (undo-tree-id1 . -5) (undo-tree-id2 . -5) 1568 (t 25295 25340 948904 147000)) nil (25295 28345 556007 0) 0 nil])
-([nil current ((apply 4 1497 1559 undo--wrap-and-run-primitive-undo 1497 1559 ((#(";;" 0 2 (fontified t face font-lock-comment-delimiter-face)) . -1518) (#(";;" 0 2 (fontified t face font-lock-comment-delimiter-face)) . -1498) 1497))) nil (25295 28345 555986 0) 0 nil])
+([nil nil ((apply 4 1497 1559 undo--wrap-and-run-primitive-undo 1497 1559 ((#(";;" 0 2 (fontified t face font-lock-comment-delimiter-face)) . -1518) (#(";;" 0 2 (fontified t face font-lock-comment-delimiter-face)) . -1498) 1497))) nil (25295 28345 555986 0) 0 nil])
+([nil nil ((#("
+
+" 0 2 (fontified t)) . 293) (undo-tree-id4 . -2) (undo-tree-id5 . -2) (undo-tree-id6 . -2) (undo-tree-id7 . -2) (undo-tree-id8 . -2) (undo-tree-id9 . -2) 295 (t 25295 28345 559680 637000)) nil (25302 33711 46687 0) 0 nil])
+([nil nil ((379 . 380)) nil (25302 33711 46683 0) 0 nil])
+([nil nil ((381 . 384) (380 . 382)) nil (25302 33711 46682 0) 0 nil])
+([nil nil ((381 . 392) (#("add" 0 3 (fontified t)) . -381) (undo-tree-id2 . -3) (undo-tree-id3 . -3) 384) nil (25302 33711 46681 0) 0 nil])
+([nil nil ((392 . 394)) nil (25302 33711 46679 0) 0 nil])
+([nil nil ((394 . 425)) nil (25302 33711 46679 0) 0 nil])
+([nil nil ((423 . 428)) nil (25302 33711 46678 0) 0 nil])
+([nil nil ((428 . 433)) nil (25302 33711 46678 0) 0 nil])
+([nil nil ((434 . 435)) nil (25302 33711 46677 0) 0 nil])
+([nil nil ((#("))" 0 1 (fontified nil face (rainbow-delimiters-depth-2-face)) 1 2 (fontified nil face (rainbow-delimiters-depth-1-face))) . 467) (undo-tree-id0 . 2) (undo-tree-id1 . -1) (435 . 467)) nil (25302 33711 46674 0) 0 nil])
+([nil current ((#("
+" 0 1 (fontified t)) . 379) (undo-tree-id10 . -1) (undo-tree-id11 . -1) (undo-tree-id12 . -1) (undo-tree-id13 . -1) (undo-tree-id14 . -1) (undo-tree-id15 . -1) 380 (#("(add-to-list 'load-path (expand-file-name \"lsp-bridge\" dragonli-emacs-tools-file-path))" 0 1 (fontified t face (rainbow-delimiters-depth-1-face)) 1 14 (fontified t) 14 24 (fontified t) 24 25 (fontified t face (rainbow-delimiters-depth-2-face)) 25 42 (fontified t) 42 53 (fontified t face font-lock-string-face) 53 54 (fontified t face font-lock-string-face) 54 55 (fontified t) 55 85 (fontified t) 85 86 (fontified t face (rainbow-delimiters-depth-2-face)) 86 87 (fontified t face (rainbow-delimiters-depth-1-face))) . 380) (undo-tree-id16 . -55) (undo-tree-id17 . -87) (undo-tree-id18 . 1) (undo-tree-id19 . -87) (undo-tree-id20 . 87) (undo-tree-id21 . -1) (undo-tree-id22 . -87) 467 (t 25302 33711 51767 484000)) nil (25302 34714 443422 0) 0 nil])
 nil

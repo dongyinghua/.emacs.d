@@ -1,5 +1,5 @@
 (undo-tree-save-format-version . 1)
-"3321bbe2213a0b3fceb1de176cb36309446d1e0f"
+"b7d10110f621ad1318f7fd26d089a3a72193600d"
 [nil nil nil nil (25293 25420 550757 0) 0 nil]
 ([nil nil ((#(";;===========================================================================
 
@@ -141,7 +141,18 @@ nil
 ([nil nil ((#("A" 0 1 (fontified t face font-lock-constant-face)) . -544) (undo-tree-id1728 . -1) (undo-tree-id1729 . -1) 545) nil (25300 12743 61251 0) 0 nil])
 ([nil nil ((534 . 535)) ((#("
 " 0 1 (fontified t)) . 534) (undo-tree-id34 . -1)) (25300 12710 976239 0) 0 nil])
-([nil current ((#("(use-package company-mode)" 0 1 (fontified t face (rainbow-delimiters-depth-1-face)) 1 12 (fontified t face font-lock-keyword-face) 12 13 (fontified t) 13 25 (fontified t face font-lock-constant-face) 25 26 (fontified t face (rainbow-delimiters-depth-1-face))) . 519) (undo-tree-id1722 . -25) (undo-tree-id1723 . 26) (undo-tree-id1724 . -1) (undo-tree-id1725 . 1) (undo-tree-id1726 . -26) (undo-tree-id1727 . -26)) nil (25300 12743 61246 0) 0 nil])
+([nil nil ((#("(use-package company-mode)" 0 1 (fontified t face (rainbow-delimiters-depth-1-face)) 1 12 (fontified t face font-lock-keyword-face) 12 13 (fontified t) 13 25 (fontified t face font-lock-constant-face) 25 26 (fontified t face (rainbow-delimiters-depth-1-face))) . 519) (undo-tree-id1722 . -25) (undo-tree-id1723 . 26) (undo-tree-id1724 . -1) (undo-tree-id1725 . 1) (undo-tree-id1726 . -26) (undo-tree-id1727 . -26)) nil (25300 12743 61246 0) 0 nil])
 ([nil nil ((534 . 605)) ((#("Started config server at http://127.0.0.1:5555/sec-ygimkvrwjqqcsyzpdibk" 0 71 (fontified t)) . 534) (undo-tree-id32 . -71) (undo-tree-id33 . -71)) (25300 12710 976139 0) 0 nil])
+([nil nil ((1359 . 1360) (t 25300 12743 66890 394000)) nil (25302 34480 986398 0) 0 nil])
 nil
+([nil nil ((1359 . 1360)) nil (25302 34480 986397 0) 0 nil])
+([nil nil ((1361 . 1363) (1360 . 1362)) nil (25302 34480 986396 0) 0 nil])
+([nil nil ((1361 . 1368) (#("re" 0 2 (fontified t)) . -1361) (undo-tree-id2 . -2) (undo-tree-id3 . -2) 1363) nil (25302 34480 986395 0) 0 nil])
+([nil nil ((1368 . 1373)) nil (25302 34480 986392 0) 0 nil])
+([nil nil ((1373 . 1377)) nil (25302 34480 986391 0) 0 nil])
+([nil nil ((1370 . 1384) (#("init-ya" 0 7 (face font-lock-constant-face fontified t)) . -1370) (undo-tree-id0 . -7) (undo-tree-id1 . -7) 1377) nil (25302 34480 986389 0) 0 nil])
+([nil nil ((1385 . 1386)) nil (25302 34480 986371 0) 0 nil])
+([nil nil ((1387 . 1395) (1386 . 1388)) nil (25302 34480 986369 0) 0 nil])
+([nil nil ((1395 . 1401)) nil (25302 34480 986368 0) 0 nil])
+([nil current ((1401 . 1404)) nil (25302 34480 986363 0) 0 nil])
 nil

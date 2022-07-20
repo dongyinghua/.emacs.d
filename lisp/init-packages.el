@@ -47,7 +47,7 @@
 (use-package pretty-hydra
   :init
   (cl-defun pretty-hydra-title (title &optional icon-type icon-name
-                              &key face height v-adjust)
+                                 &key face height v-adjust)
     "Add an icon in the hydra title."
     (let ((face (or face `(:foreground ,(face-background 'highlight))))
            (height (or height 1.0))
@@ -78,7 +78,7 @@
   (setq visual-fill-column-enable-sensible-window-split t)
   ;;(setq-default visual-fill-column-center-text t)
   (advice-add 'text-scale-adjust :after #'visual-fill-column-adjust)
-  (setq-default fill-column 95)
+  (setq-default fill-column 105)
   ;; visual-fill-column-extra-text-width可以调节文本在中间时，文本两边距屏幕边缘的距离
   ;;(setq-default visual-fill-column-extra-text-width '(5 . 10))
   )
@@ -132,7 +132,9 @@
   :init (global-undo-tree-mode)
   :config
   (setq undo-tree-visualizer-timestamps t)
-  (setq undo-tree-visualizer-diff t))
+  (setq undo-tree-visualizer-diff t)
+  (setq undo-tree-auto-save-history nil)
+  (evil-set-undo-system 'undo-tree))
 
 ;; https://github.com/Malabarba/smart-mode-line
 ;;(use-package smart-mode-line
@@ -156,9 +158,6 @@
   )
 
 (use-package tiny)
-
-(use-package highlight-symbol
-  :hook (after-init . highlight-symbol-mode))
 
 (use-package rainbow-delimiters
   :hook (prog-mode . rainbow-delimiters-mode))

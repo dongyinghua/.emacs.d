@@ -19,6 +19,14 @@
   (interactive)
   (find-file "~/.emacs.d/lisp/init-org.el"))
 
+(defun open-emacs-learning-note ()
+  (interactive)
+  (find-file "~/Documents/Org/org-roam-directory/2022021709_emacs_learning_note.org"))
+
+(defun open-org-learning-note ()
+  (interactive)
+  (find-file "~/Documents/Org/org-roam-directory/2022021709_org_learning_note.org"))
+
 ;; init-basic.el
 ;;Emacs Server
 ;; define function to shutdown emacs server instance

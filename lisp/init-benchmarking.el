@@ -1,5 +1,10 @@
 ;;; init-benchmarking.el --- Measure startup and require times -*- lexical-binding: t -*-
 ;;; Commentary:
+;;
+;; Refer to https://github.com/purcell/emacs.d/blob/64695dd330650391e7c2b03c0b70e1d414333ec7/lisp/init-benchmarking.el
+;; 测量启动时间。
+;;
+
 ;;; Code:
 
 (defun sanityinc/time-subtract-millis (b a)

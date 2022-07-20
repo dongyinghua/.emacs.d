@@ -43,9 +43,6 @@
 
 (global-set-key (kbd "C-c C-e b") 'eval-buffer)
 
-(global-set-key (kbd "C-c p f") 'project-find-file)
-(global-set-key (kbd "C-c p s") 'consult-ripgrep)
-
 (provide 'init-keybindings)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

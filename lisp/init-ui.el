@@ -73,8 +73,9 @@
 ;; 这里的执行顺序非常重要，doom-modeline-mode 的激活时机一定要在设置global-mode-string 之后‘
 (use-package doom-modeline
   :ensure t
-  :init (doom-modeline-mode t)
+  :hook (after-init . doom-modeline-mode)
   :config
+  (require 'all-the-icons)
 
   ;; If non-nil, cause imenu to see `doom-modeline' declarations.
   ;; This is done by adjusting `lisp-imenu-generic-expression' to
@@ -85,7 +86,7 @@
   ;; How tall the mode-line should be. It's only respected in GUI.
   ;; If the actual char height is larger, it respects the actual height.
   ;; If ‘doom-modeline-height’ is <= 0 the modeline will have default height.
-  (setq doom-modeline-height 0)
+  (setq doom-modeline-height 1)
 
   ;; How wide the mode-line bar should be. It's only respected in GUI.
   (setq doom-modeline-bar-width 4)
