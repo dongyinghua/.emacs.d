@@ -1,13 +1,13 @@
 
 ;; ----- amx-history -----
 (
- lsp-bridge-ref-popup
- lsp-bridge-find-def
- lsp-bridge-find-def-other-window
- lsp-bridge-mode
  counsel-projectile-find-file
  projectile-commander
  highlight-symbol-at-point
+ eval-buffer
+ company-tabnine
+ revert-buffer
+ valign-mode
 )
 
 ;; ----- amx-data -----
