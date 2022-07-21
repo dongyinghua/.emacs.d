@@ -1,6 +1,6 @@
 ;; -*- mode: emacs-lisp; eval: (progn (pp-buffer) (indent-buffer)) -*-
 ((def-persp nil
-   ((def-buffer "2022021709_emacs_learning_note.org" "/Users/yinghuadong/Documents/Org/org-roam-directory/2022021709_emacs_learning_note.org" org-mode)
+   ((def-buffer "init.el" "/Users/yinghuadong/.emacs.d/init.el" emacs-lisp-mode)
     (def-buffer "init-projectile.el" "/Users/yinghuadong/.emacs.d/lisp/init-projectile.el" emacs-lisp-mode)
     (def-buffer "Inbox.org" "/Users/yinghuadong/Documents/Org/GTD/Inbox.org" org-mode)
     (def-buffer "Projects.org" "/Users/yinghuadong/Documents/Org/GTD/Projects.org" org-mode)
@@ -23,10 +23,10 @@
       (pixel-width . 1440)
       (pixel-height . 822)
       (total-width . 120)
-      (total-height . 32)
+      (total-height . 33)
       (normal-height . 1.0)
       (normal-width . 1.0)
-      (buffer "2022021709_emacs_learning_note.org"
+      (buffer "init.el"
 	      (selected . t)
 	      (hscroll . 0)
 	      (fringes 8 8 t nil)
@@ -34,12 +34,11 @@
 	      (scroll-bars nil 0 t nil 0 t nil)
 	      (vscroll . 0)
 	      (dedicated)
-	      (point . 17677)
-	      (start . 7158))
+	      (point . 1431)
+	      (start . 1337))
       (prev-buffers
-       ("init-projectile.el" 1 211)
-       ("Inbox.org" 129 453)
-       ("*dashboard*" 365 1346)
+       ("init-projectile.el" 1 454)
+       ("*dashboard*" 119 120)
        ("*scratch*" 1 146))))
    (def-params nil)
    t nil nil))
