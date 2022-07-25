@@ -15,6 +15,4 @@
               persp-auto-resume-time (if centaur-dashboard 0 1.0)))
 
 (provide 'init-persp)
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; init-persp.el ends here

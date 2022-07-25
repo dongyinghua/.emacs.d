@@ -75,6 +75,7 @@
     (setq dashboard-show-shortcuts nil)
 
     (setq dashboard-items '((recents  . 10)   ; 显示多少个最近文件
+                             (projects . 10)
                              (agenda . 5)
                              (bookmarks . 5)))  ; 显示多少个最近书签
 
@@ -83,8 +84,9 @@
     (setq dashboard-set-file-icons t)
     ;; To modify heading icons with another icon from all-the-icons octicons:
     (setq dashboard-heading-icons '((recents   . "history")
-                                     (bookmarks . "bookmark")
-                                     (agenda    . "calendar")))
+                                     (projects  . "briefcase")
+                                     (agenda    . "calendar")
+                                     (bookmarks . "bookmark")))
     ;; (projects  . "briefcase")
     ;; (registers . "database")))
 

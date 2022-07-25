@@ -2,14 +2,4 @@
 ;;; This format is meant to be slightly human-readable;
 ;;; nevertheless, you probably don't want to edit it.
 ;;; -*- End Of Bookmark File Format Version Stamp -*-
-(("org-refile-last-stored"
- (filename . "~/Documents/Org/GTD/Inbox.org")
- (front-context-string . "** DOING 整理之前的例会")
- (rear-context-string . ") 代码检查 flycheck\n")
- (position . 402))
-("org-capture-last-stored"
- (filename . "~/Documents/Org/GTD/Inbox.org")
- (front-context-string . "** TODO 配置 Emacs")
- (rear-context-string . "O 配置 Emacs 编程环境\n")
- (position . 365))
-)
+()

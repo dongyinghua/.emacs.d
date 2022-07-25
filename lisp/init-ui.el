@@ -265,7 +265,7 @@
   ;; doom-one、doom-xcode、doom-horizon、doom-molokai、doom-gruvbox、doom-monokai-pro
   ;; doom-henna
   ;; doom-opera感觉像是莫兰迪色系
-  (load-theme 'doom-opera t)
+  (load-theme 'doom-one t)
 
   ;; Enable flashing mode-line on errors
   (doom-themes-visual-bell-config)

@@ -1,1 +1,1 @@
-nil
+("~/.emacs.d/" "~/ripgrep/" "~/Documents/Org/org-roam-directory/" "~/Library/Android/sdk/platform-tools/systrace/catapult/common/py_trace_event/py_trace_event/" "/opt/homebrew/")

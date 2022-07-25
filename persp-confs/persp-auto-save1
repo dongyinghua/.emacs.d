@@ -1,6 +1,6 @@
 ;; -*- mode: emacs-lisp; eval: (progn (pp-buffer) (indent-buffer)) -*-
 ((def-persp nil
-   ((def-buffer "init-projectile.el" "/Users/yinghuadong/.emacs.d/lisp/init-projectile.el" emacs-lisp-mode)
+   ((def-buffer "init-completion.el" "/Users/yinghuadong/.emacs.d/lisp/init-completion.el" emacs-lisp-mode)
     (def-buffer "Inbox.org" "/Users/yinghuadong/Documents/Org/GTD/Inbox.org" org-mode)
     (def-buffer "Projects.org" "/Users/yinghuadong/Documents/Org/GTD/Projects.org" org-mode)
     (def-buffer "Schedule.org" "/Users/yinghuadong/Documents/Org/GTD/Schedule.org" org-mode)
@@ -19,24 +19,24 @@
        (min-pixel-height-safe . 25)
        (min-pixel-width-safe . 24))
       leaf
-      (pixel-width . 1440)
-      (pixel-height . 597)
-      (total-width . 120)
-      (total-height . 24)
+      (pixel-width . 1112)
+      (pixel-height . 692)
+      (total-width . 93)
+      (total-height . 28)
       (normal-height . 1.0)
       (normal-width . 1.0)
-      (buffer "init-projectile.el"
+      (buffer "init-completion.el"
 	      (selected . t)
 	      (hscroll . 0)
 	      (fringes 8 8 t nil)
-	      (margins nil . 13)
+	      (margins nil)
 	      (scroll-bars nil 0 t nil 0 t nil)
-	      (vscroll . 0)
+	      (vscroll . 0.48)
 	      (dedicated)
-	      (point . 472)
-	      (start . 193))
+	      (point . 357)
+	      (start . 242))
       (prev-buffers
-       ("*dashboard*" 1 1)
-       ("*scratch*" 1 146))))
+       ("*dashboard*" 2 315)
+       ("*scratch*" 1 1))))
    (def-params nil)
    t nil nil))

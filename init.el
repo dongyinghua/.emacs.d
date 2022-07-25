@@ -20,7 +20,6 @@
 (defconst *is-a-mac* (eq system-type 'darwin))
 
 ;; Adjust garbage collection thresholds during startup, and thereafter
-
 (let ((normal-gc-cons-threshold (* 20 1024 1024))
       (init-gc-cons-threshold (* 128 1024 1024)))
   (setq gc-cons-threshold init-gc-cons-threshold)
@@ -40,6 +39,7 @@
 
 ;; Package Management
 (require 'init-packages)
+(require 'init-exec-path) ;; Set up $PATH
 
 ;; Emacs Basic Settings (Emacs内置功能的配置)
 (require 'init-basic)
@@ -52,9 +52,16 @@
 
 (require 'init-tools)
 
+(require 'init-projectile)
+
 (require 'init-yasnippet)
 (require 'init-lsp)
-(require 'init-projectile)
+(require 'init-lsp-bridge)
+
+(require 'init-git)
+(require 'init-compile)
+(require 'init-c)
+(require 'init-python)
 
 (require 'init-ui)
 (require 'init-dashboard)

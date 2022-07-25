@@ -592,8 +592,9 @@ This is meant to be used in `post-command-hook'."
           (message "org-bars-mode not turned on; your display can't display images."))
       (add-hook 'post-command-hook 'org-bars-narrow nil 'local)
       (advice-add 'text-scale-increase :after 'org-bars-indent)
-      (advice-add 'org-indent-set-line-properties :override
-                  'org-bars-set-line-properties)
+      ;; 解决缩进问题
+      ;; (advice-add 'org-indent-set-line-properties :override
+      ;;             'org-bars-set-line-properties)
       (advice-add 'org-indent--compute-prefixes :override
                   'org-bars-compute-prefixes)
       (advice-add 'org-get-level-face :override

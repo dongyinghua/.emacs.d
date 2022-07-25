@@ -78,7 +78,7 @@
   (setq visual-fill-column-enable-sensible-window-split t)
   ;;(setq-default visual-fill-column-center-text t)
   (advice-add 'text-scale-adjust :after #'visual-fill-column-adjust)
-  (setq-default fill-column 105)
+  (setq-default fill-column 100)
   ;; visual-fill-column-extra-text-width可以调节文本在中间时，文本两边距屏幕边缘的距离
   ;;(setq-default visual-fill-column-extra-text-width '(5 . 10))
   )
@@ -147,14 +147,18 @@
 ;; https://github.com/abo-abo/avy
 (use-package avy
   :ensure t
+  :bind (("C-c '" . avy-goto-char-timer)
+          ("M-g l" . avy-goto-line)
+          ("M-g w" . avy-goto-word-1)
+          ("M-g o" . avy-org-goto-heading-timer))
+  :hook (after-init . avy-setup-default)
   :config
   (setq avy-timeout-seconds 2)
   (setf (alist-get ?e avy-dispatch-alist) 'avy-action-embark)
-  :bind
-  (("C-c '" . avy-goto-char-timer)
-    ("M-g l" . avy-goto-line)
-    ("M-g w" . avy-goto-word-1)
-    ("M-g o" . avy-org-goto-heading-timer))
+  (setq avy-all-windows nil
+    avy-all-windows-alt t
+    avy-background t
+    avy-style 'pre)
   )
 
 (use-package tiny)

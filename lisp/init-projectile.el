@@ -9,17 +9,29 @@
 
 (use-package projectile
   :ensure t
+  :bind (:map projectile-mode-map
+          ("s-p" . projectile-command-map)
+          ("C-c p" . projectile-command-map))
+  :hook (after-init . projectile-mode)
+  :init
+  (setq
+    projectile-mode-line-prefix ""
+    projectile-sort-order 'recentf
+    projectile-use-git-grep t)
   :config
-  (projectile-mode t)
-  (define-key projectile-mode-map (kbd "s-p") 'projectile-command-map)
-  (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
-  (setq projectile-mode-line "Projectile")
-  (setq projectile-track-known-projects-automatically nil))
+  ;; Use the faster searcher to handle project files: ripgrep `rg'.
+  (when (and (not (executable-find "fd"))
+          (executable-find "rg"))
+    (setq projectile-generic-command
+      (let ((rg-cmd ""))
+        (dolist (dir projectile-globally-ignored-directories)
+          (setq rg-cmd (format "%s --glob '!%s'" rg-cmd dir)))
+        (concat "rg -0 --files --color=never --hidden" rg-cmd)))))
 
-(use-package counsel-projectile
-  :ensure t
-  :after projectile
-  :init (counsel-projectile-mode))
+;; (use-package counsel-projectile
+;;   :ensure t
+;;   :after projectile
+;;   :init (counsel-projectile-mode))
 
 (provide 'init-projectile)
 

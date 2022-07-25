@@ -27,8 +27,9 @@
          (funcall fn)))))
 
 ;; 删除很多空格使使用的
-(global-hungry-delete-mode t)
-(setq hungry-delete-join-reluctantly nil)
+(require 'hungry-delete)
+(global-hungry-delete-mode)
+(setq hungry-delete-join-reluctantly t)
 
 ;; modeline上显示我的所有的按键和执行的命令
 ;;(keycast-mode t)
@@ -56,7 +57,7 @@
 (delete-selection-mode t)
 
 ;; 下面的代码可以使 Emacs 自动加载外部修改过的文件。
-(global-auto-revert-mode t)
+(global-auto-revert-mode)
 
 ;; 也许你并不喜欢听到错误时的“哔哔”的警告提示音，使用下面的代码你可以关闭 Emacs 中的警告音
 (setq ring-bell-function 'ignore)
