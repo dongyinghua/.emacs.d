@@ -27,15 +27,11 @@
 ;;delete-frame
 (global-set-key (kbd "s-w") 'delete-frame)
 
-(global-set-key (kbd "C-c e") 'editorconfig-format-buffer)
-
 ;;下面的这些函数可以让你找到不同函数，变量以及快捷键所定义的文件位置。
 ;;因为非常常用所以我们建议将其设置为与查找文档类似的快捷键（如下所示）
 (global-set-key (kbd "C-h C-f") 'find-function)
 (global-set-key (kbd "C-h C-v") 'find-variable)
 (global-set-key (kbd "C-h C-k") 'find-function-on-key)
-
-(global-set-key (kbd "C-c f") 'org-roam-node-find)
 
 ;;这一行代码，将函数 open-init-file 绑定到 <f1> 键上
 (global-set-key (kbd "<f1>") 'open-init-file)

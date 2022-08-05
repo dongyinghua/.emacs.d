@@ -6,9 +6,9 @@
 ;;; Code:
 
 ;; git
-(use-package magit
-  :ensure t
-  :hook (after-init . magit-mode))
+;; (use-package magit
+;;   :ensure t
+;;   :hook (after-init . magit-mode))
 
 (provide 'init-git)
 ;;; init-git.el ends here

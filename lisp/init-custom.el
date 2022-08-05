@@ -65,10 +65,10 @@
                               name)))
                      centaur-package-archives-alist)))
 
-(defcustom centaur-dashboard (not (daemonp))
+(defcustom dragonli-dashboard (not (daemonp))
   "Display dashboard at startup or not.
 If Non-nil, use dashboard, otherwise will restore previous session."
-  :group 'centaur
+  :group 'dragonli
   :type 'boolean)
 
 

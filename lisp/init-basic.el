@@ -11,11 +11,14 @@
 (server-start)
 
 ;; 括号匹配
-(electric-pair-mode t)
-(setq electric-pair-pairs '(
-                             (?\{ . ?\})
-                             (?\“ . ?\”)
-                             ))
+(use-package electric-pair
+  :ensure nil
+  :init
+  (electric-pair-mode)
+  (setq electric-pair-pairs '(
+                               (?\{ . ?\})
+                               (?\“ . ?\”)
+                               )))
 
 ;; Emacs 有一个自带的包来高亮括号，那就是 show-paren-mode，但它只会在编辑器的
 ;; 光标处在括号上时才会生效，我们可以使用子龙山人的代码来使光标在括号内时高亮括号。
@@ -25,11 +28,6 @@
     (t (save-excursion
          (ignore-errors (backward-up-list))
          (funcall fn)))))
-
-;; 删除很多空格使使用的
-(require 'hungry-delete)
-(global-hungry-delete-mode)
-(setq hungry-delete-join-reluctantly t)
 
 ;; modeline上显示我的所有的按键和执行的命令
 ;;(keycast-mode t)
@@ -44,6 +42,7 @@
 ;; consult-buffer 中也有历史文件
 (use-package recentf
   :ensure nil
+  :defer 1
   :config
   (recentf-mode t)
   (setq recentf-max-menu-item 50)
@@ -54,10 +53,14 @@
 (setq mouse-wheel-progressive-speed nil)
 
 ;; 使用下面的配置文件将删除功能配置成与其他图形界面的编辑器相同，即当你选中一段文字之后输入一个字符会替换掉你选中部分的文字。
-(delete-selection-mode t)
+(use-package delete-selection
+  :ensure nil
+  :hook (after-init . delete-selection-mode))
 
 ;; 下面的代码可以使 Emacs 自动加载外部修改过的文件。
-(global-auto-revert-mode)
+(use-package auto-revert
+  :ensure nil
+  :init (global-auto-revert-mode))
 
 ;; 也许你并不喜欢听到错误时的“哔哔”的警告提示音，使用下面的代码你可以关闭 Emacs 中的警告音
 (setq ring-bell-function 'ignore)
@@ -124,7 +127,14 @@
   ;;     (kill-buffer (current-buffer))))
   )
 
-(provide 'init-basic)
+;; (use-package flyspell-mode
+;;   :ensure nil
+;;   :hook (text-mode . flyspell-mode)
+;;   :init
+;;   ;; use aspell as ispell backend
+;;   (setq-default ispell-program-name "aspell")
+;;   ;; use American English as ispell default dictionary
+;;   (ispell-change-dictionary "american" t))
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(provide 'init-basic)
 ;;; init-basic.el ends here

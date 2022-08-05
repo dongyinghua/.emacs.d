@@ -6,7 +6,7 @@
     (magit-section "20220325")
     (transient "20220325")
     (with-editor "20220318"))
-  :commit "281f0c3c377cc03f685f43c15e90be5a1fc09e75" :authors
+  :commit "765069add98d64f4ef4961a0aa4b2aa82efb2156" :authors
   '(("Marius Vollmer" . "marius.vollmer@gmail.com")
     ("Jonas Bernoulli" . "jonas@bernoul.li"))
   :maintainer

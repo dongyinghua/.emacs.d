@@ -36,8 +36,8 @@
   (package-install 'use-package))
 
 ;; 以后在使用use-package的时候就不用加ensure了
-(require 'use-package-ensure)
-(setq use-package-always-ensure t)
+;;(require 'use-package-ensure)
+;;(setq use-package-always-ensure t)
 
 
 ;; 关于hydra的配置应当写在靠前一点的位置比较保险。
@@ -45,6 +45,7 @@
   :ensure t)
 
 (use-package pretty-hydra
+  :ensure t
   :init
   (cl-defun pretty-hydra-title (title &optional icon-type icon-name
                                  &key face height v-adjust)
@@ -59,22 +60,26 @@
               (concat
                 (apply f (list icon-name :face face :height height :v-adjust v-adjust))
                 " "))))
-        (propertize title 'face face))))
-  )
+        (propertize title 'face face)))))
 
 
+
+;; 查看 Emacs 启动时加载插件的时间
+(use-package benchmark-init
+  :ensure t)
 
 ;; ---------------------------------------------------------------------------
 ;;visual-fill-column-mode
 ;;https://codeberg.org/joostkremers/visual-fill-column
 (use-package visual-fill-column
+  :ensure t
+  :defer t
+  :hook (after-init . visual-fill-column-mode)
   :init
   (add-hook 'text-mode-hook 'toggle-truncate-lines-off)
   ;; 在所有从text-mode衍生出来的mode中使用visual-fill-column-mode
   (add-hook 'text-mode-hook 'visual-fill-column-mode)
-
   :config
-  (global-visual-fill-column-mode)
   (setq visual-fill-column-enable-sensible-window-split t)
   ;;(setq-default visual-fill-column-center-text t)
   (advice-add 'text-scale-adjust :after #'visual-fill-column-adjust)
@@ -87,49 +92,47 @@
 
 ;;代码格式.editorconfig
 (use-package editorconfig
-  :config
-  (editorconfig-mode 1))
+  :ensure t
+  :defer t
+  :hook (after-init . editorconfig-mode)
+  :bind ("C-c e" . editorconfig-format-buffer))
 
 ;; unicode-fonts
 (use-package unicode-fonts
-  :config
-  (unicode-fonts-setup))
+  :ensure t
+  :defer t
+  :hook (after-init . (lambda () (unicode-fonts-setup))))
 
-;; evil模式
-(use-package evil
-  :config
-  (evil-mode 1)
-  ;; 下面的代码可以将 insert state map 中的快捷键清空，使其可以回退（Fallback）到 Emacs State 中，
-  ;; 这样我们之前的 Emacs State 里面定义的 C-w 等快捷键就不会被 evil insert minor mode state 所覆盖。
-  (setcdr evil-insert-state-map nil)
-  (define-key evil-insert-state-map [escape] 'evil-normal-state))
-
-;; markdown
-(use-package markdown-mode
-  :ensure t)
-
-(use-package restart-emacs)
+(use-package restart-emacs
+  :ensure t
+  :defer t)
 
 ;;(use-package which-key
 ;;  :hook (after-init . which-key-mode)
 ;;  :config (setq which-key-idle-delay 0))
 
 ;; https://github.com/DarwinAwardWinner/amx
-(use-package amx
-  :ensure t
-  :hook (after-init . amx-mode))
+;; (use-package amx
+;;   :ensure t
+;;   :hook (after-init . amx-mode))
 
 ;; https://github.com/abo-abo/ace-window
 (use-package ace-window
+  :ensure t
+  :defer t
   :bind (("C-x o" . 'ace-window)))
 
 (use-package mwim
+  :ensure t
+  :defer t
   :bind
   ("C-a" . mwim-beginning-of-code-or-line)
   ("C-e" . mwim-end-of-code-or-line))
 
 (use-package undo-tree
-  :init (global-undo-tree-mode)
+  :ensure t
+  :defer t
+  :hook (after-init . (lambda () (global-undo-tree-mode)))
   :config
   (setq undo-tree-visualizer-timestamps t)
   (setq undo-tree-visualizer-diff t)
@@ -141,32 +144,43 @@
 ;;  :config (sml/setup))
 
 ;; https://github.com/io12/good-scroll.el
-(use-package good-scroll
-  :hook (after-init . good-scroll-mode))
+;; (use-package good-scroll
+;;   :hook (after-init . good-scroll-mode))
 
 ;; https://github.com/abo-abo/avy
-(use-package avy
-  :ensure t
-  :bind (("C-c '" . avy-goto-char-timer)
-          ("M-g l" . avy-goto-line)
-          ("M-g w" . avy-goto-word-1)
-          ("M-g o" . avy-org-goto-heading-timer))
-  :hook (after-init . avy-setup-default)
-  :config
-  (setq avy-timeout-seconds 2)
-  (setf (alist-get ?e avy-dispatch-alist) 'avy-action-embark)
-  (setq avy-all-windows nil
-    avy-all-windows-alt t
-    avy-background t
-    avy-style 'pre)
-  )
+;; 暂时用不到 avy
+;; (use-package avy
+;;   :ensure t
+;;   :defer t
+;;   :hook (org-mode . avy-setup-default)
+;;   :bind (("C-c '" . avy-goto-char-timer)
+;;           ("M-g l" . avy-goto-line)
+;;           ("M-g w" . avy-goto-word-1)
+;;           ("M-g o" . avy-org-goto-heading-timer))
+;;   :config
+;;   (setq avy-timeout-seconds 2)
+;;   (setf (alist-get ?e avy-dispatch-alist) 'avy-action-embark)
+;;   (setq avy-all-windows nil
+;;     avy-all-windows-alt t
+;;     avy-background t
+;;     avy-style 'pre)
+;;   )
 
-(use-package tiny)
+;;(use-package tiny)
 
 (use-package rainbow-delimiters
+  :ensure t
+  :defer t
   :hook (prog-mode . rainbow-delimiters-mode))
 
-(provide 'init-packages)
+;; 删除很多空格使使用的
+(use-package hungry-delete
+  :ensure t
+  :defer t
+  :init
+  (global-hungry-delete-mode)
+  (setq hungry-delete-join-reluctantly t))
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(provide 'init-packages)
 ;;; init-packages.el ends here

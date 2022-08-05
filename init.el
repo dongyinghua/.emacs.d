@@ -9,11 +9,13 @@
 
 ;;; Code:
 
+
+
 ;;如果不加这句代码的话，就会报错说找不到lisp中的.el文件
 (add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
 
 
-;; Refer to https://github.com/purcell/emacs.d
+;; ;; Refer to https://github.com/purcell/emacs.d
 (require 'init-benchmarking)
 
 (defconst *spell-check-support-enabled* nil) ;; Enable with t if you prefer
@@ -39,45 +41,45 @@
 
 ;; Package Management
 (require 'init-packages)
-(require 'init-exec-path) ;; Set up $PATH
+(require 'init-exec-path) ; Set up $PATH. If you startup emacs in terminal, this is not necessary.
 
 ;; Emacs Basic Settings (Emacs内置功能的配置)
 (require 'init-basic)
 (require 'init-hydra)
-;; Custom Functions
-(require 'init-funcs)
 
-
-(require 'init-completion)
-
-(require 'init-tools)
-
-(require 'init-projectile)
-
-(require 'init-yasnippet)
-(require 'init-lsp)
-(require 'init-lsp-bridge)
-
-(require 'init-git)
-(require 'init-compile)
-(require 'init-c)
-(require 'init-python)
+;; Font Setting
+(require 'init-font)
+(require 'init-clipboard)
 
 (require 'init-ui)
 (require 'init-dashboard)
 (require 'init-persp)
 
+(require 'init-evil)
+
 ;; Key Bindings
 (require 'init-keybindings)
 
+(require 'init-completion)
+(require 'init-tools)
+(require 'init-projectile)
+
+(require 'init-git)
+(require 'init-compile)
 (require 'init-org)
 
+(require 'init-yasnippet)
+(require 'init-lsp)
+(require 'init-lsp-bridge)
 
-;; Font Setting
-(require 'init-font)
+;;Degug
+(require 'init-dap)
+;;Language
+(require 'init-c)
+(require 'init-python)
 
 (require 'init-latex)
-
-(require 'init-clipboard)
+(require 'init-markdown)
 
 (provide 'init)
+;;; init.el ends here

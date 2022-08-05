@@ -10,20 +10,22 @@
 (require 'init-const)
 
 (use-package org
-  :ensure t
   :pin melpa
+  :ensure t
   :bind
   ("C-c a" . org-agenda)
   ("C-c x" . org-capture)
   ("C-c b" . org-switchb)
   ("C-c C-f a" . consul-org-agenda)
   ("C-c r" . org-refile)
+  ("C-c 。" . org-time-stamp)
   :config
   ;; Add new template
   (add-to-list 'org-structure-template-alist '("n" . "note"))
 
   ;;org-mode缩进
-  (setq org-startup-indented t)
+  ;; org-bars-mode 开启时会自动开启 org-indent-mode
+  ;;(setq org-startup-indented t)
 
   ;; https://apple.stackexchange.com/questions/277928/error-auctex-cannot-find-a-working-tex-distribution-macos-sierra
   (setenv "PATH" (concat (getenv "PATH") ":/Library/TeX/texbin/"))
@@ -117,15 +119,17 @@
 ;; https://github.com/casouri/valign
 ;; 表格对齐
 (use-package valign
+  :ensure t
+  :defer t
   :hook (org-mode . valign-mode)
   :config (setq valign-fancy-bar t))
 
-(use-package org-contrib
-  :pin nongnu
-  :config
-  ;; 对于需要重复完成的任务很有帮助
-  (require 'org-checklist)
-  )
+;; (use-package org-contrib
+;;   :pin nongnu
+;;   :config
+;;   ;; 对于需要重复完成的任务很有帮助
+;;   (require 'org-checklist)
+;;   )
 
 
 ;;（造轮子）定义了一个函数可以循环org-mode的emphasis-markers的可见性。
@@ -143,8 +147,7 @@
 ;; emacs-china：https://emacs-china.org/t/org-mode/16826
 (use-package org-appear
   :ensure t
-  :init
-  (add-hook 'org-mode-hook 'org-appear-mode)
+  :hook (org-mode . org-appear-mode)
   :config
   ;;使用evil-mode后，可以用以下代码来实现只在编辑模式下激活org-appear-mode
   ;;⚠️得先执行(setq org-hide-emphasis-markers t)，否则org-appear-autoemphasis会失效
@@ -170,6 +173,9 @@
 ;; org-roam
 (use-package org-roam
   :ensure t
+  ;; :defer t
+  ;; :hook (org-mode . org-roam-mode)
+  :bind ("C-c o f" . org-roam-node-find)
   :config
   (setq org-roam-directory "~/Documents/Org/org-roam-directory")
   (setq find-file-visit-truename t)
@@ -243,7 +249,7 @@
 
 (use-package org-roam-ui
   :ensure t
-  :after org-roam
+  :bind ("C-c o i" . org-roam-ui-open)
   ;;normally we'd recommend hooking orui after org-roam, but since org-roam does not have
   ;;a hookable mode anymore, you're advised to pick something yourself
   ;;if you don't care about startup time, use
@@ -257,6 +263,7 @@
 
 (use-package org-roam-bibtex
   :after org-roam
+  :defer t
   :hook (org-roam-mode . org-roam-bibtex-mode)
   :bind (:map org-mode-map
           (("C-c n a" . orb-note-actions))))
@@ -265,8 +272,9 @@
 
 (use-package zotxt
   :ensure t
-  :config
-  (org-zotxt-mode))
+  :after org-roam
+  :defer t
+  :hook (org-roam-mode . org-zotxt-mode))
 
 (provide 'init-org)
 

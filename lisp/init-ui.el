@@ -10,7 +10,10 @@
 ;; 显示行号
 ;; (global-linum-mode 1)
 ;; 用linum-mode的话会和viusal-fill-column-mode冲突，导致行号显示不出来而且移动光标会出现行号一闪就消失的情况
-(global-display-line-numbers-mode)
+
+(use-package display-line-numbers
+  :ensure nil
+  :init (global-display-line-numbers-mode))
 
 ;;修改行间距
 (setq-default line-spacing 0.15)
@@ -20,9 +23,9 @@
 
 ;; 启动最大化
 ;; 以函数调用的方式写在配置文件中，就可以在启动时执行这些函数
-;; (toggle-frame-maximized)
+;;(toggle-frame-maximized)
 ;; Start maximised (cross-platf)
-;; (add-hook 'window-setup-hook 'toggle-frame-maximized t)
+;;(add-hook 'window-setup-hook 'toggle-frame-maximized t)
 ;; 使用下面这种配置方法可以保证在使用emacs server和client时，也能保证在启动的时候窗口最大化
 ;; 问题的关键在于frame
 (add-to-list 'default-frame-alist '(fullscreen . maximized))
@@ -33,6 +36,14 @@
 ;; 关闭工具栏和右侧滑动
 ;; 正数表示t，非正数表示nil
 ;; 注：不知道为什么最基本的emacs不识别nil，就算用nil赋值，其值依旧是t
+
+;; (use-package tool-bar
+;;   :ensure nil
+;;   :init (tool-bar-mode -1))
+
+;; (use-package scroll-bar
+;;   :ensure nil
+;;   :init (scroll-bar-mode -1))
 (tool-bar-mode -1)
 (scroll-bar-mode -1)
 
@@ -41,41 +52,55 @@
 ;; https://stackoverflow.com/questions/18172728/the-difference-between-setq-and-setq-default-in-emacs-lisp
 (setq-default cursor-type 'bar)
 
-;; 彩虹猫nyan-mode应该在doom-modeline-mode后运行
-;; https://github.com/TeMPOraL/nyan-mode
-(use-package nyan-mode
-  :hook (doom-modeline-mode . nyan-mode)
+;;doom-themes
+;;🔗https://github.com/doomemacs/themes
+(use-package doom-themes
+  :ensure t
+  ;;:defer t
+  ;;:hook (after-init . (lambda () (load-theme 'doom-one-light t)))
   :config
-  ;;nyan-animate-nyancat - t to have it animated, nil for a static version.
-  (setq nyan-animate-nyancat t)
-  ;; nyan-animation-frame-interval
-  ;; number of seconds between animation frames. Accepts fractional values.
-  (setq nyan-animation-frame-interval 0.4)
+  ;; Global settings (defaults)
+  (setq doom-themes-enable-bold t    ; if nil, bold is universally disabled
+    doom-themes-enable-italic t) ; if nil, italics is universally disabled
 
-  ;; nyan-bar-length
-  ;; length of nyan-mode bar, in 8px-wide units.
-  (setq nyan-bar-length 24)
+  ;; 比较好看的doom-theme：
+  ;; doom-one、doom-xcode、doom-horizon、doom-molokai、doom-gruvbox、doom-monokai-pro
+  ;; doom-henna
+  ;; doom-opera感觉像是莫兰迪色系
+  (load-theme 'doom-opera-light t)
 
-  ;; nyan-cat-face-number - choose a cat face for the console mode.
-  (setq nyan-cat-face-number 1)
+  ;; Enable flashing mode-line on errors
+  (doom-themes-visual-bell-config)
+  ;; Enable custom neotree theme (all-the-icons must be installed!)
+  (doom-themes-neotree-config)
+  ;; or for treemacs users
+  (setq doom-themes-treemacs-theme "doom-atom") ; use "doom-colors" for less minimal icon theme
+  (doom-themes-treemacs-config)
+  ;; Corrects (and improves) org-mode's native fontification.
+  (doom-themes-org-config)
 
-  ;; nyan-wavy-trail
-  ;; t to make the trail wavy; works even better when animation is enabled!
-  (setq nyan-wavy-trail t)
-
-  ;; nyan-minimum-window-width
-  ;; minimum width of the window, below which Nyan Mode will be disabled.
-  ;; This is important because Nyan Mode will otherwise push out more relevant information from the modelilne.
-  (setq nyan-minimum-window-width 64)
+  ;; Emacs背景虚化
+  ;; emacs-china：https://emacs-china.org/t/emacs-mac-port/15056/3
+  ;; (set-face-background 'default "mac:windowBackgroundColor")
+  ;; 如果下面关于背景虚化的配置代码没有放在use-package里，就会出现modeline中的图标之间出现间隙
+  ;; 原因（只是猜测）可能是因为使用use-package来配置doom-themes，如果单独设置背景虚化，可能会出问题
+  ;; (dolist (f (face-list)) (set-face-stipple f "alpha:60%"))
+  ;;                                       (setq face-remapping-alist
+  ;;                                         (append face-remapping-alist '((default my/default-blurred))))
+  ;;                                       (defface my/default-blurred
+  ;;                                         '((t :inherit 'default :stipple "alpha:60%"))
+  ;;                                         "Like 'default but blurred."
+  ;;                                         :group 'my)
   )
 
 ;; doom-modeline
 ;; 这里的执行顺序非常重要，doom-modeline-mode 的激活时机一定要在设置global-mode-string 之后‘
 (use-package doom-modeline
   :ensure t
+  :defer t
   :hook (after-init . doom-modeline-mode)
   :config
-  (require 'all-the-icons)
+  ;;(require 'all-the-icons)
 
   ;; If non-nil, cause imenu to see `doom-modeline' declarations.
   ;; This is done by adjusting `lisp-imenu-generic-expression' to
@@ -252,44 +277,34 @@
   (setq doom-modeline-after-update-env-hook nil)
   )
 
-;;doom-themes
-;;🔗https://github.com/doomemacs/themes
-(use-package doom-themes
+;; 彩虹猫nyan-mode应该在doom-modeline-mode后运行
+;; https://github.com/TeMPOraL/nyan-mode
+(use-package nyan-mode
   :ensure t
+  :defer t
+  :hook (doom-modeline-mode . nyan-mode)
   :config
-  ;; Global settings (defaults)
-  (setq doom-themes-enable-bold t    ; if nil, bold is universally disabled
-    doom-themes-enable-italic t) ; if nil, italics is universally disabled
+  ;;nyan-animate-nyancat - t to have it animated, nil for a static version.
+  (setq nyan-animate-nyancat t)
+  ;; nyan-animation-frame-interval
+  ;; number of seconds between animation frames. Accepts fractional values.
+  (setq nyan-animation-frame-interval 0.4)
 
-  ;; 比较好看的doom-theme：
-  ;; doom-one、doom-xcode、doom-horizon、doom-molokai、doom-gruvbox、doom-monokai-pro
-  ;; doom-henna
-  ;; doom-opera感觉像是莫兰迪色系
-  (load-theme 'doom-one t)
+  ;; nyan-bar-length
+  ;; length of nyan-mode bar, in 8px-wide units.
+  (setq nyan-bar-length 24)
 
-  ;; Enable flashing mode-line on errors
-  (doom-themes-visual-bell-config)
-  ;; Enable custom neotree theme (all-the-icons must be installed!)
-  (doom-themes-neotree-config)
-  ;; or for treemacs users
-  (setq doom-themes-treemacs-theme "doom-atom") ; use "doom-colors" for less minimal icon theme
-  (doom-themes-treemacs-config)
-  ;; Corrects (and improves) org-mode's native fontification.
-  (doom-themes-org-config)
+  ;; nyan-cat-face-number - choose a cat face for the console mode.
+  (setq nyan-cat-face-number 1)
 
-  ;; Emacs背景虚化
-  ;; emacs-china：https://emacs-china.org/t/emacs-mac-port/15056/3
-  ;; (set-face-background 'default "mac:windowBackgroundColor")
-  ;; 如果下面关于背景虚化的配置代码没有放在use-package里，就会出现modeline中的图标之间出现间隙
-  ;; 原因（只是猜测）可能是因为使用use-package来配置doom-themes，如果单独设置背景虚化，可能会出问题
-  ;;(dolist (f (face-list)) (set-face-stipple f "alpha:60%"))
-                                        ;(setq face-remapping-alist
-                                        ;  (append face-remapping-alist '((default my/default-blurred))))
-                                        ;(defface my/default-blurred
-                                        ;  '((t :inherit 'default :stipple "alpha:60%"))
-                                        ;  "Like 'default but blurred."
-                                        ;  :group 'my)
-  )
+  ;; nyan-wavy-trail
+  ;; t to make the trail wavy; works even better when animation is enabled!
+  (setq nyan-wavy-trail t)
+
+  ;; nyan-minimum-window-width
+  ;; minimum width of the window, below which Nyan Mode will be disabled.
+  ;; This is important because Nyan Mode will otherwise push out more relevant information from the modelilne.
+  (setq nyan-minimum-window-width 64))
 
 ;; 高亮显示当前行
 (global-hl-line-mode 1)
@@ -299,6 +314,8 @@
 ;; https://www.emacswiki.org/emacs/PageBreaks
 (use-package page-break-lines
   :diminish
+  :ensure t
+  :defer t
   :hook (after-init . global-page-break-lines-mode))
 
 (provide 'init-ui)

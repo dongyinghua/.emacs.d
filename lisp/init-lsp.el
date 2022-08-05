@@ -2,6 +2,7 @@
 ;;; Commentary
 ;;; Code:
 
+
 (provide 'init-lsp)
 
 

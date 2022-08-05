@@ -1,1 +1,1 @@
-("~/.emacs.d/" "~/ripgrep/" "~/Documents/Org/org-roam-directory/" "~/Library/Android/sdk/platform-tools/systrace/catapult/common/py_trace_event/py_trace_event/" "/opt/homebrew/")
+("~/.emacs.d/" "~/Documents/Org/org-roam-directory/" "/opt/homebrew/" "~/Documents/学习资料/Emacs/Org-mode/Worg/worg/" "~/.vscode/extensions/lanza.lldb-vscode-0.2.3/" "~/ripgrep/" "~/Library/Android/sdk/platform-tools/systrace/catapult/common/py_trace_event/py_trace_event/")

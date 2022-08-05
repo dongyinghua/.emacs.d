@@ -2,4 +2,14 @@
 ;;; This format is meant to be slightly human-readable;
 ;;; nevertheless, you probably don't want to edit it.
 ;;; -*- End Of Bookmark File Format Version Stamp -*-
-()
+(("org-capture-last-stored"
+ (filename . "~/Documents/Org/org-roam-directory/2022072901_git_learning_note.org")
+ (front-context-string)
+ (rear-context-string . "t Learning Note\n")
+ (position . 106))
+("org-refile-last-stored"
+ (filename . "~/Documents/Org/GTD/Projects.org")
+ (front-context-string . "** DOING [#A] 知乎")
+ (rear-context-string . "2022-04-03 Sun>\n")
+ (position . 5637))
+)

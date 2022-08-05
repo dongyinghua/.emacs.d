@@ -4,7 +4,8 @@
 
 ;;; Code:
 
-(use-package yasnippet)
+(use-package yasnippet
+  :ensure nil)
 
 (provide 'init-yasnippet)
 

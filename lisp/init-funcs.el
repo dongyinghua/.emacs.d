@@ -86,7 +86,7 @@ Supports exporting consult-grep to wgrep, file to wdeired, and consult-location 
   (interactive)
   ;;Setting English Font
   (set-face-attribute
-    'default nil :font "Source Code Pro 20" :weight 'normal)
+    'default nil :font "Source Code Pro 18" :weight 'normal)
   ;;Chinese Font
   (dolist (charset '(kana han symbol cjk-misc bopomofo))
     (set-fontset-font (frame-parameter nil 'font)
@@ -210,6 +210,13 @@ See `buffer-invisibility-spec'."
               'invisible t)))))))
 
 
+;;按f11让Emacs进入全屏显示
+;;参考： http://www.emacswiki.org/cgi-bin/wiki/FullScreen
+
+(defun fullscreen ()
+  (interactive)
+  (set-frame-parameter nil 'fullscreen
+    (if (frame-parameter nil 'fullscreen) nil 'fullboth)))
 
 (provide 'init-funcs)
 

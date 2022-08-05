@@ -30,7 +30,7 @@
     :init
     (add-to-list 'company-backends #'company-tabnine)
     (setq company-tabnine--disable-next-transform nil)
-    :config
+    ;;:config
     ;; workaround for company-transformers
     (defun my-company--transform-candidates (func &rest args)
       (if (not company-tabnine--disable-next-transform)
@@ -65,8 +65,7 @@
 ;; 增强 minibuffer 补全：vertico 和 Orderless
 (use-package vertico ;;所有的minibuffer都适用
   :ensure t
-  :config
-  (vertico-mode t))
+  :hook (after-init . vertico-mode))
 
 ;; Optionally use the `orderless' completion style.
 (use-package orderless
@@ -101,7 +100,16 @@
   ("C-s" . consult-line)
   ;;找到代码中自定义和函数或者使用的packages（前提是用use-package）
   ("C-c i" . consult-imenu)
-  ("C-x C-r" . consult-recent-file))
+  ("C-x C-r" . consult-recent-file)
+  ("C-c C-p r" . consult-ripgrep)
+  :config
+  (setq
+      consult-narrow-key "<"
+      consult-line-numbers-widen t
+      consult-async-min-input 2
+      consult-async-refresh-delay  0.15
+      consult-async-input-throttle 0.2
+      consult-async-input-debounce 0.1))
 
 (define-key minibuffer-local-map (kbd "C-c C-e") 'embark-export-write)
 
@@ -135,16 +143,6 @@
 ;; (progn
 ;;   (setq consult-locate-args (encode-coding-string "es.exe -i -p -r" 'gbk))
 ;;   (add-to-list 'process-coding-system-alist '("es" gbk . gbk)))
-
-(eval-after-load 'consult
-  (progn
-    (setq
-      consult-narrow-key "<"
-      consult-line-numbers-widen t
-      consult-async-min-input 2
-      consult-async-refresh-delay  0.15
-      consult-async-input-throttle 0.2
-      consult-async-input-debounce 0.1)))
 
 (provide 'init-completion)
 

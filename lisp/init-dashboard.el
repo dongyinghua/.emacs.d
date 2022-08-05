@@ -10,8 +10,10 @@
 (require 'init-custom)
 (require 'init-funcs)
 
-(when centaur-dashboard
+(when dragonli-dashboard
   (use-package dashboard
+    :ensure t
+    ;;:defer 1
     ;;:diminish dashboard-mode
     :functions (all-the-icons-faicon
                  all-the-icons-material

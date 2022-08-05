@@ -8,8 +8,11 @@
 ;;; Code:
 
 ;; C/C++ Mode
-(use-package cc-mode
+(use-package c++-mode
   :ensure nil
+  :hook
+  ((c-mode . lsp-deferred)
+  (c++-mode . lsp-deferred))
   :bind (:map c-mode-base-map
          ("C-c c" . compile))
   :init (setq-default c-basic-offset 4)
