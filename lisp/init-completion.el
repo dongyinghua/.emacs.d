@@ -1,6 +1,6 @@
 ;;; init-company.el --- Initialize company configurations. -*- lexical-binding: t -*-
 
-;;; Commentary
+;;; Commentary:
 ;;
 ;; Auto-completion configurations.
 ;;
@@ -19,34 +19,38 @@
 (use-package company
   :hook (after-init . global-company-mode)
   :init
-  (setq company-minimum-prefix-length 2)
+  (setq company-minimum-prefix-length 0)
   (setq company-idle-delay 0.0)
-  (setq company-show-numbers t) ; 给选项编号 (按快捷键 M-1、M-2 等等来进行选择).
+  (setq company-show-quick-access t) ; 给选项编号 (按快捷键 M-1、M-2 等等来进行选择).
   (setq company-selection-wrap-around t)
   (setq company-transformers '(company-sort-by-occurrence)) ; 根据选择的频率进行排序
   :config
-  ;; company-tabnine AI 自动补全
-  (use-package company-tabnine
-    :init
-    (add-to-list 'company-backends #'company-tabnine)
-    (setq company-tabnine--disable-next-transform nil)
-    ;;:config
-    ;; workaround for company-transformers
-    (defun my-company--transform-candidates (func &rest args)
-      (if (not company-tabnine--disable-next-transform)
-        (apply func args)
-        (setq company-tabnine--disable-next-transform nil)
-        (car args)))
-
-    (defun my-company-tabnine (func &rest args)
-      (when (eq (car args) 'candidates)
-        (setq company-tabnine--disable-next-transform t))
-      (apply func args))
-
-    (advice-add #'company--transform-candidates :around #'my-company--transform-candidates)
-    (advice-add #'company-tabnine :around #'my-company-tabnine))
   )
 
+;; company-tabnine AI 自动补全
+(use-package company-tabnine
+  :ensure t
+  :defer t
+  :after company-mode
+  :init
+  (add-to-list 'company-backends #'company-tabnine)
+  ;; (setq company-tabnine--disable-next-transform nil)
+  ;; ;;:config
+  ;; ;; workaround for company-transformers
+  ;; (defun my-company--transform-candidates (func &rest args)
+  ;;   (if (not company-tabnine--disable-next-transform)
+  ;;     (apply func args)
+  ;;     (setq company-tabnine--disable-next-transform nil)
+  ;;     (car args)))
+
+  ;; (defun my-company-tabnine (func &rest args)
+  ;;   (when (eq (car args) 'candidates)
+  ;;     (setq company-tabnine--disable-next-transform t))
+  ;;   (apply func args))
+
+  ;; (advice-add #'company--transform-candidates :around #'my-company--transform-candidates)
+  ;; (advice-add #'company-tabnine :around #'my-company-tabnine)
+  )
 
 ;; 图形界面
 (use-package company-box
@@ -104,12 +108,12 @@
   ("C-c C-p r" . consult-ripgrep)
   :config
   (setq
-      consult-narrow-key "<"
-      consult-line-numbers-widen t
-      consult-async-min-input 2
-      consult-async-refresh-delay  0.15
-      consult-async-input-throttle 0.2
-      consult-async-input-debounce 0.1))
+    consult-narrow-key "<"
+    consult-line-numbers-widen t
+    consult-async-min-input 2
+    consult-async-refresh-delay  0.15
+    consult-async-input-throttle 0.2
+    consult-async-input-debounce 0.1))
 
 (define-key minibuffer-local-map (kbd "C-c C-e") 'embark-export-write)
 

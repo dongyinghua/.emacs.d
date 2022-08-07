@@ -74,7 +74,7 @@
 (use-package visual-fill-column
   :ensure t
   :defer t
-  :hook (after-init . visual-fill-column-mode)
+  :hook (after-init . (lambda () (global-visual-fill-column-mode)))
   :init
   (add-hook 'text-mode-hook 'toggle-truncate-lines-off)
   ;; 在所有从text-mode衍生出来的mode中使用visual-fill-column-mode

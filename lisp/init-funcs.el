@@ -187,6 +187,12 @@ Return the fastest package archive."
     ;; Return the fastest
     fastest))
 
+(defun childframe-workable-p ()
+  "Whether childframe is workable."
+  (or (not (or noninteractive
+               emacs-basic-display
+               (not (display-graphic-p))))
+      (daemonp)))
 
 ;; Functions for org mode.
 

@@ -75,6 +75,7 @@
 ;;Degug
 (require 'init-dap)
 ;;Language
+(require 'init-flycheck)
 (require 'init-c)
 (require 'init-python)
 

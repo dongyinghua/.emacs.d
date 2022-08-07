@@ -1,26 +1,33 @@
 ;;; init-dap.el --- Initialize the dap mode. -*- lexical-binding: t -*-
-;;;Commentary
+;;; Commentary:
 ;;; Code:
 
+;; Debug
 (use-package dap-mode
-  :ensure t
-  :after hydra lsp-mode
+  :defines dap-python-executable
+  :diminish
+  :bind (:map lsp-mode-map
+          ("<f5>" . dap-debug)
+          ("M-<f5>" . dap-hydra))
+  :hook ((after-init     . dap-auto-configure-mode)
+          (dap-stopped    . (lambda (_) (dap-hydra)))
+
+          (python-mode            . (lambda () (require 'dap-python)))
+          (ruby-mode              . (lambda () (require 'dap-ruby)))
+          (go-mode                . (lambda () (require 'dap-go)))
+          (java-mode              . (lambda () (require 'dap-java)))
+          ((c-mode c++-mode)      . (lambda () (require 'dap-lldb)))
+          ((objc-mode swift-mode) . (lambda () (require 'dap-lldb)))
+          (php-mode               . (lambda () (require 'dap-php)))
+          (elixir-mode            . (lambda () (require 'dap-elixir)))
+          ((js-mode js2-mode)     . (lambda () (require 'dap-chrome)))
+          (powershell-mode        . (lambda () (require 'dap-pwsh))))
   :init
-  (dap-mode 1)
-  (dap-tooltip-mode 1)
-  (dap-auto-configure-mode 1)
-  (dap-ui-controls-mode 1)
-  (require 'dap-lldb)
-  :config
-  (use-package dap-ui
-    :ensure nil
-    :config
-    (dap-ui-mode 1))
+  (setq dap-auto-configure-features '(sessions locals breakpoints expressions controls))
+  (when (executable-find "python3")
+    (setq dap-python-executable "python3"))
+  )
 
-  (setq dap-auto-configure-feature
-    '(sessions locals breakpoints expressions repl controls tooltip)))
-
-;;(use-package dap-lldb)
 
 (provide 'init-dap)
 ;;; init-dap.el ends here.

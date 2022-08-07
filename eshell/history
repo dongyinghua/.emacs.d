@@ -11,3 +11,50 @@ vim .zshenv
 pyenv version
 pip install ptvsd
 python
+pyenv version
+pip uninstall pyright
+pip install python-lsp-server
+pip list
+pyenv Version
+pyenv local py38_tf2
+pyenv version
+pyenv version
+pip install python-lsp-server
+pip list
+pip install Flake8-pep257
+pip list
+pip uninstall flake8
+pip uninstall Flake8-pep257
+pip install pyflakes autopep8
+python3.8 -m pip install --upgrade pip
+pip install yaft
+pip list
+pip uninstall pyflakes autopep8
+pip list
+pip install pylint
+pyenv version
+pip list
+pip uninstall python-lsp-server
+pip list
+pip uninstall python-jsonrpc-server
+pip uninstall python-language-server
+pip uninstall python-lsp-jsonrpc
+emacs 
+pyenv version
+pip install pylint
+pip list
+pip install pyright
+pyenv version
+pyenv local 3.8.11
+emacs
+pyenv version
+cd /Users/yinghuadong/.pyenv/shims/p
+cd /Users/yinghuadong/.pyenv/shims/
+ls
+pip list
+pip uninstall flake8 
+pip uninstall flake8-pep257
+pip list
+pip uninstall autoflake
+pip uninstall autopep8
+pip list
