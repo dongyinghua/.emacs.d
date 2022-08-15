@@ -9,7 +9,7 @@
 
 (defcustom dragonli-emacs-tools-file-path
   (expand-file-name "tools" user-emacs-directory)
-  "This is the path of the thrid-party tools for emacs"
+  "This is the path of the thrid-party tools for Emacs."
   :group 'dragonli
   :type 'string)
 
@@ -74,12 +74,14 @@ If Non-nil, use dashboard, otherwise will restore previous session."
 
 
 (defcustom is-company t
-  "If not-nil, using company"
+  "If not-nil, using company."
   :group 'dragonli
   :type 'boolean)
 
 (defcustom my/completion-styles 'company
-  "There are three choices for completion. They are company, corfu and lsp-bridge. For example, if the value is company, choicing the company-mode for completion."
+  "There are three choices for completion.
+They are company, corfu and lsp-bridge.
+For example, if the value is company, choicing the company-mode for completion."
   :group 'dragonli
   :type 'string)
 

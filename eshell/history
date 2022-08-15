@@ -58,3 +58,5 @@ pip list
 pip uninstall autoflake
 pip uninstall autopep8
 pip list
+source .zshenv 
+source .zshenv 

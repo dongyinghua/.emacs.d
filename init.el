@@ -63,8 +63,9 @@
 (require 'init-completion)
 (require 'init-tools)
 (require 'init-projectile)
-
 (require 'init-git)
+(require 'init-treemacs)
+
 (require 'init-compile)
 (require 'init-org)
 

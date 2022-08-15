@@ -17,8 +17,13 @@
     (setq lsp-ui-doc-position 'top))
   )
 
+(use-package lsp-treemacs
+  :ensure t
+  :defer t)
+
 (use-package lsp-pyright
   :ensure t
+  :defer t
   :preface
   ;; Use yapf to format
   (defun lsp-pyright-format-buffer ()

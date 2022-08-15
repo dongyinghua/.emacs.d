@@ -1,6 +1,6 @@
 ;;; init-dashboard.el --- Initialize dashboard configurations.  -*- lexical-binding: t -*-
 
-;;; Commentary
+;;; Commentary:
 ;;
 ;; Dashboard configurations.
 ;;
@@ -13,8 +13,6 @@
 (when dragonli-dashboard
   (use-package dashboard
     :ensure t
-    ;;:defer 1
-    ;;:diminish dashboard-mode
     :functions (all-the-icons-faicon
                  all-the-icons-material
                  winner-undo
@@ -89,8 +87,6 @@
                                      (projects  . "briefcase")
                                      (agenda    . "calendar")
                                      (bookmarks . "bookmark")))
-    ;; (projects  . "briefcase")
-    ;; (registers . "database")))
 
     (setq dashboard-set-footer t
       dashboard-footer (format "Powered by Yinghua Dong, %s" (format-time-string "%Y"))
@@ -214,6 +210,4 @@
         (setq dashboard-recover-layout-p nil)))))
 
 (provide 'init-dashboard)
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; init-dashboard.el ends here

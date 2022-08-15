@@ -1,8 +1,7 @@
 ;; -*- mode: emacs-lisp; eval: (progn (pp-buffer) (indent-buffer)) -*-
 ((def-persp nil
-   ((def-buffer "init-lsp.el" "/Users/yinghuadong/.emacs.d/lisp/init-lsp.el" emacs-lisp-mode)
-    (def-buffer "init-python.el" "/Users/yinghuadong/.emacs.d/lisp/init-python.el" emacs-lisp-mode)
-    (def-buffer "test.py" "/Users/yinghuadong/Desktop/test/test.py" python-mode)
+   ((def-buffer "init-org.el" "/Users/yinghuadong/.emacs.d/lisp/init-org.el" emacs-lisp-mode)
+    (def-buffer "2022081500_translation_what_is_a_wireless_uav_a_design_blueprint_for_6g_flying_wireless_nodes.org" "/Users/yinghuadong/Documents/Org/org-roam-directory/2022081500_translation_what_is_a_wireless_uav_a_design_blueprint_for_6g_flying_wireless_nodes.org" org-mode)
     (def-buffer "Inbox.org" "/Users/yinghuadong/Documents/Org/GTD/Inbox.org" org-mode)
     (def-buffer "Projects.org" "/Users/yinghuadong/Documents/Org/GTD/Projects.org" org-mode)
     (def-buffer "Schedule.org" "/Users/yinghuadong/Documents/Org/GTD/Schedule.org" org-mode)
@@ -27,7 +26,7 @@
       (total-height . 31)
       (normal-height . 1.0)
       (normal-width . 1.0)
-      (buffer "init-lsp.el"
+      (buffer "init-org.el"
 	      (selected . t)
 	      (hscroll . 0)
 	      (fringes 8 8 t nil)
@@ -35,11 +34,14 @@
 	      (scroll-bars nil 0 t nil 0 t nil)
 	      (vscroll . 0)
 	      (dedicated)
-	      (point . 832)
-	      (start . 270))
+	      (point . 10458)
+	      (start . 10271))
       (prev-buffers
-       ("init-python.el" 1 244)
-       ("test.py" 1 40)
+       ("2022081500_translation_what_is_a_wireless_uav_a_design_blueprint_for_6g_flying_wireless_nodes.org" 4961 5630)
+       ("Inbox.org" 1 1)
+       ("Projects.org" 1 1)
+       ("Schedule.org" 1 1)
+       ("TODOs.org" 1 1)
        ("*dashboard*" 1 1)
        ("*scratch*" 1 146))))
    (def-params nil)

@@ -56,7 +56,7 @@
         ("T" projectile-regenerate-tags) ;Regenerate the project’s [e|g]tags.
         ("R" projectile-recentf)
         ("s" projectile-switch-project))
-    )))
+      )))
 (global-set-key (kbd "C-c <f2>") 'hydra-my-project-command-launcher/body)
 
 ;; Global toggles launcher
@@ -130,12 +130,13 @@
       (("B" org-bars-mode "org bars" :toggle t :color amaranth)
         ("Z" org-zotxt-mode :toggle t)
         ("V" valign-mode "table optimization" :toggle t :color amaranch)
+        ("N" org-num-mode :toggle t :color amaranch)
         ;;("i" org-indent-mode "org indent" :toggle t :color amaranth)
-        ("i t" org-toggle-inline-images "toggle images" :toggle t :color amaranth)
-        ("i d" org-display-inline-images)
+        ("f" org-fragtog-mode :toggle t :color amaranth)
+        ("l" org-latex-preview :color amaranth)
         ("c" org-capture)
         ("t" org-insert-structure-template "org template")
-        ("l" org-insert-link)
+        ("L" org-insert-link)
         ("o" org-open-at-point)
         ("b" org-mark-ring-goto)
         ("R" org-refile)
@@ -154,6 +155,13 @@
         ("r b" org-mark-ring-goto :exit nil)
         ("n e" open-emacs-learning-note)
         ("n o" open-org-learning-note))
+      "Org Image"
+      (("i t" org-toggle-inline-images "toggle images" :color amaranth)
+        ("i d" org-display-inline-images)
+        ("i D" org-download-delete)
+        ("i p" org-download-clipboard)
+        ("i r" org-download-rename-at-point)
+        )
       )))
 (global-set-key (kbd "M-SPC") 'hydra-my-org-launcher/body)
 

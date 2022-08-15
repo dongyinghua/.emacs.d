@@ -82,7 +82,7 @@
   :config
   (setq visual-fill-column-enable-sensible-window-split t)
   ;;(setq-default visual-fill-column-center-text t)
-  (advice-add 'text-scale-adjust :after #'visual-fill-column-adjust)
+  (advice-add 'text-scale-adjust :after 'visual-fill-column-adjust)
   (setq-default fill-column 100)
   ;; visual-fill-column-extra-text-width可以调节文本在中间时，文本两边距屏幕边缘的距离
   ;;(setq-default visual-fill-column-extra-text-width '(5 . 10))
@@ -136,8 +136,8 @@
   :config
   (setq undo-tree-visualizer-timestamps t)
   (setq undo-tree-visualizer-diff t)
-  (setq undo-tree-auto-save-history nil)
-  (evil-set-undo-system 'undo-tree))
+  (setq undo-tree-auto-save-history t))
+  ;;(evil-set-undo-system 'undo-tree))
 
 ;; https://github.com/Malabarba/smart-mode-line
 ;;(use-package smart-mode-line
@@ -148,23 +148,20 @@
 ;;   :hook (after-init . good-scroll-mode))
 
 ;; https://github.com/abo-abo/avy
-;; 暂时用不到 avy
-;; (use-package avy
-;;   :ensure t
-;;   :defer t
-;;   :hook (org-mode . avy-setup-default)
-;;   :bind (("C-c '" . avy-goto-char-timer)
-;;           ("M-g l" . avy-goto-line)
-;;           ("M-g w" . avy-goto-word-1)
-;;           ("M-g o" . avy-org-goto-heading-timer))
-;;   :config
-;;   (setq avy-timeout-seconds 2)
-;;   (setf (alist-get ?e avy-dispatch-alist) 'avy-action-embark)
-;;   (setq avy-all-windows nil
-;;     avy-all-windows-alt t
-;;     avy-background t
-;;     avy-style 'pre)
-;;   )
+(use-package avy
+  :ensure t
+  :defer t
+  :bind (("C-c '" . avy-goto-char-timer)
+          ("M-g l" . avy-goto-line)
+          ("M-g w" . avy-goto-word-1)
+          ("M-g o" . avy-org-goto-heading-timer))
+  :config
+  (setq avy-timeout-seconds 2)
+  (setf (alist-get ?e avy-dispatch-alist) 'avy-action-embark)
+  (setq avy-all-windows nil
+    avy-all-windows-alt t
+    avy-background t
+    avy-style 'pre))
 
 ;;(use-package tiny)
 

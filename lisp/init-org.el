@@ -12,6 +12,7 @@
 (use-package org
   :pin melpa
   :ensure t
+  :defer 1
   :bind
   ("C-c a" . org-agenda)
   ("C-c x" . org-capture)
@@ -20,6 +21,9 @@
   ("C-c r" . org-refile)
   ("C-c 。" . org-time-stamp)
   :config
+  ;; 使 org-mode 中的 timestamp 格式为英文
+  (setq system-time-locale "C")
+
   ;; Add new template
   (add-to-list 'org-structure-template-alist '("n" . "note"))
 
@@ -28,11 +32,29 @@
   ;;(setq org-startup-indented t)
 
   ;; https://apple.stackexchange.com/questions/277928/error-auctex-cannot-find-a-working-tex-distribution-macos-sierra
-  (setenv "PATH" (concat (getenv "PATH") ":/Library/TeX/texbin/"))
-  (setq exec-path (append exec-path '("/Library/TeX/texbin/")))
+  ;; (setenv "PATH" (concat (getenv "PATH") ":/Library/TeX/texbin/"))
+  ;; (setq exec-path (append exec-path '("/Library/TeX/texbin/")))
 
   ;;使用 XeLaTeX 程序进行编译转换
   (setq org-latex-compiler "xelatex")
+  (setq org-latex-pdf-process '("xelatex %f"))
+  (add-to-list 'org-latex-default-packages-alist '("" "ctex" t ("xelatex")))
+
+  ;; 解决org-mode中LaTeX数学公式中的中文渲染问题
+  ;; https://q3yi.me/post/4_use_xelatex_instead_of_latex_in_org_preview_latex_process/
+  (add-to-list 'org-preview-latex-process-alist
+    '(xdvsvgm :progams
+       ("xelatex" "dvisvgm")
+       :discription "xdv > svg"
+       :message "you need install the programs: xelatex and dvisvgm."
+       :image-input-type "xdv"
+       :image-output-type "svg"
+       :image-size-adjust (2.7 . 2.5) ; 调整 svg 的 size
+       :latex-compiler ("xelatex -interaction nonstopmode -no-pdf -output-directory %o %f")
+       :image-converter ("dvisvgm %f -n -b min -c %S -o %O")))
+
+  (setq org-preview-latex-default-process 'xdvsvgm)
+
 
   ;; To speed up startup, don't put to init section
   (setq org-modules nil)     ;; Faster loading
@@ -147,6 +169,7 @@
 ;; emacs-china：https://emacs-china.org/t/org-mode/16826
 (use-package org-appear
   :ensure t
+  :defer t
   :hook (org-mode . org-appear-mode)
   :config
   ;;使用evil-mode后，可以用以下代码来实现只在编辑模式下激活org-appear-mode
@@ -157,11 +180,11 @@
   (setq org-appear-trigger 'manual)
   (add-hook 'org-mode-hook (lambda ()
                              (add-hook 'evil-insert-state-entry-hook
-                               #'org-appear-manual-start
+                               'org-appear-manual-start
                                nil
                                t)
                              (add-hook 'evil-insert-state-exit-hook
-                               #'org-appear-manual-stop
+                               'org-appear-manual-stop
                                nil
                                t)
                              )
@@ -173,16 +196,16 @@
 ;; org-roam
 (use-package org-roam
   :ensure t
-  ;; :defer t
-  ;; :hook (org-mode . org-roam-mode)
+  ;;:defer 2
   :bind ("C-c o f" . org-roam-node-find)
   :config
   (setq org-roam-directory "~/Documents/Org/org-roam-directory")
+
   (setq find-file-visit-truename t)
   ;; 如果不激活org-roam-db-autosync-mode，就会导致org-roam-directory里的笔记不是最新的，
   ;; 也就是说新创建的笔记用“M-x org-roam-node-find”找不到
   (org-roam-db-autosync-mode)
-  ;; (setq org-roam-completion-everywhere t)
+  (setq org-roam-completion-everywhere t)
 
   (setq org-roam-capture-templates
     '(("s" "simple default" plain "%?"
@@ -196,13 +219,11 @@
        ("p" "Paper Note" plain "* FIRST PASS\n ** Category\n\n** Context\n\n** Correctness\n\n** Contribution\n\n** Clarity\n * SECOND PASS\n\n* * THIRD PASS"
          :target (file+head "%<%Y%m%d%H>_${slug}.org"
                    "#+STARTUP:\n#+title: ${title}\n\n")
-         :unnarrowed t)
-       )
-    )
+         :unnarrowed t)))
 
   ;;org-roam-dailies-directory
-  (setq org-roam-dailies-directory "~/Documents/Org/org-roam-directory/daily")
-  (setq org-roam-dailies-capture-templates
+  (setq-default org-roam-dailies-directory "~/Documents/Org/org-roam-directory/daily")
+  (setq-default org-roam-dailies-capture-templates
     '(("j" "journal" plain "* %?"
         :target (file+head "%<%Y-%m-%d-%a>-日志.org"
                   "#+title: %<%Y-%m-%d-%a>-日志\n")
@@ -222,14 +243,13 @@
     ;;  :unnarrowed t))
     )
 
-
   ;; 必须要在init.el中加入(require 'org-roam-protocol)以及打开Emacs Server，
   ;; 否则网页抓取会出现问题
   ;; org-roam的网页抓取原理是利用 org-protocol 这样的外部程序和 Emacs 进行通信的机制
   (require 'org-roam-protocol)
 
   ;;网页抓取
-  (setq org-roam-capture-ref-templates
+  (setq-default org-roam-capture-ref-templates
     '(("D" "Default" plain "\n"
         :target (file+head "${slug}.org" "#+title: ${title}\n\n")
         ;; :immediate-finish t
@@ -241,14 +261,14 @@
        ("r" "Reference" plain
          "* FIRST PASS\n* Category\nWhat type of paper is this? A measurement paper? An analysis of an existing system? A description of a research prototype?\n\n** Context\nWhich other papers is it related to? Which theoretical bases were used to analyze the problem?\n\n** Correctness\nDo the assumptions appear to be valid?\n\n** Contribution\nWhat are the paper’s main contributions?\n\n** Clarity\nIs the paper well written?\n\n* SECOND PASS\n\n* THIRD PASS\n\n"
          :target (file+head "${slug}.org" "#+title: ${title}\n\n")
-         :unnarrowed t)
-       )
+         :unnarrowed t))
     )
   )
 
 
 (use-package org-roam-ui
   :ensure t
+  :defer t
   :bind ("C-c o i" . org-roam-ui-open)
   ;;normally we'd recommend hooking orui after org-roam, but since org-roam does not have
   ;;a hookable mode anymore, you're advised to pick something yourself
@@ -258,8 +278,7 @@
   (setq org-roam-ui-sync-theme t
     org-roam-ui-follow t
     org-roam-ui-update-on-save t
-    org-roam-ui-open-on-start t)
-  )
+    org-roam-ui-open-on-start t))
 
 (use-package org-roam-bibtex
   :after org-roam
@@ -272,11 +291,34 @@
 
 (use-package zotxt
   :ensure t
-  :after org-roam
+  :after org org-roam
   :defer t
-  :hook (org-roam-mode . org-zotxt-mode))
+  :hook
+  (org . org-zotxt-mode)
+  (org-roam-mode . org-zotxt-mode))
+
+(use-package org-fragtog
+  :ensure t
+  :defer t
+  ;; :hook
+  ;; (org-mode . org-fragtog-mode)
+  ;; (org-roam-mode . org-fragtog-mode)
+  )
+
+(use-package org-download
+  :ensure t
+  :defer t
+  :hook
+  (org-mode . org-download-enable)
+  (org-roam-mode . org-download-enable)
+  :init
+  ;;(setq-default org-download-heading-lvl nil)
+  (setq-default org-download-image-dir "./images")
+  (defun dummy-org-download-annotate-function (link)
+    "")
+  (setq org-download-annotate-function
+    'dummy-org-download-annotate-function)
+  )
 
 (provide 'init-org)
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; init-org.el ends here

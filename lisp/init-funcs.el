@@ -12,18 +12,22 @@
 ;; init-keybindings.el
 ;;快速打开配置文件
 (defun open-init-file()
+  "Open `init.el'."
   (interactive)
   (find-file "~/.emacs.d/init.el"))
 
 (defun open-init-org()
+  "Open `init-org.el'."
   (interactive)
   (find-file "~/.emacs.d/lisp/init-org.el"))
 
 (defun open-emacs-learning-note ()
+  "Open the note about learning Emacs."
   (interactive)
   (find-file "~/Documents/Org/org-roam-directory/2022021709_emacs_learning_note.org"))
 
 (defun open-org-learning-note ()
+  "Open the note about learning Org."
   (interactive)
   (find-file "~/Documents/Org/org-roam-directory/2022021709_org_learning_note.org"))
 
@@ -31,7 +35,7 @@
 ;;Emacs Server
 ;; define function to shutdown emacs server instance
 (defun server-shutdown ()
-  "Save buffers, Quit, and Shutdown (kill) server"
+  "Save buffers, Quit, and Shutdown (kill) server."
   (interactive)
   (save-some-buffers)
   (kill-emacs)
@@ -39,9 +43,10 @@
 
 ;; init-packages.el
 ;; 增强 embark 和 consult，批量搜索替换大杀器
-(defun embark-export-write()
+(defun embark-export-write ()
   "Export the current vertico results to a writable buffer if possible.
-Supports exporting consult-grep to wgrep, file to wdeired, and consult-location to occur-edit"
+Supports exporting consult-grep to wgrep,
+file to wdeired, and consult-location to occur-edit"
   (interactive)
   (require 'embark)
   (require 'wgrep)
@@ -77,12 +82,14 @@ Supports exporting consult-grep to wgrep, file to wdeired, and consult-location 
 
 ;;在所有由text-mode衍生出来的mode中禁用toggle-truncate-lines
 (defun toggle-truncate-lines-off()
+  "禁用 `toggle-truncate-lines'."
   (interactive)
   (setq truncate-lines nil)
   )
 
 ;; init-font.el
 (defun s-font()
+  "Setting fonts."
   (interactive)
   ;;Setting English Font
   (set-face-attribute
@@ -116,7 +123,7 @@ Supports exporting consult-grep to wgrep, file to wdeired, and consult-location 
 
 (defun centaur-set-variable (variable value &optional no-save)
   "Set the VARIABLE to VALUE, and return VALUE.
-  Save to `custom-file' if NO-SAVE is nil."
+Save to `custom-file' if NO-SAVE is nil."
   (customize-set-variable variable value)
   (when (and (not no-save)
           (file-writable-p custom-file))
@@ -132,7 +139,7 @@ Supports exporting consult-grep to wgrep, file to wdeired, and consult-location 
 
 ;; Pakcage repository (ELPA)
 (defun set-package-archives (archives &optional refresh async no-save)
-  "Set the package archives (ELPA).
+  "Set the package ARCHIVES (ELPA).
 REFRESH is non-nil, will refresh archive contents.
 ASYNC specifies whether to perform the downloads in the background.
 Save to `custom-file' if NO-SAVE is nil."
@@ -190,9 +197,9 @@ Return the fastest package archive."
 (defun childframe-workable-p ()
   "Whether childframe is workable."
   (or (not (or noninteractive
-               emacs-basic-display
-               (not (display-graphic-p))))
-      (daemonp)))
+             emacs-basic-display
+             (not (display-graphic-p))))
+    (daemonp)))
 
 ;; Functions for org mode.
 
@@ -203,29 +210,15 @@ Return the fastest package archive."
 See `buffer-invisibility-spec'."
   (remove-from-invisibility-spec '(outline . t))
   (add-to-invisibility-spec 'outline))
-
-;; 取消标题前面的 * 号
-;; 用法 (use-package :hook (org-mode . me-org-mode-remove-stars))
-(defun me-org-mode-remove-stars ()
-  (font-lock-add-keywords
-    nil
-    '(("^\\*+ "
-        (0
-          (prog1 nil
-            (put-text-property (match-beginning 0) (match-end 0)
-              'invisible t)))))))
 
 
 ;;按f11让Emacs进入全屏显示
 ;;参考： http://www.emacswiki.org/cgi-bin/wiki/FullScreen
-
 (defun fullscreen ()
+  "按 f11 让 Emacs 进入全屏显示."
   (interactive)
   (set-frame-parameter nil 'fullscreen
     (if (frame-parameter nil 'fullscreen) nil 'fullboth)))
 
 (provide 'init-funcs)
-
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; init-funcs.el ends here
