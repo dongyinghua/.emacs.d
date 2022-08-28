@@ -88,3 +88,5 @@ var/
 workspace/
 *.~undo-tree~
 **/*.~undo-tree~
+*.el~
+**/*.el~
