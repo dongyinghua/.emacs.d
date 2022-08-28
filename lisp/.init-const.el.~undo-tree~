@@ -1,6 +1,0 @@
-(undo-tree-save-format-version . 1)
-"01ecd6243c10493af4e077e1bf1d3e5a4fa01e1a"
-[nil nil nil nil (25300 4591 698916 0) 0 nil]
-([nil nil ((#("https://github.com/seagle0128/.emacs.d" 0 38 (face font-lock-string-face fontified t)) . -155) (undo-tree-id0 . -38) (undo-tree-id1 . -38) 193 (t 25284 21353 512146 751000)) nil (25300 4591 698913 0) 0 nil])
-([nil current ((nil rear-nonsticky nil 193 . 194) (nil fontified nil 155 . 194) (155 . 194)) nil (25300 4591 698891 0) 0 nil])
-nil

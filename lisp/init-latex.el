@@ -7,11 +7,7 @@
 
 ;;; Code:
 
-(setq-default TeX-engine 'xetex)
-;; (setq-default org-latex-compiler "xelatex")
-;; (setq-default org-latex-pdf-process '("xelatex %f"))
-;;(add-to-list 'org-latex-default-packages-alist '("" "ctex" t ("xelatex")))
-
+;;(setq-default TeX-engine 'xetex)
 (provide 'init-latex)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

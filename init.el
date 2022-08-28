@@ -60,6 +60,7 @@
 ;; Key Bindings
 (require 'init-keybindings)
 
+;;(require 'init-eaf)
 (require 'init-completion)
 (require 'init-tools)
 (require 'init-projectile)

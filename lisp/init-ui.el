@@ -42,13 +42,21 @@
       ;;eldoc-mode 显示函数或变量的信息
       ))
 
-;; 显示行号
+;; modeline 显示行号
 ;; (global-linum-mode 1)
 ;; 用linum-mode的话会和viusal-fill-column-mode冲突，导致行号显示不出来而且移动光标会出现行号一闪就消失的情况
-(use-package display-line-numbers
-  :ensure nil
-  :defer t
-  :hook (after-init . global-display-line-numbers-mode))
+;; (use-package display-line-numbers
+;;   :ensure nil
+;;   :defer t
+;;   :hook (doom-modeline-mode . global-display-line-numbers-mode))
+
+;; modeline 显示列号
+(add-hook 'doom-modeline-mode-hook
+  #'(lambda ()
+      (global-display-line-numbers-mode)
+      (column-number-mode)
+      (size-indication-mode)
+      ))
 
 ;;doom-themes
 ;;🔗https://github.com/doomemacs/themes
@@ -110,10 +118,11 @@
   ;; How tall the mode-line should be. It's only respected in GUI.
   ;; If the actual char height is larger, it respects the actual height.
   ;; If ‘doom-modeline-height’ is <= 0 the modeline will have default height.
-  (setq doom-modeline-height 1)
+  (setq doom-modeline-height 4)
 
   ;; How wide the mode-line bar should be. It's only respected in GUI.
-  (setq doom-modeline-bar-width 4)
+  ;; If `doom-modeline-bar-width' is <= 0, the modeline will be the min width.
+  (setq doom-modeline-bar-width 0)
 
   ;; Whether to use hud instead of default bar. It's only respected in GUI.
   (setq doom-modeline-hud nil)

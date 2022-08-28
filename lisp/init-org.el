@@ -25,7 +25,7 @@
   (setq system-time-locale "C")
 
   ;; Add new template
-  (add-to-list 'org-structure-template-alist '("n" . "note"))
+  ;;(add-to-list 'org-structure-template-alist '("n" . "note"))
 
   ;;org-mode缩进
   ;; org-bars-mode 开启时会自动开启 org-indent-mode
@@ -128,6 +128,41 @@
        ;; ...other commands here
        ))
 
+  ;; org for beamer
+  (eval-after-load "ox-latex"
+
+  ;; update the list of LaTeX classes and associated header (encoding, etc.)
+  ;; and structure
+  '(add-to-list 'org-latex-classes
+                `("beamer"
+                  ,(concat "\\documentclass[presentation]{beamer}\n"
+                           "[DEFAULT-PACKAGES]"
+                           "[PACKAGES]"
+                           "[EXTRA]\n")
+                  ("\\section{%s}" . "\\section*{%s}")
+                  ("\\subsection{%s}" . "\\subsection*{%s}")
+                   ("\\subsubsection{%s}" . "\\subsubsection*{%s}"))))
+  (setq org-latex-listings t)
+  ;;     (setq org-emphasis-alist (quote (("*" bold "<b>" "</b>")
+  ;;                                       ("/" italic "<i>" "</i>")
+  ;;                                       ("_" underline "<span
+  ;; style=\"text-decoration:underline;\">" "</span>")
+  ;;                                       ("=" org-code "<code>" "</code>"
+  ;;                                         verbatim)
+  ;;                                       ("~" org-verbatim "<code>" "</code>"
+  ;;                                         verbatim)
+  ;;                                       ("+" (:strike-through t) "<del>" "</del>")
+  ;;                                       ("@" org-warning "<b>" "</b>")))
+  ;;       org-export-latex-emphasis-alist (quote
+  ;;                                         (("*" "\\textbf{%s}" nil)
+  ;;                                           ("/" "\\emph{%s}" nil)
+  ;;                                           ("_" "\\underline{%s}" nil)
+  ;;                                           ("+" "\\texttt{%s}" nil)
+  ;;                                           ("=" "\\verb=%s=" nil)
+  ;;                                           ("~" "\\verb~%s~" t)
+  ;;                                           ("@" "\\alert{%s}" nil))))
+
+
   ) ; use-package org
 
 ;; (use-package org-superstar
@@ -137,6 +172,11 @@
 ;;   (setq org-superstar-headline-bullets-list '("▼")) ; no bullets
 ;;   (setq org-ellipsis " ▼ ")
 ;;   )
+
+(use-package ox-beamer
+  :ensure nil
+  :defer t
+  :hook (org-mode . org-beamer-mode))
 
 ;; https://github.com/casouri/valign
 ;; 表格对齐
@@ -196,7 +236,7 @@
 ;; org-roam
 (use-package org-roam
   :ensure t
-  ;;:defer 2
+  :defer 2
   :bind ("C-c o f" . org-roam-node-find)
   :config
   (setq org-roam-directory "~/Documents/Org/org-roam-directory")
@@ -259,7 +299,7 @@
          ;; :immediate-finish t
          :unnarrowed t)
        ("r" "Reference" plain
-         "* FIRST PASS\n* Category\nWhat type of paper is this? A measurement paper? An analysis of an existing system? A description of a research prototype?\n\n** Context\nWhich other papers is it related to? Which theoretical bases were used to analyze the problem?\n\n** Correctness\nDo the assumptions appear to be valid?\n\n** Contribution\nWhat are the paper’s main contributions?\n\n** Clarity\nIs the paper well written?\n\n* SECOND PASS\n\n* THIRD PASS\n\n"
+         "* FIRST PASS\n** Category\nWhat type of paper is this? A measurement paper? An analysis of an existing system? A description of a research prototype?\n\n** Context\nWhich other papers is it related to? Which theoretical bases were used to analyze the problem?\n\n** Correctness\nDo the assumptions appear to be valid?\n\n** Contribution\nWhat are the paper’s main contributions?\n\n** Clarity\nIs the paper well written?\n\n* SECOND PASS\n\n* THIRD PASS\n\n"
          :target (file+head "${slug}.org" "#+title: ${title}\n\n")
          :unnarrowed t))
     )
@@ -319,6 +359,14 @@
   (setq org-download-annotate-function
     'dummy-org-download-annotate-function)
   )
+
+(use-package org-re-reveal
+  :ensure t
+  :defer t
+  :hook (after-init . (lambda () (require 'org-re-reveal)))
+  :config
+  ;; reveal.js 的根目录
+  (setq org-re-reveal-root "file:///Users/yinghuadong/reveal.js"))
 
 (provide 'init-org)
 ;;; init-org.el ends here

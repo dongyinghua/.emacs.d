@@ -75,10 +75,12 @@
         ("c" flyspell-mode "spell check" :toggle t)
         ("d" global-hungry-delete-mode "hungry delete" :toggle t)
         ("e" electric-pair-mode "electric pair" :toggle t)
-        ("s" prettify-symbols-mode "pretty symbol" :toggle t)
+        ("S" prettify-symbols-mode "pretty symbol" :toggle t)
         ("l" global-page-break-lines-mode "page break lines" :toggle t)
         ("i" display-time-mode "time" :toggle t)
         ("m" doom-modeline-mode "modern mode-line" :toggle t)
+        ("C" column-number-mode :toggle t)
+        ("s" size-indication-mode :toggle t)
         ("N" nyan-mode "nyan mode" :toggle t))
       "Package Archive"
       (("p m" (centaur-set-package-archives 'melpa t)
