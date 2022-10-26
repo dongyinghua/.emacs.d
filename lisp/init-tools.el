@@ -14,7 +14,8 @@
 ;; (add-to-list 'load-path (expand-file-name "org-bars" dragonli-emacs-tools-file-path))
 
 (use-package awesome-tab
-  :load-path "~/.emacs.d/tools/awesome-tab"
+  :load-path (lambda () (expand-file-name "awesome-tab" dragonli-emacs-tools-file-path))
+  ;;"~/.emacs.d/tools/awesome-tab"
   :ensure nil
   :defer t
   :hook (after-init . awesome-tab-mode)
@@ -49,7 +50,8 @@ Other buffer group by `awesome-tab-get-group-name' with project name."
           (awesome-tab-get-group-name (current-buffer)))))))
 
 (use-package org-bars
-  :load-path "~/.emacs.d/tools/org-bars"
+  :load-path (lambda () (expand-file-name "org-bars" dragonli-emacs-tools-file-path))
+  ;;"~/.emacs.d/tools/org-bars"
   :ensure nil
   :defer t
   :hook (org-mode . org-bars-mode))

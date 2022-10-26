@@ -72,10 +72,10 @@
                             "~/Documents/Org/GTD/Projects.org"
                             "~/Documents/Org/GTD/Schedule.org"
                             "~/Documents/Org/GTD/TODOs.org"))
-  (setq org-refile-targets '(("~/Documents/Org/GTD/Projects.org" :maxlevel . 3)
-                              ("~/Documents/Org/GTD/TODOs.org" :maxlevel . 3)
-                              ("~/Documents/Org/GTD/Schedule.org" :maxlevel . 3)
-                              ("~/Documents/Org/GTD/Inbox.org" :maxlevel . 3)
+  (setq org-refile-targets '(("~/Documents/Org/GTD/Projects.org" :maxlevel . 5)
+                              ("~/Documents/Org/GTD/TODOs.org" :maxlevel . 5)
+                              ("~/Documents/Org/GTD/Schedule.org" :maxlevel . 5)
+                              ("~/Documents/Org/GTD/Inbox.org" :maxlevel . 5)
                               ))
 
   ;; org-capture
@@ -131,17 +131,17 @@
   ;; org for beamer
   (eval-after-load "ox-latex"
 
-  ;; update the list of LaTeX classes and associated header (encoding, etc.)
-  ;; and structure
-  '(add-to-list 'org-latex-classes
-                `("beamer"
-                  ,(concat "\\documentclass[presentation]{beamer}\n"
-                           "[DEFAULT-PACKAGES]"
-                           "[PACKAGES]"
-                           "[EXTRA]\n")
-                  ("\\section{%s}" . "\\section*{%s}")
-                  ("\\subsection{%s}" . "\\subsection*{%s}")
-                   ("\\subsubsection{%s}" . "\\subsubsection*{%s}"))))
+    ;; update the list of LaTeX classes and associated header (encoding, etc.)
+    ;; and structure
+    '(add-to-list 'org-latex-classes
+       `("beamer"
+          ,(concat "\\documentclass[presentation]{beamer}\n"
+             "[DEFAULT-PACKAGES]"
+             "[PACKAGES]"
+             "[EXTRA]\n")
+          ("\\section{%s}" . "\\section*{%s}")
+          ("\\subsection{%s}" . "\\subsection*{%s}")
+          ("\\subsubsection{%s}" . "\\subsubsection*{%s}"))))
   (setq org-latex-listings t)
   ;;     (setq org-emphasis-alist (quote (("*" bold "<b>" "</b>")
   ;;                                       ("/" italic "<i>" "</i>")
@@ -175,8 +175,8 @@
 
 (use-package ox-beamer
   :ensure nil
-  :defer t
-  :hook (org-mode . org-beamer-mode))
+  :defer 2
+  )
 
 ;; https://github.com/casouri/valign
 ;; 表格对齐
@@ -236,7 +236,7 @@
 ;; org-roam
 (use-package org-roam
   :ensure t
-  :defer 2
+  :defer
   :bind ("C-c o f" . org-roam-node-find)
   :config
   (setq org-roam-directory "~/Documents/Org/org-roam-directory")
@@ -268,14 +268,15 @@
         :target (file+head "%<%Y-%m-%d-%a>-日志.org"
                   "#+title: %<%Y-%m-%d-%a>-日志\n")
         :unnarrowed t)
-       ("w" "weekly report" plain "* %?"
-         :target (file+head "%<%Y-%m-%d-%a>-周报.org"
-                   "#+title: %<%Y-%m-%d-%a>-周报\n")
-         :unnarrowed t)
-       ("m" "monthly report" plain "* %?"
-         :target (file+head "%<%Y-%m-%d-%a>-月报.org"
-                   "#+title: %<%Y-%m-%d-%a>-月报\n")
-         :unnarrowed t))
+       ;; ("w" "weekly report" plain "* %?"
+       ;;   :target (file+head "%<%Y-%m-%d-%a>-周报.org"
+       ;;             "#+title: %<%Y-%m-%d-%a>-周报\n")
+       ;;   :unnarrowed t)
+       ;; ("m" "monthly report" plain "* %?"
+       ;;   :target (file+head "%<%Y-%m-%d-%a>-月报.org"
+       ;;             "#+title: %<%Y-%m-%d-%a>-月报\n")
+       ;;   :unnarrowed t)
+       )
     ;;("M" "regular meeting" plain
     ;;  "* Mini Talk\n\n * Academic Report\n\n * Key Points"
     ;;  :target (file+head "%<%Y-%m-%d-%a>-例会.org"
@@ -352,7 +353,7 @@
   (org-mode . org-download-enable)
   (org-roam-mode . org-download-enable)
   :init
-  ;;(setq-default org-download-heading-lvl nil)
+  (setq-default org-download-heading-lvl 4)
   (setq-default org-download-image-dir "./images")
   (defun dummy-org-download-annotate-function (link)
     "")
@@ -364,7 +365,7 @@
   :ensure t
   :defer t
   :hook (after-init . (lambda () (require 'org-re-reveal)))
-  :config
+  :init
   ;; reveal.js 的根目录
   (setq org-re-reveal-root "file:///Users/yinghuadong/reveal.js"))
 

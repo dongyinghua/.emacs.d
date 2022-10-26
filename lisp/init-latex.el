@@ -7,7 +7,7 @@
 
 ;;; Code:
 
-;;(setq-default TeX-engine 'xetex)
+(setq-default TeX-engine 'xetex)
 (provide 'init-latex)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

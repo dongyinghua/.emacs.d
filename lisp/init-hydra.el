@@ -42,7 +42,7 @@
         ("a w" avy-goto-word-1)
         ("a h" avy-org-goto-heading-timer))
       )))
-(global-set-key (kbd "C-c <f1>") 'hydra-my-emacs-commands-launcher/body)
+(global-set-key (kbd "s-1") 'hydra-my-emacs-commands-launcher/body)
 
 ;; Projectile commands launcher
 (with-no-warnings
@@ -57,7 +57,7 @@
         ("R" projectile-recentf)
         ("s" projectile-switch-project))
       )))
-(global-set-key (kbd "C-c <f2>") 'hydra-my-project-command-launcher/body)
+(global-set-key (kbd "s-2") 'hydra-my-project-command-launcher/body)
 
 ;; Global toggles launcher
 (with-no-warnings
@@ -98,7 +98,7 @@
         ("p u" (centaur-set-package-archives 'ustc t)
           "ustc" :toggle (eq centaur-package-archives 'ustc) :exit t)
         ("p T" (centaur-test-package-archives t) "speed test" :exit t)))))
-(global-set-key (kbd "C-c <f3>") 'hydra-emacs-toggles/body)
+(global-set-key (kbd "s-3") 'hydra-emacs-toggles/body)
 
 ;; Refer to https://github.com/abo-abo/hydra/wiki/multiple-cursors
 (with-no-warnings
@@ -121,7 +121,7 @@
         ;; Help with click recognition in this hydra
         ("<down-mouse-1>" ignore)
         ("<drag-mouse-1>" ignore)))))
-(global-set-key (kbd "C-c <f4>") 'hydra-multiple-cursors/body)
+(global-set-key (kbd "s-4") 'hydra-multiple-cursors/body)
 
 ;; Org mode commands launcher
 (with-no-warnings
@@ -130,9 +130,10 @@
       :color teal :quit-key "q")
     ("Basic"
       (("B" org-bars-mode "org bars" :toggle t :color amaranth)
-        ("Z" org-zotxt-mode :toggle t)
         ("V" valign-mode "table optimization" :toggle t :color amaranch)
         ("N" org-num-mode :toggle t :color amaranch)
+        ("z s" org-zotxt-mode :toggle t :color amaranch)
+        ("z i" org-zotxt-insert-reference-link)
         ;;("i" org-indent-mode "org indent" :toggle t :color amaranth)
         ("f" org-fragtog-mode :toggle t :color amaranth)
         ("l" org-latex-preview :color amaranth)

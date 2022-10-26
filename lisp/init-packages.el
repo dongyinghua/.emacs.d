@@ -137,15 +137,15 @@
   (setq undo-tree-visualizer-timestamps t)
   (setq undo-tree-visualizer-diff t)
   (setq undo-tree-auto-save-history t))
-  ;;(evil-set-undo-system 'undo-tree))
+;;(evil-set-undo-system 'undo-tree))
 
 ;; https://github.com/Malabarba/smart-mode-line
 ;;(use-package smart-mode-line
 ;;  :config (sml/setup))
 
 ;; https://github.com/io12/good-scroll.el
-;; (use-package good-scroll
-;;   :hook (after-init . good-scroll-mode))
+(use-package good-scroll
+  :hook (after-init . good-scroll-mode))
 
 ;; https://github.com/abo-abo/avy
 (use-package avy
