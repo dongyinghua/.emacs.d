@@ -143,10 +143,6 @@
 ;;(use-package smart-mode-line
 ;;  :config (sml/setup))
 
-;; https://github.com/io12/good-scroll.el
-(use-package good-scroll
-  :hook (after-init . good-scroll-mode))
-
 ;; https://github.com/abo-abo/avy
 (use-package avy
   :ensure t

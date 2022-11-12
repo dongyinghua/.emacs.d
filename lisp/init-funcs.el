@@ -93,14 +93,14 @@ file to wdeired, and consult-location to occur-edit"
   (interactive)
   ;;Setting English Font
   (set-face-attribute
-    'default nil :font "Source Code Pro 18" :weight 'normal)
+    'default nil :font "Fira Code Retina 20" :weight 'normal)
   ;;Chinese Font
   (dolist (charset '(kana han symbol cjk-misc bopomofo))
     (set-fontset-font (frame-parameter nil 'font)
       charset
       (font-spec :family "冬青黑体简体中文 W6")))
   ;; tune rescale so that Chinese character width = 2 * English character width
-  (setq face-font-rescale-alist '(("monospace" . 1.0) ("WenQuanYi" . 1.23)))
+  (setq face-font-rescale-alist '(("Fira Code Retina" . 1.0) ("冬青黑体简体中文 W6" . 1.23)))
   )
 
 (defun avy-action-embark (pt)

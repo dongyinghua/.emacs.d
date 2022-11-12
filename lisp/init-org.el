@@ -175,7 +175,7 @@
 
 (use-package ox-beamer
   :ensure nil
-  :defer 2
+  :defer t
   )
 
 ;; https://github.com/casouri/valign
@@ -262,19 +262,19 @@
          :unnarrowed t)))
 
   ;;org-roam-dailies-directory
-  (setq-default org-roam-dailies-directory "~/Documents/Org/org-roam-directory/daily")
+  (setq-default org-roam-dailies-directory "~/Documents/Org/org-roam-directory/diary")
   (setq-default org-roam-dailies-capture-templates
     '(("j" "journal" plain "* %?"
-        :target (file+head "%<%Y-%m-%d-%a>-日志.org"
-                  "#+title: %<%Y-%m-%d-%a>-日志\n")
+        :target (file+head "%<%Y-%m-%d-%a>-Diary.org"
+                  "#+title: %<%Y-%m-%d-%a>-Diary\n")
         :unnarrowed t)
        ;; ("w" "weekly report" plain "* %?"
-       ;;   :target (file+head "%<%Y-%m-%d-%a>-周报.org"
-       ;;             "#+title: %<%Y-%m-%d-%a>-周报\n")
+       ;;   :target (file+head "%<%Y-%m-%d-%a>-Weekly.org"
+       ;;             "#+title: %<%Y-%m-%d-%a>-Weekly\n")
        ;;   :unnarrowed t)
        ;; ("m" "monthly report" plain "* %?"
-       ;;   :target (file+head "%<%Y-%m-%d-%a>-月报.org"
-       ;;             "#+title: %<%Y-%m-%d-%a>-月报\n")
+       ;;   :target (file+head "%<%Y-%m-%d-%a>-Monthly.org"
+       ;;             "#+title: %<%Y-%m-%d-%a>-Monthly\n")
        ;;   :unnarrowed t)
        )
     ;;("M" "regular meeting" plain
@@ -364,7 +364,7 @@
 (use-package org-re-reveal
   :ensure t
   :defer t
-  :hook (after-init . (lambda () (require 'org-re-reveal)))
+  ;;:hook (after-init . (lambda () (require 'org-re-reveal)))
   :init
   ;; reveal.js 的根目录
   (setq org-re-reveal-root "file:///Users/yinghuadong/reveal.js"))
