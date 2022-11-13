@@ -7,10 +7,11 @@
 
 ;;; Code:
 
-(unless (package-installed-p 'auctex)  
-  (package-install 'auctex))
-
-(setq-default TeX-engine 'xetex)
+(use-package auctex
+  :ensure t
+  :defer 1
+  :init
+  (TeX-engine-set 'xetex))
 
 (provide 'init-latex)
 

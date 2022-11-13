@@ -9,7 +9,8 @@
 
 ;;; Code:
 
-
+;; https://www.reddit.com/r/emacs/comments/xfhnzz/weird_errors_with_latest_build_of_emacs/
+(when (eq system-type 'darwin) (customize-set-variable 'native-comp-driver-options '("-Wl,-w")))
 
 ;;如果不加这句代码的话，就会报错说找不到lisp中的.el文件
 (add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))

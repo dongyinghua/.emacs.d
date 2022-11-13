@@ -106,7 +106,7 @@
       `(((,(when (icon-displayable-p)
              (all-the-icons-octicon "mark-github" :height 1.1 :v-adjust 0.0))
            "Homepage" "Browse homepage"
-           (lambda (&rest _) (browse-url centaur-homepage)))
+           (lambda (&rest _) (browse-url dragonli-homepage)))
           (,(when (icon-displayable-p)
               (all-the-icons-material "restore" :height 1.35 :v-adjust -0.24))
             "Restore" "Restore previous session"

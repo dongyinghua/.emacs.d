@@ -31,6 +31,16 @@
   (interactive)
   (find-file "~/Documents/Org/org-roam-directory/2022021709_org_learning_note.org"))
 
+(defun open-mac-learning-note ()
+  "Open the note about learning Mac."
+  (interactive)
+  (find-file "~/Documents/Org/org-roam-directory/2022032322_my_macbook_manual.org"))
+
+(defun open-org-roam-diary ()
+  "Open the diary by org roam."
+  (interactive)
+  (find-file "~/Documents/Org/org-roam-directory/2022070322_org_roam_dailies_汇总.org"))
+
 ;; init-basic.el
 ;;Emacs Server
 ;; define function to shutdown emacs server instance
@@ -98,9 +108,9 @@ file to wdeired, and consult-location to occur-edit"
   (dolist (charset '(kana han symbol cjk-misc bopomofo))
     (set-fontset-font (frame-parameter nil 'font)
       charset
-      (font-spec :family "冬青黑体简体中文 W6")))
+      (font-spec :family "Sarasa Term SC Light")))
   ;; tune rescale so that Chinese character width = 2 * English character width
-  (setq face-font-rescale-alist '(("Fira Code Retina" . 1.0) ("冬青黑体简体中文 W6" . 1.23)))
+  (setq face-font-rescale-alist '(("Fira Code Retina" . 1.0) ("Sarasa Term SC Light" . 1.23)))
   )
 
 (defun avy-action-embark (pt)
@@ -116,12 +126,12 @@ file to wdeired, and consult-location to occur-edit"
 ;; Refer to https://github.com/seagle0128/.emacs.d/blob/master/lisp/init-funcs.el
 (defun icon-displayable-p ()
   "Return non-nil if icons are displayable."
-  (and centaur-icon
+  (and dragonli-icon
     (or (display-graphic-p) (daemonp))
     (or (featurep 'all-the-icons)
       (require 'all-the-icons nil t))))
 
-(defun centaur-set-variable (variable value &optional no-save)
+(defun dragonli-set-variable (variable value &optional no-save)
   "Set the VARIABLE to VALUE, and return VALUE.
 Save to `custom-file' if NO-SAVE is nil."
   (customize-set-variable variable value)
@@ -147,19 +157,19 @@ Save to `custom-file' if NO-SAVE is nil."
     (list
       (intern
         (ivy-read "Select package archives: "
-          (mapcar #'car centaur-package-archives-alist)
-          :preselect (symbol-name centaur-package-archives)))))
+          (mapcar #'car dragonli-package-archives-alist)
+          :preselect (symbol-name dragonli-package-archives)))))
   ;; Set option
-  (centaur-set-variable 'centaur-package-archives archives no-save)
+  (dragonli-set-variable 'dragonli-package-archives archives no-save)
 
   ;; Refresh if need
   (and refresh (package-refresh-contents async))
 
   (message "Set package archives to `%s'" archives))
-(defalias 'centaur-set-package-archives #'set-package-archives)
+(defalias 'dragonli-set-package-archives #'set-package-archives)
 
 ;; Refer to https://emacs-china.org/t/elpa/11192
-(defun centaur-test-package-archives (&optional no-chart)
+(defun dragonli-test-package-archives (&optional no-chart)
   "Test connection speed of all package archives and display on chart.
 Not displaying the chart if NO-CHART is non-nil.
 Return the fastest package archive."
@@ -174,9 +184,9 @@ Return the fastest package archive."
                           (ignore-errors
                             (url-copy-file url null-device t))
                           (float-time (time-subtract (current-time) start))))
-                      centaur-package-archives-alist))
+                      dragonli-package-archives-alist))
           (fastest (car (nth (cl-position (apply #'min durations) durations)
-                          centaur-package-archives-alist))))
+                          dragonli-package-archives-alist))))
 
     Display on chart
     (when (and (not no-chart)
@@ -185,7 +195,7 @@ Return the fastest package archive."
       (chart-bar-quickie
         'horizontal
         "Speed test for the ELPA mirrors"
-        (mapcar (lambda (p) (symbol-name (car p))) centaur-package-archives-alist)
+        (mapcar (lambda (p) (symbol-name (car p))) dragonli-package-archives-alist)
         "ELPA"
         (mapcar (lambda (d) (* 1e3 d)) durations) "ms"))
 

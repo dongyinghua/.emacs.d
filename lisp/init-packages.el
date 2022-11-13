@@ -9,9 +9,9 @@
 
 (require 'init-funcs)
 
-;; 默认 centaur-package-archives 是 ustc
-;; (setq-default centaur-package-archives 'melpa)
-(set-package-archives centaur-package-archives nil nil t)
+;; 默认 dragonli-package-archives 是 ustc
+;; (setq-default dragonli-package-archives 'melpa)
+(set-package-archives dragonli-package-archives nil nil t)
 ;; 或者用如下代码修改镜像
 ;;(set-package-archives 'melpa nil nil t)
 

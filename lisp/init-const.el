@@ -7,20 +7,20 @@
 
 ;;; Code:
 
-(defconst centaur-homepage
+(defconst dragonli-homepage
   "https://github.com/dongyinghua/.emacs.d"
-  "The Github page of Centaur Emacs.")
+  "The Github page of DragonLi Emacs.")
 
-(defconst centaur-custom-example-file
+(defconst dragonli-custom-example-file
   (expand-file-name "custom-example.el" user-emacs-directory)
-  "Custom example file of Centaur Emacs.")
+  "Custom example file of DragonLi Emacs.")
 
-(defconst centaur-custom-post-file
+(defconst dragonli-custom-post-file
   (expand-file-name "custom-post.el" user-emacs-directory)
   "Custom file after startup.
 Put private configurations to override defaults here.")
 
-(defconst centaur-custom-post-org-file
+(defconst dragonli-custom-post-org-file
   (expand-file-name "custom-post.org" user-emacs-directory)
   "Custom org file after startup.
 Put private configurations to override defaults here.

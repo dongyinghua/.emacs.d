@@ -236,7 +236,7 @@
 ;; org-roam
 (use-package org-roam
   :ensure t
-  :defer
+  :defer t
   :bind ("C-c o f" . org-roam-node-find)
   :config
   (setq org-roam-directory "~/Documents/Org/org-roam-directory")
@@ -268,14 +268,14 @@
         :target (file+head "%<%Y-%m-%d-%a>-Diary.org"
                   "#+title: %<%Y-%m-%d-%a>-Diary\n")
         :unnarrowed t)
-       ;; ("w" "weekly report" plain "* %?"
-       ;;   :target (file+head "%<%Y-%m-%d-%a>-Weekly.org"
-       ;;             "#+title: %<%Y-%m-%d-%a>-Weekly\n")
-       ;;   :unnarrowed t)
-       ;; ("m" "monthly report" plain "* %?"
-       ;;   :target (file+head "%<%Y-%m-%d-%a>-Monthly.org"
-       ;;             "#+title: %<%Y-%m-%d-%a>-Monthly\n")
-       ;;   :unnarrowed t)
+       ("w" "weekly report" plain "* %?"
+         :target (file+head "%<%Y-%m-%d-%a>-Weekly.org"
+                   "#+title: %<%Y-%m-%d-%a>-Weekly\n")
+         :unnarrowed t)
+       ("m" "monthly report" plain "* %?"
+         :target (file+head "%<%Y-%m-%d-%a>-Monthly.org"
+                   "#+title: %<%Y-%m-%d-%a>-Monthly\n")
+         :unnarrowed t)
        )
     ;;("M" "regular meeting" plain
     ;;  "* Mini Talk\n\n * Academic Report\n\n * Key Points"

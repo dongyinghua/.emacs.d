@@ -15,13 +15,13 @@
 
 
 ;; Refer from https://github.com/seagle0128/.emacs.d/blob/master/lisp/init-custom.el
-(defcustom centaur-icon (or (display-graphic-p) (daemonp))
+(defcustom dragonli-icon (or (display-graphic-p) (daemonp))
   "Display icons or not."
-  :group 'centaur
+  :group 'dragonli
   :type 'boolean)
 
 ;; @see https://github.com/melpa/melpa and https://elpa.emacs-china.org/.
-(defcustom centaur-package-archives-alist
+(defcustom dragonli-package-archives-alist
   '((melpa    . (("gnu"    . "http://elpa.gnu.org/packages/")
                  ("nongnu" . "http://elpa.nongnu.org/nongnu/")
                  ("melpa"  . "http://melpa.org/packages/")))
@@ -44,18 +44,18 @@
                  ("nongnu" . "http://mirrors.ustc.edu.cn/elpa/nongnu/")
                  ("melpa"  . "http://mirrors.ustc.edu.cn/elpa/melpa/"))))
   "A list of the package archives."
-  :group 'centaur
+  :group 'dragonli
   :type '(alist :key-type (symbol :tag "Archive group name")
                 :value-type (alist :key-type (string :tag "Archive name")
                                    :value-type (string :tag "URL or directory name"))))
 
-(defcustom centaur-package-archives 'bfsu
+(defcustom dragonli-package-archives 'bfsu
   "Set package archives from which to fetch."
-  :group 'centaur
+  :group 'dragonli
   :set (lambda (symbol value)
          (set symbol value)
          (setq package-archives
-               (or (alist-get value centaur-package-archives-alist)
+               (or (alist-get value dragonli-package-archives-alist)
                    (error "Unknown package archives: `%s'" value))))
   :type `(choice ,@(mapcar
                     (lambda (item)
@@ -63,7 +63,7 @@
                         (list 'const
                               :tag (capitalize (symbol-name name))
                               name)))
-                     centaur-package-archives-alist)))
+                     dragonli-package-archives-alist)))
 
 (defcustom dragonli-dashboard (not (daemonp))
   "Display dashboard at startup or not.
