@@ -5,7 +5,10 @@
 ;; markdown
 (use-package markdown-mode
   :ensure t
-  :defer t)
+  :defer t
+  :config
+  (with-eval-after-load 'org
+    (add-to-list 'org-export-backends 'md)))
 
 (provide 'init-markdown)
 ;;; init-markdown.el ends here.

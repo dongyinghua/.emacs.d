@@ -1,5 +1,6 @@
+#+OPTIONS: toc:nil
 * 简介
-本文档是对自己的 emacs 配置做一些解释，方便以后查看。
+本文档是对自己的 Emacs 配置做一些解释，方便以后查看。
 
 * 配置模块化原则
 init-packages.el        # 插件管理
