@@ -8,6 +8,7 @@
 
 ;;; Code:
 
+(require 'init-custom)
 (require 'init-funcs)
 
 ;; (add-to-list 'after-make-frame-functions
@@ -16,8 +17,13 @@
 ;;     (if window-system
 ;;       (s-font))))
 
+
+(setq-default english-font "Fira Code Retina")
+(setq-default chinese-font "Sarasa Term SC Light")
+
 (if window-system
-  (s-font))
+    (set-font english-font chinese-font))
 
 (provide 'init-font)
+
 ;;; init-font.el ends here

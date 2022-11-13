@@ -61,7 +61,7 @@ file to wdeired, and consult-location to occur-edit"
   (require 'embark)
   (require 'wgrep)
   (pcase-let ((`(,type . ,candidates)
-                (run-hook-with-args-until-success 'embark-candidate-collectors)))
+               (run-hook-with-args-until-success 'embark-candidate-collectors)))
     (pcase type
       ('consult-grep (let ((embark-after-export-hook #'wgrep-change-to-wgrep-mode))
                        (embark-export)))
@@ -79,14 +79,14 @@ file to wdeired, and consult-location to occur-edit"
   "Open FILE externally using the default application of the system."
   (interactive "fOpen externally: ")
   (if (and (eq system-type 'windows-nt)
-        (fboundp 'w32-shell-execute))
-    (shell-command-to-string (encode-coding-string (replace-regexp-in-string "/" "\\\\"(format "explorer.exe %s" (file-name-directory (expand-file-name file)))) 'gbk))
+           (fboundp 'w32-shell-execute))
+      (shell-command-to-string (encode-coding-string (replace-regexp-in-string "/" "\\\\"(format "explorer.exe %s" (file-name-directory (expand-file-name file)))) 'gbk))
     (call-process (pcase system-type
                     ('darwin "open")
                     ('cygwin "cygstart")
                     (_ "xdg-open"))
-      nil 0 nil
-      (file-name-directory (expand-file-name file)))
+		  nil 0 nil
+		  (file-name-directory (expand-file-name file)))
     )
   )
 
@@ -98,28 +98,46 @@ file to wdeired, and consult-location to occur-edit"
   )
 
 ;; init-font.el
-(defun s-font()
-  "Setting fonts."
+(defun set-font (english-font chinese-font)
+  "Function for setting fonts.
+The `ENGLISH-FONT' and `CHINESE-FONT' are respectively
+the names of the English and Chinese font of Emacs."
   (interactive)
   ;;Setting English Font
   (set-face-attribute
-    'default nil :font "Fira Code Retina 20" :weight 'normal)
+   'default nil :family english-font :height 200 :weight 'normal)
   ;;Chinese Font
   (dolist (charset '(kana han symbol cjk-misc bopomofo))
     (set-fontset-font (frame-parameter nil 'font)
-      charset
-      (font-spec :family "Sarasa Term SC Light")))
+		      charset
+		      (font-spec :family chinese-font)))
   ;; tune rescale so that Chinese character width = 2 * English character width
-  (setq face-font-rescale-alist '(("Fira Code Retina" . 1.0) ("Sarasa Term SC Light" . 1.23)))
+  (setq face-font-rescale-alist '((english-font . 1.0) (chinese-font . 1.23)))
   )
+
+;; (defun s-font(english-font chinese-font)
+;;   "Function for setting fonts."
+;;   (interactive)
+;;   ;;Setting English Font
+;;   (set-face-attribute
+;;    'default nil :font "Fira Code Retina 20" :weight 'normal)
+;;   ;;Chinese Font
+;;   (dolist (charset '(kana han symbol cjk-misc bopomofo))
+;;     (set-fontset-font (frame-parameter nil 'font)
+;; 		      charset
+;; 		      (font-spec :family "Sarasa Term SC Light")))
+;;   ;; tune rescale so that Chinese character width = 2 * English character width
+;;   (setq face-font-rescale-alist '(("Fira Code Retina" . 1.0) ("Sarasa Term SC Light" . 1.23)))
+;;   )
+
 
 (defun avy-action-embark (pt)
   (unwind-protect
-    (save-excursion
-      (goto-char pt)
-      (embark-act))
+      (save-excursion
+	(goto-char pt)
+	(embark-act))
     (select-window
-      (cdr (ring-ref avy-ring 0))))
+     (cdr (ring-ref avy-ring 0))))
   t)
 
 
@@ -127,22 +145,22 @@ file to wdeired, and consult-location to occur-edit"
 (defun icon-displayable-p ()
   "Return non-nil if icons are displayable."
   (and dragonli-icon
-    (or (display-graphic-p) (daemonp))
-    (or (featurep 'all-the-icons)
-      (require 'all-the-icons nil t))))
+       (or (display-graphic-p) (daemonp))
+       (or (featurep 'all-the-icons)
+	   (require 'all-the-icons nil t))))
 
 (defun dragonli-set-variable (variable value &optional no-save)
   "Set the VARIABLE to VALUE, and return VALUE.
 Save to `custom-file' if NO-SAVE is nil."
   (customize-set-variable variable value)
   (when (and (not no-save)
-          (file-writable-p custom-file))
+             (file-writable-p custom-file))
     (with-temp-buffer
       (insert-file-contents custom-file)
       (goto-char (point-min))
       (while (re-search-forward
-               (format "^[\t ]*[;]*[\t ]*(setq %s .*)" variable)
-               nil t)
+              (format "^[\t ]*[;]*[\t ]*(setq %s .*)" variable)
+              nil t)
         (replace-match (format "(setq %s '%s)" variable value) nil nil))
       (write-region nil nil custom-file)
       (message "Saved %s (%s) to %s" variable value custom-file))))
@@ -154,11 +172,11 @@ REFRESH is non-nil, will refresh archive contents.
 ASYNC specifies whether to perform the downloads in the background.
 Save to `custom-file' if NO-SAVE is nil."
   (interactive
-    (list
-      (intern
-        (ivy-read "Select package archives: "
-          (mapcar #'car dragonli-package-archives-alist)
-          :preselect (symbol-name dragonli-package-archives)))))
+   (list
+    (intern
+     (ivy-read "Select package archives: "
+               (mapcar #'car dragonli-package-archives-alist)
+               :preselect (symbol-name dragonli-package-archives)))))
   ;; Set option
   (dragonli-set-variable 'dragonli-package-archives archives no-save)
 
@@ -176,28 +194,28 @@ Return the fastest package archive."
   (interactive)
 
   (let* ((durations (mapcar
-                      (lambda (pair)
-                        (let ((url (concat (cdr (nth 2 (cdr pair)))
-                                     "archive-contents"))
-                               (start (current-time)))
-                          (message "Fetching %s..." url)
-                          (ignore-errors
-                            (url-copy-file url null-device t))
-                          (float-time (time-subtract (current-time) start))))
-                      dragonli-package-archives-alist))
-          (fastest (car (nth (cl-position (apply #'min durations) durations)
-                          dragonli-package-archives-alist))))
+                     (lambda (pair)
+                       (let ((url (concat (cdr (nth 2 (cdr pair)))
+					  "archive-contents"))
+                             (start (current-time)))
+                         (message "Fetching %s..." url)
+                         (ignore-errors
+                           (url-copy-file url null-device t))
+                         (float-time (time-subtract (current-time) start))))
+                     dragonli-package-archives-alist))
+         (fastest (car (nth (cl-position (apply #'min durations) durations)
+                            dragonli-package-archives-alist))))
 
     Display on chart
     (when (and (not no-chart)
-            (require 'chart nil t)
-            (require 'url nil t))
+               (require 'chart nil t)
+               (require 'url nil t))
       (chart-bar-quickie
-        'horizontal
-        "Speed test for the ELPA mirrors"
-        (mapcar (lambda (p) (symbol-name (car p))) dragonli-package-archives-alist)
-        "ELPA"
-        (mapcar (lambda (d) (* 1e3 d)) durations) "ms"))
+       'horizontal
+       "Speed test for the ELPA mirrors"
+       (mapcar (lambda (p) (symbol-name (car p))) dragonli-package-archives-alist)
+       "ELPA"
+       (mapcar (lambda (d) (* 1e3 d)) durations) "ms"))
 
     (message "`%s' is the fastest package archive" fastest)
 
@@ -207,9 +225,9 @@ Return the fastest package archive."
 (defun childframe-workable-p ()
   "Whether childframe is workable."
   (or (not (or noninteractive
-             emacs-basic-display
-             (not (display-graphic-p))))
-    (daemonp)))
+               emacs-basic-display
+               (not (display-graphic-p))))
+      (daemonp)))
 
 ;; Functions for org mode.
 
@@ -228,7 +246,8 @@ See `buffer-invisibility-spec'."
   "按 f11 让 Emacs 进入全屏显示."
   (interactive)
   (set-frame-parameter nil 'fullscreen
-    (if (frame-parameter nil 'fullscreen) nil 'fullboth)))
+		       (if (frame-parameter nil 'fullscreen) nil 'fullboth)))
 
 (provide 'init-funcs)
+
 ;;; init-funcs.el ends here

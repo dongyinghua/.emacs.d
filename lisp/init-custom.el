@@ -63,7 +63,7 @@
                         (list 'const
                               :tag (capitalize (symbol-name name))
                               name)))
-                     dragonli-package-archives-alist)))
+                    dragonli-package-archives-alist)))
 
 (defcustom dragonli-dashboard (not (daemonp))
   "Display dashboard at startup or not.
@@ -85,7 +85,21 @@ For example, if the value is company, choicing the company-mode for completion."
   :group 'dragonli
   :type 'string)
 
+(defcustom my-theme 'my-theme-name
+  "The name of the theme."
+  :group 'dragonli
+  :type 'string)
+
+(defcustom english-font 'english-font
+  "English font."
+  :group 'dragonli
+  :type 'string)
+
+(defcustom chinese-font 'chinese-font
+  "Chinese font."
+  :group 'dragonli
+  :type 'string)
+
 (provide 'init-custom)
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; init-custom.el ends here

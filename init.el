@@ -53,6 +53,9 @@
 (require 'init-clipboard)
 
 (require 'init-ui)
+(require 'init-doom-theme)
+(require 'init-modeline)
+
 (require 'init-dashboard)
 (require 'init-persp)
 
