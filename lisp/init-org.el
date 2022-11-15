@@ -43,15 +43,15 @@
   ;; 解决org-mode中LaTeX数学公式中的中文渲染问题
   ;; https://q3yi.me/post/4_use_xelatex_instead_of_latex_in_org_preview_latex_process/
   (add-to-list 'org-preview-latex-process-alist
-    '(xdvsvgm :progams
-       ("xelatex" "dvisvgm")
-       :discription "xdv > svg"
-       :message "you need install the programs: xelatex and dvisvgm."
-       :image-input-type "xdv"
-       :image-output-type "svg"
-       :image-size-adjust (2.7 . 2.5) ; 调整 svg 的 size
-       :latex-compiler ("xelatex -interaction nonstopmode -no-pdf -output-directory %o %f")
-       :image-converter ("dvisvgm %f -n -b min -c %S -o %O")))
+	       '(xdvsvgm :progams
+			 ("xelatex" "dvisvgm")
+			 :discription "xdv > svg"
+			 :message "you need install the programs: xelatex and dvisvgm."
+			 :image-input-type "xdv"
+			 :image-output-type "svg"
+			 :image-size-adjust (2.7 . 2.5) ; 调整 svg 的 size
+			 :latex-compiler ("xelatex -interaction nonstopmode -no-pdf -output-directory %o %f")
+			 :image-converter ("dvisvgm %f -n -b min -c %S -o %O")))
 
   (setq org-preview-latex-default-process 'xdvsvgm)
 
@@ -69,51 +69,51 @@
 
   ;;org-agenda
   (setq org-agenda-files '("~/Documents/Org/GTD/Inbox.org"
-                            "~/Documents/Org/GTD/Projects.org"
-                            "~/Documents/Org/GTD/Schedule.org"
-                            "~/Documents/Org/GTD/TODOs.org"))
+                           "~/Documents/Org/GTD/Projects.org"
+                           "~/Documents/Org/GTD/Schedule.org"
+                           "~/Documents/Org/GTD/TODOs.org"))
   (setq org-refile-targets '(("~/Documents/Org/GTD/Projects.org" :maxlevel . 5)
-                              ("~/Documents/Org/GTD/TODOs.org" :maxlevel . 5)
-                              ("~/Documents/Org/GTD/Schedule.org" :maxlevel . 5)
-                              ("~/Documents/Org/GTD/Inbox.org" :maxlevel . 5)
-                              ))
+                             ("~/Documents/Org/GTD/TODOs.org" :maxlevel . 5)
+                             ("~/Documents/Org/GTD/Schedule.org" :maxlevel . 5)
+                             ("~/Documents/Org/GTD/Inbox.org" :maxlevel . 5)
+                             ))
 
   ;; org-capture
   ;; 快捷键“C-c x”
   (setq org-capture-templates
-    '(("i" "Inbox" entry
-        (file+headline "~/Documents/Org/GTD/Inbox.org" "Tasks")
-        "* TODO %?\n  %i\n"
-        :empty-lines 0)
-       ("s" "Schedule" entry
-         (file+headline "~/Documents/Org/GTD/Schedule.org" "Schedule")
-         "* TODO %?\n  %i\n"
-         :empty-lines 1)
-       ("t" "TODOs" entry
-         ("~/Documents/Org/GTD/TODOs.org" "TODOs")
-         "* TODO %?\n  %i\n"
-         :empty-lines 1)
-       ("p" "Projects" entry
-         (file+headline "~/Documents/Org/GTD/Projects.org" "Projects")
-         "* TODO %?\n  %i\n"
-         :empty-lines 1)
-       )
-    )
+	'(("i" "Inbox" entry
+           (file+headline "~/Documents/Org/GTD/Inbox.org" "Tasks")
+           "* TODO %?\n  %i\n"
+           :empty-lines 0)
+	  ("s" "Schedule" entry
+           (file+headline "~/Documents/Org/GTD/Schedule.org" "Schedule")
+           "* TODO %?\n  %i\n"
+           :empty-lines 1)
+	  ("t" "TODOs" entry
+           (file+headline "~/Documents/Org/GTD/TODOs.org" "TODOs")
+           "* TODO %?\n  %i\n"
+           :empty-lines 1)
+	  ("p" "Projects" entry
+           (file+headline "~/Documents/Org/GTD/Projects.org" "Projects")
+           "* TODO %?\n  %i\n"
+           :empty-lines 1)
+	  )
+	)
 
   ;; 设置任务流程
   ;; This is achieved by adding special markers ‘!’ (for a timestamp)
   ;; or ‘@’ (for a note with timestamp) in parentheses after each keyword.
   (setq org-todo-keywords
-    '((sequence "DOING(i)" "TODO(t)" "HANGUP(h@/!)" "|" "DONE(d!)" "CANCEL(c@)"))
-    org-todo-keyword-faces '(("TODO" . (:foreground "#F4606C" :weight blod))
-                              ("DOING" . (:foreground "#19CAAD" :weight blod))
-                              ("HANGUP" . (:foreground "#F4606C" :weight bold))
-                              ("DONE" . (:foreground "#939391" :weight blod))
-                              ("CANCEL" . (:background "gray" :foreground "black"))))
+	'((sequence "DOING(i)" "TODO(t)" "HANGUP(h@/!)" "|" "DONE(d!)" "CANCEL(c@)"))
+	org-todo-keyword-faces '(("TODO" . (:foreground "#F4606C" :weight blod))
+				 ("DOING" . (:foreground "#19CAAD" :weight blod))
+				 ("HANGUP" . (:foreground "#F4606C" :weight bold))
+				 ("DONE" . (:foreground "#939391" :weight blod))
+				 ("CANCEL" . (:background "gray" :foreground "black"))))
 
   (setq org-priority-faces '((?A . error)
-                              (?B . warning)
-                              (?C . success)))
+                             (?B . warning)
+                             (?C . success)))
 
   ;; need repeat task and properties
   (setq org-log-done t)
@@ -123,10 +123,10 @@
   ;;(add-hook org-capture-mode-hook 'evil-mode)
 
   (setq org-agenda-custom-commands
-    '(("i" "重要且紧急的事" ;; 不显示没有加org-todo-keywords以及keyword是DONE的任务
-        ((tags-todo "+PRIORITY=\"A\"")))
-       ;; ...other commands here
-       ))
+	'(("i" "重要且紧急的事" ;; 不显示没有加org-todo-keywords以及keyword是DONE的任务
+           ((tags-todo "+PRIORITY=\"A\"")))
+	  ;; ...other commands here
+	  ))
 
   ;; org for beamer
   (eval-after-load "ox-latex"
@@ -134,14 +134,14 @@
     ;; update the list of LaTeX classes and associated header (encoding, etc.)
     ;; and structure
     '(add-to-list 'org-latex-classes
-       `("beamer"
-          ,(concat "\\documentclass[presentation]{beamer}\n"
-             "[DEFAULT-PACKAGES]"
-             "[PACKAGES]"
-             "[EXTRA]\n")
-          ("\\section{%s}" . "\\section*{%s}")
-          ("\\subsection{%s}" . "\\subsection*{%s}")
-          ("\\subsubsection{%s}" . "\\subsubsection*{%s}"))))
+		  `("beamer"
+		    ,(concat "\\documentclass[presentation]{beamer}\n"
+			     "[DEFAULT-PACKAGES]"
+			     "[PACKAGES]"
+			     "[EXTRA]\n")
+		    ("\\section{%s}" . "\\section*{%s}")
+		    ("\\subsection{%s}" . "\\subsection*{%s}")
+		    ("\\subsubsection{%s}" . "\\subsubsection*{%s}"))))
   (setq org-latex-listings t)
   ;;     (setq org-emphasis-alist (quote (("*" bold "<b>" "</b>")
   ;;                                       ("/" italic "<i>" "</i>")
@@ -220,15 +220,15 @@
   (setq org-appear-trigger 'manual)
   (add-hook 'org-mode-hook (lambda ()
                              (add-hook 'evil-insert-state-entry-hook
-                               'org-appear-manual-start
-                               nil
-                               t)
+				       'org-appear-manual-start
+				       nil
+				       t)
                              (add-hook 'evil-insert-state-exit-hook
-                               'org-appear-manual-stop
-                               nil
-                               t)
+				       'org-appear-manual-stop
+				       nil
+				       t)
                              )
-    )
+	    )
   )
 
 
@@ -248,41 +248,37 @@
   (setq org-roam-completion-everywhere t)
 
   (setq org-roam-capture-templates
-    '(("s" "simple default" plain "%?"
-        :target (file+head "%<%Y%m%d%H>_${slug}.org"
-                  "#+STARTUP:\n#+title: ${title}\n\n")
-        :unnarrowed t)
-       ("d" "default" plain "%?"
-         :target (file+head "%<%Y%m%d%H>_${slug}.org"
-                   "#+STARTUP:\n#+title: ${title}\n\n")
-         :unnarrowed t)
-       ("p" "Paper Note" plain "* FIRST PASS\n ** Category\n\n** Context\n\n** Correctness\n\n** Contribution\n\n** Clarity\n * SECOND PASS\n\n* * THIRD PASS"
-         :target (file+head "%<%Y%m%d%H>_${slug}.org"
-                   "#+STARTUP:\n#+title: ${title}\n\n")
-         :unnarrowed t)))
+	'(("s" "simple default" plain "%?"
+           :target (file+head "%<%Y%m%d%H>_${slug}.org"
+			      "#+STARTUP:\n#+title: ${title}\n\n")
+           :unnarrowed t)
+	  ("d" "default" plain "%?"
+           :target (file+head "%<%Y%m%d%H>_${slug}.org"
+			      "#+STARTUP:\n#+title: ${title}\n\n")
+           :unnarrowed t)
+	  ("p" "Paper Note" plain "* FIRST PASS\n ** Category\n\n** Context\n\n** Correctness\n\n** Contribution\n\n** Clarity\n * SECOND PASS\n\n* * THIRD PASS"
+           :target (file+head "%<%Y%m%d%H>_${slug}.org"
+			      "#+STARTUP:\n#+title: ${title}\n\n")
+           :unnarrowed t)))
 
   ;;org-roam-dailies-directory
   (setq-default org-roam-dailies-directory "~/Documents/Org/org-roam-directory/diary")
   (setq-default org-roam-dailies-capture-templates
-    '(("j" "journal" plain "* %?"
-        :target (file+head "%<%Y-%m-%d-%a>-Diary.org"
-                  "#+title: %<%Y-%m-%d-%a>-Diary\n")
-        :unnarrowed t)
-       ("w" "weekly report" plain "* %?"
-         :target (file+head "%<%Y-%m-%d-%a>-Weekly.org"
-                   "#+title: %<%Y-%m-%d-%a>-Weekly\n")
-         :unnarrowed t)
-       ("m" "monthly report" plain "* %?"
-         :target (file+head "%<%Y-%m-%d-%a>-Monthly.org"
-                   "#+title: %<%Y-%m-%d-%a>-Monthly\n")
-         :unnarrowed t)
-       )
-    ;;("M" "regular meeting" plain
-    ;;  "* Mini Talk\n\n * Academic Report\n\n * Key Points"
-    ;;  :target (file+head "%<%Y-%m-%d-%a>-例会.org"
-    ;;            "#+title: %<%Y-%m-%d-%a>-例会\n")
-    ;;  :unnarrowed t))
-    )
+		'(("j" "journal" plain "* %?"
+		   :target (file+head "%<%Y-%m-%d-%a>-Diary.org"
+				      "#+title: %<%Y-%m-%d-%a>-Diary\n")
+		   :unnarrowed t)
+		  ("w" "weekly report" plain
+		   "* 本周工作总结\n\n * 下周工作安排"
+		   :target (file+head "%<%Y-%m-%d-%a>-Weekly.org"
+				      "#+title: %<%Y-%m-%d-%a>-Weekly\n")
+		   :unnarrowed t)
+		  ("m" "monthly report" plain
+		   "* 本月工作总结\n\n * 下月工作安排"
+		   :target (file+head "%<%Y-%m-%d-%a>-Monthly.org"
+				      "#+title: %<%Y-%m-%d-%a>-Monthly\n")
+		   :unnarrowed t))
+		)
 
   ;; 必须要在init.el中加入(require 'org-roam-protocol)以及打开Emacs Server，
   ;; 否则网页抓取会出现问题
@@ -291,19 +287,19 @@
 
   ;;网页抓取
   (setq-default org-roam-capture-ref-templates
-    '(("D" "Default" plain "\n"
-        :target (file+head "${slug}.org" "#+title: ${title}\n\n")
-        ;; :immediate-finish t
-        :unnarrowed t)
-       ("a" "Annotation" plain "%U ${body}\n"
-         :target (file+head "${slug}.org" "#+title: ${title}\n\n")
-         ;; :immediate-finish t
-         :unnarrowed t)
-       ("r" "Reference" plain
-         "* FIRST PASS\n** Category\nWhat type of paper is this? A measurement paper? An analysis of an existing system? A description of a research prototype?\n\n** Context\nWhich other papers is it related to? Which theoretical bases were used to analyze the problem?\n\n** Correctness\nDo the assumptions appear to be valid?\n\n** Contribution\nWhat are the paper’s main contributions?\n\n** Clarity\nIs the paper well written?\n\n* SECOND PASS\n\n* THIRD PASS\n\n"
-         :target (file+head "${slug}.org" "#+title: ${title}\n\n")
-         :unnarrowed t))
-    )
+		'(("D" "Default" plain "\n"
+		   :target (file+head "${slug}.org" "#+title: ${title}\n\n")
+		   ;; :immediate-finish t
+		   :unnarrowed t)
+		  ("a" "Annotation" plain "%U ${body}\n"
+		   :target (file+head "${slug}.org" "#+title: ${title}\n\n")
+		   ;; :immediate-finish t
+		   :unnarrowed t)
+		  ("r" "Reference" plain
+		   "* FIRST PASS\n** Category\nWhat type of paper is this? A measurement paper? An analysis of an existing system? A description of a research prototype?\n\n** Context\nWhich other papers is it related to? Which theoretical bases were used to analyze the problem?\n\n** Correctness\nDo the assumptions appear to be valid?\n\n** Contribution\nWhat are the paper’s main contributions?\n\n** Clarity\nIs the paper well written?\n\n* SECOND PASS\n\n* THIRD PASS\n\n"
+		   :target (file+head "${slug}.org" "#+title: ${title}\n\n")
+		   :unnarrowed t))
+		)
   )
 
 
@@ -317,16 +313,16 @@
   ;;:hook (after-init . org-roam-ui-mode)
   :config
   (setq org-roam-ui-sync-theme t
-    org-roam-ui-follow t
-    org-roam-ui-update-on-save t
-    org-roam-ui-open-on-start t))
+	org-roam-ui-follow t
+	org-roam-ui-update-on-save t
+	org-roam-ui-open-on-start t))
 
 (use-package org-roam-bibtex
   :after org-roam
   :defer t
   :hook (org-roam-mode . org-roam-bibtex-mode)
   :bind (:map org-mode-map
-          (("C-c n a" . orb-note-actions))))
+              (("C-c n a" . orb-note-actions))))
 
 
 
@@ -358,7 +354,7 @@
   (defun dummy-org-download-annotate-function (link)
     "")
   (setq org-download-annotate-function
-    'dummy-org-download-annotate-function)
+	'dummy-org-download-annotate-function)
   )
 
 (use-package org-re-reveal

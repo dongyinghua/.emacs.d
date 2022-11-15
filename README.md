@@ -2,7 +2,7 @@
 
 # 简介
 
-本文档是对自己的 Emacs 配置做一些解释，方便以后查看。
+本文档是对配置文件的解释。
 
 
 # 配置模块化原则
@@ -62,4 +62,43 @@ M-x all-the-icons-install-fonts
 在 macOS 上安装 ripgrep，代码如下：
 
     brew install ripgrep
+
+
+# 背景虚化
+
+
+## loop-alpha 函数
+
+
+### 代码详解
+
+-   lambda 返回一个匿名的函数，就将它假设为 fun(a,ab)，上边的语句就近似为“(fun (car h) (car (cdr h)))”，即 (car h) 和 (car (cdr h)) 为传入函数 fun 的两个参数。
+-   let 定义了一个局部变量 h，值为(car alpha-list)，在 let 语句之外不没有定义。
+-   ⚠️ 执行这个函数之后只是临时修改了 set-frame-paramete，重启后设置消失。如果想让设置永久生效，则需要直接在配置文件中修改。
+-   ⚠️ 应该不能在 Emacs 启动后，通过函数来修改配置，即无法修改配置文件。利用函数只能暂时修改配置，重启之后配置重置。
+
+
+### 代码
+
+loop-alpha 函数来自 [EmacsWiki - alpha-window](https://www.emacswiki.org/emacs/alpha-window)，代码如下：
+
+    (setq alpha-list '((100 100) (95 65) (85 55) (75 45) (65 35)))
+    
+    (defun loop-alpha ()
+      (interactive)
+      (let ((h (car alpha-list)))                ;; head value will set to
+        ((lambda (a ab)
+           (set-frame-parameter (selected-frame) 'alpha (list a ab))
+           (add-to-list 'default-frame-alist (cons 'alpha (list a ab)))
+           ) (car h) (car (cdr h)))
+        (setq alpha-list (cdr (append alpha-list (list h))))
+        )
+      )
+
+
+## 修改配置文件
+
+利用 loop-alpha 函数无法永久修改配置，因此需要在配置文件中加入如下代码：
+
+    (set-frame-parameter (selected-frame) 'alpha '(95 65))
 

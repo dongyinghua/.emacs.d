@@ -44,6 +44,9 @@
 	      (setq-default cursor-type 'bar)
 
 	      ;;eldoc-mode 显示函数或变量的信息
+
+	      ;; 虚拟化背景
+	      (set-frame-parameter (selected-frame) 'alpha '(95 65))
 	      ))
 
 ;; 显示行号
