@@ -144,7 +144,8 @@
       ("s p" org-set-property)
       ("s t" org-set-tags-command)
       ("C h" consult-org-heading)
-      ("C a" consult-org-agenda))
+      ("C a" consult-org-agenda)
+      ("o c" open-init-org))
      "Org Roam"
      (("r d" org-roam-dailies-goto-date "org roam dailies")
       ("r f" org-roam-node-find)
@@ -154,9 +155,6 @@
       ("r u" org-roam-ui-open)
       ("r r" org-roam-refile)
       ("r b" org-mark-ring-goto :exit nil)
-      )
-     "Open file & note"
-     (("o c" open-init-org)
       ("o e" open-emacs-learning-note)
       ("o o" open-org-learning-note)
       ("o m" open-mac-learning-note)
