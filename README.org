@@ -1,4 +1,6 @@
 #+OPTIONS: toc:nil
+#+STARTUP: content
+
 * 简介
 本文档是对配置文件的解释。
 
@@ -9,10 +11,6 @@ init-better-defaults.el # 增强内置功能
 init-keybindings.el     # 快捷键绑定
 init-org.el             # Org 模式相关的全部设定
 custom.el              # 存放使用编辑器接口产生的配置信息
-
-* Emacs 界面显示出现乱码
-** 解决办法
-M-x all-the-icons-install-fonts
 
 * 字体设置
 在 init-custom.el 中定义了两个字符串变量 english-font 和 chinese-font，分别表示 Emacs 中所使用的中英文字体名称。通过在 init-font.el 中调用函数 set-font 来修改 Emacs 的字体。set-font 函数定义如下：
@@ -46,6 +44,7 @@ M-x all-the-icons-install-fonts
 #+begin_src terminal
   brew install ripgrep
 #+end_src
+
 * 背景虚化
 ** loop-alpha 函数
 *** 代码详解
@@ -76,4 +75,10 @@ loop-alpha 函数来自 [[https://www.emacswiki.org/emacs/alpha-window][EmacsWik
 #+begin_src elisp
   (set-frame-parameter (selected-frame) 'alpha '(95 65))
 #+end_src
+
+* Q&A
+** Emacs 界面显示出现乱码
+*** 解决办法
+M-x all-the-icons-install-fonts
+
 

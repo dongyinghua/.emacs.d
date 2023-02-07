@@ -58,7 +58,7 @@
     (setq dashboard-projects-backend 'projectile) ;; 读者可以暂时注释掉这一行，等安装了 projectile 后再使用
 
     ;; Set the banner
-    (setq dashboard-startup-banner "~/.emacs.d/emacs-dragon.png")
+    (setq dashboard-startup-banner "~/.emacs.d/Genshin.png")
     ;;(setq dashboard-startup-banner [VALUE])
     ;; Value can be
     ;; 'official which displays the official emacs logo

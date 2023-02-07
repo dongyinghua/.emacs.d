@@ -16,7 +16,8 @@
 (add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
 
 
-;; ;; Refer to https://github.com/purcell/emacs.d
+;; Refer to https://github.com/purcell/emacs.d
+;; 提高Emacs启动速度
 (require 'init-benchmarking)
 
 (defconst *spell-check-support-enabled* nil) ;; Enable with t if you prefer
@@ -52,7 +53,7 @@
 (require 'init-font)
 (require 'init-clipboard)
 
-(require 'init-dashboard)
+(require 'init-dashboard) ; 要放到“init-ui”和“init-modeline”之前
 (require 'init-ui)
 (require 'init-doom-theme)
 (require 'init-modeline)
@@ -72,6 +73,7 @@
 
 (require 'init-compile)
 (require 'init-org)
+(require 'init-org-roam)
 
 (require 'init-yasnippet)
 (require 'init-lsp)

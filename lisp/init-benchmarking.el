@@ -10,7 +10,6 @@
 (defun sanityinc/time-subtract-millis (b a)
   (* 1000.0 (float-time (time-subtract b a))))
 
-
 (defvar sanityinc/require-times nil
   "A list of (FEATURE LOAD-START-TIME LOAD-DURATION).
 LOAD-DURATION is the time taken in milliseconds to load FEATURE.")

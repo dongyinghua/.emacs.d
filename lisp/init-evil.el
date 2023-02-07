@@ -1,5 +1,7 @@
 ;;; init-evil.el --- Initialize evil configuration. -*- lexical-binding: t
-;;; Commentary
+;;
+;;; Commentary:
+;;
 ;;; code:
 
 ;; evil模式
@@ -14,5 +16,4 @@
   (define-key evil-insert-state-map [escape] 'evil-normal-state))
 
 (provide 'init-evil)
-
-;;; init-ecil.el ends here.
+;;; init-evil.el ends here.
