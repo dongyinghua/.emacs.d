@@ -100,6 +100,37 @@ For example, if the value is company, choicing the company-mode for completion."
   :group 'dragonli
   :type 'string)
 
+;; The prefix of the GTD files path.
+(defcustom org-gtd-path "/Users/dragonli/Library/Mobile Documents/iCloud~com~appsonthemove~beorg/Documents/org/"
+  "The prefix of the GTD files."
+  :group 'dragonli
+  :type 'string)
+
+;; The path of the GTD files.
+(defcustom org-gtd-path-todos
+  (expand-file-name "TODOs.org" org-gtd-path)
+  "The path of the TODOs.org."
+  :group 'dragonli
+  :type 'string)
+
+(defcustom org-gtd-path-projects
+  (expand-file-name "Projects.org" org-gtd-path)
+  "The path of the Projects.org."
+  :group 'dragonli
+  :type 'string)
+
+(defcustom org-gtd-path-schedule
+  (expand-file-name "Schedule.org" org-gtd-path)
+  "The path of the Schedule.org."
+  :group 'dragonli
+  :type 'string)
+
+(defcustom org-gtd-path-inbox
+  (expand-file-name "Inbox.org" org-gtd-path)
+  "The path of the Inbox.org."
+  :group 'dragonli
+  :type 'file)
+
 (provide 'init-custom)
 
 ;;; init-custom.el ends here

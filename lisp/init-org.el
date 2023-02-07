@@ -11,7 +11,7 @@
 
 (use-package org
   :pin melpa
-  :ensure t
+  :ensure nil
   :defer 1
   :bind
   ("C-c a" . org-agenda)
@@ -49,7 +49,7 @@
 			 :message "you need install the programs: xelatex and dvisvgm."
 			 :image-input-type "xdv"
 			 :image-output-type "svg"
-			 :image-size-adjust (2.7 . 2.5) ; 调整 svg 的 size
+			 :image-size-adjust (6.2 . 6) ; 调整 svg 的 size
 			 :latex-compiler ("xelatex -interaction nonstopmode -no-pdf -output-directory %o %f")
 			 :image-converter ("dvisvgm %f -n -b min -c %S -o %O")))
 
@@ -68,10 +68,9 @@
   ;;(setq alert-default-style 'notifications)
 
   ;;org-agenda
-  (setq org-agenda-files '("~/Documents/Org/GTD/Inbox.org"
-                           "~/Documents/Org/GTD/Projects.org"
-                           "~/Documents/Org/GTD/Schedule.org"
-                           "~/Documents/Org/GTD/TODOs.org"))
+  (load-library "find-lisp")
+  (setq org-agenda-files (find-lisp-find-files org-gtd-path "\.org$"))
+
   (setq org-refile-targets '(("~/Documents/Org/GTD/Projects.org" :maxlevel . 5)
                              ("~/Documents/Org/GTD/TODOs.org" :maxlevel . 5)
                              ("~/Documents/Org/GTD/Schedule.org" :maxlevel . 5)

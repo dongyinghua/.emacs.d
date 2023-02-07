@@ -74,10 +74,11 @@
     ;; To disable shortcut "jump" indicators for each section, set
     (setq dashboard-show-shortcuts nil)
 
-    (setq dashboard-items '((recents  . 10)   ; 显示多少个最近文件
+    (setq dashboard-items '((agenda . 5)
                              (projects . 10)
-                             (agenda . 5)
-                             (bookmarks . 5)))  ; 显示多少个最近书签
+                             (recents  . 10)   ; 显示多少个最近文件
+			     ; (bookmarks . 10) ; 显示多少个最近书签
+			     ))
 
     ;; To add icons to the widget headings and their items:
     (setq dashboard-set-heading-icons t)
@@ -86,7 +87,8 @@
     (setq dashboard-heading-icons '((recents   . "history")
                                      (projects  . "briefcase")
                                      (agenda    . "calendar")
-                                     (bookmarks . "bookmark")))
+                                     ;;(bookmarks . "bookmark")
+				     ))
 
     (setq dashboard-set-footer t
       dashboard-footer (format "Powered by Yinghua Dong, %s" (format-time-string "%Y"))
@@ -119,7 +121,7 @@
 
     ;; To show info about the packages loaded and the init time:
     (setq dashboard-set-init-info t)
-
+    
     :config
     ;; WORKAROUND: fix differnct background color of the banner image.
     ;; @see https://github.com/emacs-dashboard/emacs-dashboard/issues/203
@@ -207,7 +209,8 @@
       (quit-window t)
       (and dashboard-recover-layout-p
         (and (bound-and-true-p winner-mode) (winner-undo))
-        (setq dashboard-recover-layout-p nil)))))
+        (setq dashboard-recover-layout-p nil))))
+  )
 
 (provide 'init-dashboard)
 ;;; init-dashboard.el ends here

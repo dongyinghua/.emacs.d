@@ -11,6 +11,7 @@
 (require 'init-funcs)
 
 (use-package flycheck
+  :ensure t
   :diminish
   :commands flycheck-redefine-standard-error-levels
   :hook (after-init . global-flycheck-mode)
