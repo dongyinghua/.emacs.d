@@ -9,6 +9,8 @@
 
 (require 'init-const)
 
+;; 由于org 9.6.1版本存在问题，即在headline折叠状态下按回车键，新建行被插入到折叠（隐藏）区域内。
+;; 暂时使用Emacs自带org。
 (use-package org
   :pin melpa
   :ensure nil

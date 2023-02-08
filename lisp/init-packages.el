@@ -1,4 +1,4 @@
-;;; init-package.el --- Initialize package configurations. -*- lexical-binding: t -*-
+;;; init-package.el --- Initialize package configurations. -*- lexical-binding: t no-byte-compile: t -*-
 
 ;;; Commentary:
 ;;
@@ -9,15 +9,27 @@
 
 (require 'init-funcs)
 
+;; Load `custom.el'
+;; 通过“M-x customize-group”修改的设置会自动加载到下面这个文件中
+;; 安装的package也会记录到custom.el中
+;; 通过“M-x customize-set-variables”修改的设置会在emacs重启后还原
+(setq custom-file (expand-file-name "custom.el" user-emacs-directory))
+(load custom-file 'no-error 'no-message)
+
+;; HACK: DO NOT copy package-selected-packages to init/custom file forcibly.
+;; https://github.com/jwiegley/use-package/issues/383#issuecomment-247801751
+(defun my-save-selected-packages (&optional value)
+  "Set `package-selected-packages' to VALUE but don't save to `custom-file'."
+  (when value
+    (setq package-selected-packages value)))
+(advice-add 'package--save-selected-packages :override #'my-save-selected-packages)
+
 ;; 默认 dragonli-package-archives 是 ustc
 ;; (setq-default dragonli-package-archives 'melpa)
 (set-package-archives dragonli-package-archives nil nil t)
 ;; 或者用如下代码修改镜像
 ;;(set-package-archives 'melpa nil nil t)
 
-;;防止反复调用 package-refresh-contents 会影响加载速度
-(when (not package-archive-contents)
-  (package-refresh-contents))
 
 ;; Initialize packages
 (unless (bound-and-true-p package--initialized) ; To avoid warnings in 27
@@ -26,8 +38,8 @@
 
 ;; 这个配置一定要配置在 use-package 的初始化之前，否则无法正常安装
 ;; 目的是不使用emacs内置的org
-(assq-delete-all 'org package--builtins)
-(assq-delete-all 'org package--builtin-versions)
+;;(assq-delete-all 'org package--builtins)
+;;(assq-delete-all 'org package--builtin-versions)
 
 ;; Setup `use-package'
 ;; (package-installed-p 'use-package) 如果没有安装use-package，就返回nil
@@ -35,9 +47,15 @@
   (package-refresh-contents)
   (package-install 'use-package))
 
-;; 以后在使用use-package的时候就不用加ensure了
-;;(require 'use-package-ensure)
-;;(setq use-package-always-ensure t)
+;; Should set before loading `use-package'
+;; (eval-and-compile
+;;   (setq use-package-always-ensure t)
+;;   (setq use-package-always-defer t)
+;;   (setq use-package-expand-minimally t)
+;;   (setq use-package-enable-imenu-support t))
+
+(eval-when-compile
+  (require 'use-package))
 
 
 ;; 关于hydra的配置应当写在靠前一点的位置比较保险。

@@ -72,9 +72,9 @@ Emacs 有一个自带的 package 来高亮括号，那就是 `show-paren-mode'�
   :hook (after-init . delete-selection-mode))
 
 ;; 下面的代码可以使 Emacs 自动加载外部修改过的文件。
-(use-package auto-revert
-  :ensure nil
-  :init (global-auto-revert-mode))
+;; (use-package auto-revert
+;;   :ensure nil
+;;   :init (global-auto-revert-mode))
 
 ;; savehist-mode记住之前使用Emacs的工作状态（例如使用M-x的一些命令）
 ;; 记录到history文件中

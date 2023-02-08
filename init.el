@@ -1,4 +1,4 @@
-;;; init.el --- A Fancy and Fast Emacs Configuration. -*- lexical-binding: t -*-
+;;; init.el --- A Fancy and Fast Emacs Configuration. -*- lexical-binding: t no-byte-compile: t -*-
 
 ;;; Commentary:
 ;;
@@ -9,16 +9,22 @@
 
 ;;; Code:
 
+(require 'cl)
+
+(when (version< emacs-version "25.1")
+  (error "This requires Emacs 25.1 and above!"))
+
+(when (not (version< emacs-version "29.0"))
+  (setq package-native-compile nil))
+
+;; Speed up startup
+(setq auto-mode-case-fold nil)
+
 ;; https://www.reddit.com/r/emacs/comments/xfhnzz/weird_errors_with_latest_build_of_emacs/
 (when (eq system-type 'darwin) (customize-set-variable 'native-comp-driver-options '("-Wl,-w")))
 
 ;;如果不加这句代码的话，就会报错说找不到lisp中的.el文件
 (add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
-
-
-;; Refer to https://github.com/purcell/emacs.d
-;; 提高Emacs启动速度
-(require 'init-benchmarking)
 
 (defconst *spell-check-support-enabled* nil) ;; Enable with t if you prefer
 (defconst *is-a-mac* (eq system-type 'darwin))
@@ -30,20 +36,15 @@
   (add-hook 'emacs-startup-hook
             (lambda () (setq gc-cons-threshold normal-gc-cons-threshold))))
 
-
-
-;; Load `custom.el'
-;; 通过“M-x customize-group”修改的设置会自动加载到下面这个文件中
-;; 安装的package也会记录到custom.el中
-;; 通过“M-x customize-set-variables”修改的设置会在emacs重启后还原
-(setq custom-file (expand-file-name "custom.el" user-emacs-directory))
-(load custom-file 'no-error 'no-message)
-
-;;(require 'cl-lib)
 
 ;; Package Management
 (require 'init-packages)
-(require 'init-exec-path) ; Set up $PATH. If you startup emacs in terminal, this is not necessary.
+
+;; Refer to https://github.com/purcell/emacs.d
+;; 提高Emacs启动速度
+(require 'init-benchmarking)
+
+;;(require 'init-exec-path) ; Set up $PATH. If you startup emacs in terminal, this is not necessary.
 
 ;; Emacs Basic Settings (Emacs内置功能的配置)
 (require 'init-basic)
@@ -75,7 +76,7 @@
 (require 'init-org)
 (require 'init-org-roam)
 
-(require 'init-yasnippet)
+;;(require 'init-asnippet)
 (require 'init-lsp)
 (require 'init-lsp-bridge)
 
