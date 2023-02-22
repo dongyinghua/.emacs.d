@@ -85,7 +85,9 @@
 ;;Language
 (require 'init-flycheck)
 (require 'init-c)
-(require 'init-python)
+;;(require 'init-java)
+;;(require 'init-python)
+
 
 (require 'init-latex)
 (require 'init-markdown)

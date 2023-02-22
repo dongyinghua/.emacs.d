@@ -38,5 +38,10 @@
   (when (executable-find "python3")
     (setq lsp-pyright-python-executable-cmd "python3")))
 
+(use-package lsp-java
+  :ensure t
+  :defer t
+  :hook ((java-mode java-ts-mode jdee-mode) . (lambda () (require 'lsp-java))))
+
 (provide 'init-lsp)
 ;;; init-lsp.el ends here

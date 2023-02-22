@@ -73,30 +73,36 @@
   (load-library "find-lisp")
   (setq org-agenda-files (find-lisp-find-files org-gtd-path "\.org$"))
 
-  (setq org-refile-targets '(("~/Documents/Org/GTD/Projects.org" :maxlevel . 5)
-                             ("~/Documents/Org/GTD/TODOs.org" :maxlevel . 5)
-                             ("~/Documents/Org/GTD/Schedule.org" :maxlevel . 5)
-                             ("~/Documents/Org/GTD/Inbox.org" :maxlevel . 5)
+  (setq org-refile-targets '((org-gtd-path-projects :maxlevel . 5)
+                             (org-gtd-path-todos :maxlevel . 5)
+                             (org-gtd-path-schedule :maxlevel . 5)
+                             (org-gtd-path-inbox :maxlevel . 5)
 			     ("~/Documents/Org/org-roam-directory/2022070322_科研笔记.org" :maxlevel . 5)
                              ))
+  ;; (setq org-refile-targets '(("~/Documents/Org/GTD/Projects.org" :maxlevel . 5)
+  ;;                            ("~/Documents/Org/GTD/TODOs.org" :maxlevel . 5)
+  ;;                            ("~/Documents/Org/GTD/Schedule.org" :maxlevel . 5)
+  ;;                            ("~/Documents/Org/GTD/Inbox.org" :maxlevel . 5)
+  ;; 			     ("~/Documents/Org/org-roam-directory/2022070322_科研笔记.org" :maxlevel . 5)
+  ;;                            ))
 
   ;; org-capture
   ;; 快捷键“C-c x”
   (setq org-capture-templates
 	'(("i" "Inbox" entry
-           (file+headline "~/Documents/Org/GTD/Inbox.org" "Tasks")
+           (file+headline org-gtd-path-inbox "Tasks")
            "* TODO %?\n  %i\n"
            :empty-lines 0)
 	  ("s" "Schedule" entry
-           (file+headline "~/Documents/Org/GTD/Schedule.org" "Schedule")
+           (file+headline org-gtd-path-schedule "Schedule")
            "* TODO %?\n  %i\n"
            :empty-lines 1)
 	  ("t" "TODOs" entry
-           (file+headline "~/Documents/Org/GTD/TODOs.org" "TODOs")
+           (file+headline org-gtd-path-todos "TODOs")
            "* TODO %?\n  %i\n"
            :empty-lines 1)
 	  ("p" "Projects" entry
-           (file+headline "~/Documents/Org/GTD/Projects.org" "Projects")
+           (file+headline org-gtd-path-projects "Projects")
            "* TODO %?\n  %i\n"
            :empty-lines 1)
 	  )
