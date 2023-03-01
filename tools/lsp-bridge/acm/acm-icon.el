@@ -1,4 +1,4 @@
-;;; acm-icon.el --- Icon for acm
+;;; acm-icon.el --- Icon for acm  -*- lexical-binding: t -*-
 
 ;; Filename: acm-icon.el
 ;; Description: Icon for acm
@@ -140,6 +140,29 @@
     ("translate" . ("material" "translate" "#98c807"))
     ("emmet abbreviation" . ("material" "expand-all-outline" "#98c807"))
     ("custom" . ("material" "apple-keyboard-option" "#ed6856"))
+    ("special form" . ("material" "function-variant" "#0abf53"))
+    ("feature" . ("material" "sim-outline" "#00c4cc"))
+    ("at" . ("material" "at" "#0085c3"))
+    ("tabnine" . ("material" "alpha-t-box-outline" "#954a97"))
+    ("port" . ("material" "blinds-open" "#39a6dd"))
+    ("net" . ("material" "chart-timeline-variant" "#ed6856"))
+    ("register" . ("material" "cellphone-key" "#ff6908"))
+    ("block" . ("material" "contain" "#96cbb3"))
+    ("prototype" . ("material" "currency-sign" "#0085c3"))
+    ("instance" . ("material" "city-variant-outline" "#da1884"))
+    ("task" . ("material" "text-recognition" "#e22272"))
+    ("typedef" . ("material" "label-outline" "#bf11b6"))
+    ("tailwind" . ("material" "creation" "#39a6dd"))
+    ("namespace" . ("material" "pan" "#dc5034"))
+    ("package" . ("material" "package" "#dc5034"))
+    ("string" . ("material" "code-string" "#98c807"))
+    ("number" . ("material" "numeric-1" "#98c807"))
+    ("boolean" . ("material" "star-check" "#98c807"))
+    ("array" . ("material" "code-array" "#0085c3"))
+    ("object" . ("material" "steering" "#0085c3"))
+    ("key" . ("material" "account-key" "#0085c3"))
+    ("null" . ("material" "null" "##98c807"))
+    ("typeparameter" . ("material" "format-list-bulleted-type" "#dc5034"))
     (t . ("material" "file-find-outline" "#90cef1"))))
 
 (defvar acm-icon-cache (make-hash-table :test 'equal))

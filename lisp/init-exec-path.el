@@ -5,9 +5,16 @@
 (use-package exec-path-from-shell
   :if (memq window-system '(mac ns))
   :ensure t
-  :hook (after-init . (lambda () (exec-path-from-shell-initialize)))
   :init
-  (setq exec-path-from-shell-arguments nil))
+  (setq exec-path-from-shell-arguments nil)
+  (exec-path-from-shell-initialize))
+
+;; (use-package exec-path-from-shell
+;;   :if (memq window-system '(mac ns))
+;;   :ensure t
+;;   :hook (after-init . (lambda () (exec-path-from-shell-initialize)))
+;;   :init
+;;   (setq exec-path-from-shell-arguments nil))
 
 (provide 'init-exec-path)
 ;;; init-exec-path.el ends here

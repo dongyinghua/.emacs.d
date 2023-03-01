@@ -71,13 +71,6 @@ If Non-nil, use dashboard, otherwise will restore previous session."
   :group 'dragonli
   :type 'boolean)
 
-
-
-(defcustom is-company t
-  "If not-nil, using company."
-  :group 'dragonli
-  :type 'boolean)
-
 (defcustom my/completion-styles 'company
   "There are three choices for completion.
 They are company, corfu and lsp-bridge.
@@ -130,6 +123,11 @@ For example, if the value is company, choicing the company-mode for completion."
   "The path of the Inbox.org."
   :group 'dragonli
   :type 'file)
+
+(defcustom dragonli-select-company nil
+  "If not-nil, using company."
+  :group 'dragonli
+  :type 'boolean)
 
 (provide 'init-custom)
 

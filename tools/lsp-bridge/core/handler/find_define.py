@@ -24,19 +24,20 @@ class FindDefine(Handler):
 
         if file_uri.startswith("jdt://"):
             # for java
-            self.file_action.send_request("jdt_uri_resolver", file_uri, start_pos)
+            self.file_action.send_server_request(self.file_action.single_server, "jdt_uri_resolver", file_uri, start_pos)
         elif file_uri.startswith("csharp://"):
             # for csharp
             raise NotImplementedError()
         elif file_uri.startswith("jar://"):
             # for clojure
             raise NotImplementedError()
+        elif file_uri.startswith("deno:"):
+            # for deno
+            # Deno will return targetUri like "deno:asset/lib.deno.ns.d.ts", 
+            # so we need send server deno/virtualTextDocument to request virtual text document from Deno.
+            self.file_action.send_server_request(self.file_action.single_server, "deno_uri_resolver", file_uri, start_pos)
         else:
             # for normal file uri
             filepath = uri_to_path(file_uri)
-            self.file_action.lsp_bridge.create_file_action(
-                filepath=filepath,
-                lang_server_info=self.file_action.lang_server_info,
-                lsp_server=self.file_action.lsp_server,
-            )
-            eval_in_emacs("lsp-bridge--jump-to-def", filepath, start_pos)
+            self.file_action.create_external_file_action(filepath)
+            eval_in_emacs("lsp-bridge-define--jump", filepath, start_pos)

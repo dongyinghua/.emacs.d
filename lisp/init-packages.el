@@ -92,11 +92,16 @@
 (use-package visual-fill-column
   :ensure t
   :defer t
-  :hook (after-init . (lambda () (global-visual-fill-column-mode)))
+  :hook
+  (after-init . (lambda () (global-visual-fill-column-mode)))
+  (text-mode . (lambda ()
+		 (toggle-truncate-lines-off)
+		 (visual-fill-column-mode)))
+  
   :init
-  (add-hook 'text-mode-hook 'toggle-truncate-lines-off)
+  ;;(add-hook 'text-mode-hook 'toggle-truncate-lines-off)
   ;; 在所有从text-mode衍生出来的mode中使用visual-fill-column-mode
-  (add-hook 'text-mode-hook 'visual-fill-column-mode)
+  ;;(add-hook 'text-mode-hook 'visual-fill-column-mode)
   :config
   (setq visual-fill-column-enable-sensible-window-split t)
   ;;(setq-default visual-fill-column-center-text t)

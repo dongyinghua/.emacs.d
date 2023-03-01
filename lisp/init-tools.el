@@ -54,7 +54,8 @@ Other buffer group by `awesome-tab-get-group-name' with project name."
   ;;"~/.emacs.d/tools/org-bars"
   :ensure nil
   :defer t
-  :hook (org-mode . org-bars-mode))
+  :hook (org-mode . org-bars-mode)
+  )
 
 (provide 'init-tools)
 

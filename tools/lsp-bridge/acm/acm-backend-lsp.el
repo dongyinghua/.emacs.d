@@ -1,4 +1,4 @@
-;;; acm-backend-lsp.el --- LSP backend for acm
+;;; acm-backend-lsp.el --- LSP backend for acm  -*- lexical-binding: t -*-
 
 ;; Filename: acm-backend-lsp.el
 ;; Description: LSP backend for acm
@@ -7,8 +7,8 @@
 ;; Copyright (C) 2022, Andy Stewart, all rights reserved.
 ;; Created: 2022-06-07 08:56:16
 ;; Version: 0.1
-;; Last-Updated: 2022-06-07 08:56:16
-;;           By: Andy Stewart
+;; Last-Updated: 2022-10-10 14:09:54 +0800
+;;           By: Gong Qijian
 ;; URL: https://www.github.org/manateelazycat/acm-backend-lsp
 ;; Keywords:
 ;; Compatibility: GNU Emacs 28.1
@@ -84,43 +84,53 @@
 
 ;;; Code:
 
-(defcustom acm-backend-lsp-candidate-max-length 30
-  "Maximal length of candidate."
-  :type 'integer)
+(defgroup acm-backend-lsp nil
+  "LSP backend for acm."
+  :group 'acm)
 
-(defcustom acm-backend-lsp-candidates-max-number 1000
+(defcustom acm-backend-lsp-candidate-min-length 0
+  "Minimal length of candidate."
+  :type 'integer
+  :group 'acm-backend-lsp)
+
+(defcustom acm-backend-lsp-candidate-max-length 60
+  "Maximal length of candidate."
+  :type 'integer
+  :group 'acm-backend-lsp)
+
+(defcustom acm-backend-lsp-candidates-max-number 100
   "Maximal number of candidate of menu."
-  :type 'integer)
+  :type 'integer
+  :group 'acm-backend-lsp)
 
 (defcustom acm-backend-lsp-enable-auto-import t
   "Whether to enable auto-import."
-  :type 'boolean)
-
-(defvar-local acm-backend-lsp-completion-trigger-characters nil)
-(defvar-local acm-backend-lsp-completion-position nil)
-(defvar-local acm-backend-lsp-filepath "")
-(defvar-local acm-backend-lsp-items nil)
+  :type 'boolean
+  :group 'acm-backend-lsp)
 
 (defvar acm-backend-lsp-fetch-completion-item-func nil)
+(defvar-local acm-backend-lsp-fetch-completion-item-ticker nil)
 
 (defun acm-backend-lsp-candidates (keyword)
   (let* ((candidates (list)))
-    (when (and acm-backend-lsp-items
-               (hash-table-p acm-backend-lsp-items))
-      (maphash
-       (lambda (k v)
-         (let ((candidate-label (plist-get v :label)))
-           (when (or (string-equal keyword "")
-                     (acm-candidate-fuzzy-search keyword candidate-label))
-             (if (> (length candidate-label) acm-backend-lsp-candidate-max-length)
-                 (plist-put v :display-label (format "%s ..." (substring candidate-label 0 acm-backend-lsp-candidate-max-length)))
-               (plist-put v :display-label candidate-label))
+    (when (and
+           (>= (length keyword) acm-backend-lsp-candidate-min-length)
+           (boundp 'acm-backend-lsp-items)
+           acm-backend-lsp-items
+           (boundp 'acm-backend-lsp-server-names)
+           acm-backend-lsp-server-names
+           (hash-table-p acm-backend-lsp-items))
+      ;; Sort multi-server items by
+      (dolist (server-name acm-backend-lsp-server-names)
+        (when-let* ((server-items (gethash server-name acm-backend-lsp-items)))
+          (maphash (lambda (k v)
+                     (add-to-list 'candidates v t))
+                   server-items))))
 
-             (plist-put v :backend "lsp")
-             (add-to-list 'candidates v t))))
-       acm-backend-lsp-items))
-
-    (acm-candidate-sort-by-prefix keyword candidates)))
+    ;; NOTE:
+    ;; lsp-bridge has sort candidate at Python side,
+    ;; please do not do secondary sorting here, elisp is very slow.
+    candidates))
 
 (defun acm-backend-lsp-candidate-expand (candidate-info bound-start)
   (let* ((label (plist-get candidate-info :label))
@@ -128,31 +138,37 @@
          (insert-text-format (plist-get candidate-info :insertTextFormat))
          (text-edit (plist-get candidate-info :textEdit))
          (new-text (plist-get text-edit :newText))
-         (additionalTextEdits (plist-get candidate-info :additionalTextEdits))
-         (kind (plist-get candidate-info :icon))
-         (snippet-fn (and (or (eql insert-text-format 2) (string= kind "snippet")) (acm-backend-lsp-snippet-expansion-fn)))
-         (completion-start-pos (acm-backend-lsp-position-to-point acm-backend-lsp-completion-position))
-         (delete-start-pos (if text-edit
-                               ;; Use smaller one between `bound-start' and `range-start' used as the starting point of delete.
-                               (min (acm-backend-lsp-position-to-point (plist-get (plist-get text-edit :range) :start)) bound-start)
-                             bound-start))
-         (range-end-pos (if text-edit
-                            (acm-backend-lsp-position-to-point (plist-get (plist-get text-edit :range) :end))
-                          completion-start-pos))
-         (delete-end-pos (+ (point) (- range-end-pos completion-start-pos)))
-         (insert-candidate (or new-text insert-text label)))
+         (additional-text-edits (plist-get candidate-info :additionalTextEdits))
+         (snippet-fn (and (or (eql insert-text-format 2)
+                              (string= (plist-get candidate-info :icon) "snippet"))
+                          (acm-backend-lsp-snippet-expansion-fn)))
+         ;; Default, delete-bound is from menu popup postion to cursor postion.
+         (delete-start-pos bound-start)
+         (delete-end-pos (point)))
+
+    ;; Try to adjust delete-bound if `text-edit' is not nil.
+    (when text-edit
+      ;; Use smaller one between `bound-start' and `range-start' used as the starting point of delete.
+      (setq delete-start-pos (min (acm-backend-lsp-position-to-point (plist-get (plist-get text-edit :range) :start)) bound-start))
+
+      ;; Use bigger one between `point' and `range-end' used as the end point of delete.
+      (let* ((range-end (acm-backend-lsp-position-to-point (plist-get (plist-get text-edit :range) :end)))
+             (completion-start-pos (acm-backend-lsp-position-to-point acm-backend-lsp-completion-position)))
+        (when (> range-end completion-start-pos)
+          (setq delete-end-pos (+ (point) (- range-end completion-start-pos))))))
 
     ;; Move bound start position forward one character, if the following situation is satisfied:
     ;; 1. `textEdit' is not exist
     ;; 2. `char-before-input' is `acm-backend-lsp-completion-trigger-characters'
     ;; 3. `label' start with `char-before-input'
-    ;; 4. `insertText' is not start with `char-before-input'
+    ;; 4. `insertText' is not start with `char-before-input' and `insertText' is not `nil'
     (unless text-edit
       (let* ((char-before-input (save-excursion
                                   (goto-char (1+ delete-start-pos))
                                   (acm-char-before))))
         (when (and (member char-before-input acm-backend-lsp-completion-trigger-characters)
                    (string-prefix-p char-before-input label)
+                   (not (null insert-text)) ; fix clojure issue that insert :: before keyword #305
                    (not (string-prefix-p char-before-input insert-text)))
           (setq delete-start-pos (1+ delete-start-pos)))))
 
@@ -160,27 +176,29 @@
     (delete-region delete-start-pos delete-end-pos)
 
     ;; Insert candidate or expand snippet.
-    (funcall (or snippet-fn #'insert) insert-candidate)
+    (funcall (or snippet-fn #'insert)
+             (or new-text insert-text label))
 
-    ;; Do `additionalTextEdits' if return auto-imprt information.
+    ;; Do `additional-text-edits' if return auto-imprt information.
     (when (and acm-backend-lsp-enable-auto-import
-               (cl-plusp (length additionalTextEdits)))
-      (acm-backend-lsp-apply-text-edits additionalTextEdits))))
-
-(defun acm-backend-lsp-candidate-fetch-doc (candidate)
-  (let* ((key (plist-get candidate :key))
-         (documentation (plist-get candidate :documentation)))
-
-    ;; Popup candidate documentation directly if `documentation' is exist in candidate.
-    (when documentation
-      (acm-doc-show))
-
-    ;; Call fetch documentation function.
-    (when acm-backend-lsp-fetch-completion-item-func
-      (funcall acm-backend-lsp-fetch-completion-item-func candidate))))
+               (cl-plusp (length additional-text-edits)))
+      (acm-backend-lsp-apply-text-edits additional-text-edits))))
 
 (defun acm-backend-lsp-candidate-doc (candidate)
-  (plist-get candidate :documentation))
+  ;; NOTE:
+  ;; We only use `key' of candidate, then fetch documentation from `acm-backend-lsp-items',
+  ;; otherwise, we can't fetch documentation even `lsp-bridge-completion-item--update' update `acm-backend-lsp-items'
+  (let* ((key (plist-get candidate :key))
+         (server-name (plist-get candidate :server))
+         (documentation (plist-get (gethash key (gethash server-name acm-backend-lsp-items)) :documentation)))
+    ;; Call fetch documentation function.
+    (when (and acm-backend-lsp-fetch-completion-item-func
+               (not (and documentation
+                         (not (string-empty-p documentation)))))
+      (setq-local acm-backend-lsp-fetch-completion-item-ticker nil)
+      (funcall acm-backend-lsp-fetch-completion-item-func candidate))
+
+    documentation))
 
 (defun acm-backend-lsp-position-to-point (pos-plist &optional marker)
   "Convert LSP position POS-PLIST to Emacs point.
@@ -207,7 +225,9 @@ If optional MARKER, return a marker instead"
       (if marker (copy-marker (point-marker)) (point)))))
 
 (defun acm-backend-lsp-apply-text-edits (edits)
-  (dolist (edit edits)
+  ;; NOTE:
+  ;; We need reverse edits before apply, otherwise the row inserted before will affect the position of the row inserted later.
+  (dolist (edit (reverse edits))
     (let* ((range (plist-get edit :range)))
       (acm-backend-lsp-insert-new-text (plist-get range :start) (plist-get range :end) (plist-get edit :newText)))))
 
@@ -225,6 +245,9 @@ Doubles as an indicator of snippet support."
       (delete-region start-point end-point)
       (goto-char start-point)
       (insert new-text))))
+
+(defun acm-backend-lsp-clean ()
+  (setq-local acm-backend-lsp-items (make-hash-table :test 'equal)))
 
 (provide 'acm-backend-lsp)
 

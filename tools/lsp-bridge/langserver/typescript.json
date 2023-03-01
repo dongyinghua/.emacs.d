@@ -1,9 +1,14 @@
 {
   "name": "typescript",
-  "languageId": "typescript",
+  "languageId": "TypeScript",
   "command": [
     "typescript-language-server",
     "--stdio"
   ],
-  "settings": {}
+  "settings": {},
+  "initializationOptions": {
+    "preferences": {
+	  "includeCompletionsForModuleExports": false
+	}
+  }
 }

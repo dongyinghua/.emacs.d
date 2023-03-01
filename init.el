@@ -44,7 +44,7 @@
 ;; 提高Emacs启动速度
 (require 'init-benchmarking)
 
-;;(require 'init-exec-path) ; Set up $PATH. If you startup emacs in terminal, this is not necessary.
+(require 'init-exec-path) ; Set up $PATH. If you startup emacs in terminal, this is not necessary.
 
 ;; Emacs Basic Settings (Emacs内置功能的配置)
 (require 'init-basic)
@@ -67,6 +67,7 @@
 (require 'init-keybindings)
 
 (require 'init-completion)
+(require 'init-company-mode)
 (require 'init-tools)
 (require 'init-projectile)
 (require 'init-git)
@@ -77,17 +78,20 @@
 (require 'init-org-roam)
 
 ;;(require 'init-asnippet)
-(require 'init-lsp)
+;;(require 'init-lsp)
+(require 'init-yasnippet) ;;init-yasnippet需要在init-lsp-bridge前
 (require 'init-lsp-bridge)
 
+;;(require 'init-eshell)
+(require 'init-vterm)
+
 ;;Degug
-(require 'init-dap)
+;;(require 'init-dap)
 ;;Language
 (require 'init-flycheck)
-(require 'init-c)
+;;(require 'init-c)
 ;;(require 'init-java)
 ;;(require 'init-python)
-
 
 (require 'init-latex)
 (require 'init-markdown)

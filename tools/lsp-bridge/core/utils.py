@@ -27,13 +27,31 @@ import logging
 import pathlib
 import platform
 import sys
+import subprocess
+import queue
+import traceback
+import os
+
 from epc.client import EPCClient
+from threading import Thread
+
+try:
+    import orjson as json_parser
+except:
+    import json as json_parser
 
 KIND_MAP = ["", "Text", "Method", "Function", "Constructor", "Field",
             "Variable", "Class", "Interface", "Module", "Property",
             "Unit", "Value", "Enum", "Keyword", "Snippet", "Color",
             "File", "Reference", "Folder", "EnumMember", "Constant",
             "Struct", "Event", "Operator", "TypeParameter"]
+
+SYMBOL_MAP = ["", "File", "Module", "Namespace", "Package",
+              "Class", "Method", "Property", "Field", "Constructor",
+              "Enum", "Interface", "Function", "Variable", "Constant",
+              "String", "Number", "Boolean", "Array", "Object",
+              "Key", "Null", "EnumMember", "Struct", "Event",
+              "Operator", "TypeParameter"]
 
 epc_client: Optional[EPCClient] = None
 
@@ -129,6 +147,7 @@ def get_emacs_func_result(method_name, *args):
 
 def get_command_result(command_string, cwd):
     import subprocess
+    
     process = subprocess.Popen(command_string, cwd=cwd, shell=True, text=True,
                                stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                                encoding="utf-8")
@@ -155,6 +174,23 @@ def _make_uri_win32(path):
         # It's a path on a network drive => 'file://host/share/a/b'
         return 'file:' + urlquote_from_bytes(path.as_posix().encode('utf-8'))
 
+# From jedi/api/helpers.py
+def _fuzzy_match(string, like_name):
+    if len(like_name) <= 1:
+        return like_name in string
+    pos = string.find(like_name[0])
+    if pos >= 0:
+        return _fuzzy_match(string[pos + 1:], like_name[1:])
+    return False
+
+def _start_match(string, like_name):
+    return string.startswith(like_name)
+
+def string_match(string, like_name, fuzzy=False):
+    if fuzzy:
+        return _fuzzy_match(string, like_name)
+    else:
+        return _start_match(string, like_name)
 
 def path_to_uri(path):
     path = pathlib.Path(path)
@@ -217,6 +253,10 @@ def get_project_path(filepath):
             return get_command_result("git rev-parse --show-toplevel", dir_path)
         else:
             return filepath
+        
+def log_time(message):
+    import datetime
+    logger.info("\n--- [{}] {}".format(datetime.datetime.now().time(), message))
 
 @functools.lru_cache(maxsize=None)
 def get_emacs_version():
@@ -225,3 +265,43 @@ def get_emacs_version():
 
 def get_os_name():
     return platform.system().lower()
+
+def parse_json_content(content):
+    return json_parser.loads(content)
+
+def windows_get_env_value(var_name: str) -> str:
+    """
+    Read a Windows environment variable by os.environ and return its value.
+    """
+    if var_name in os.environ.keys():
+        return os.environ[var_name]
+
+def cmp(x, y):
+    if x < y:
+        return -1
+    elif x > y:
+        return 1
+    else:
+        return 0
+
+class MessageSender(Thread):
+    
+    def __init__(self, process: subprocess.Popen):
+        super().__init__()
+        
+        self.process = process
+        self.queue = queue.Queue()
+        
+    def send_request(self, message):
+        self.queue.put(message)
+        
+class MessageReceiver(Thread):
+    
+    def __init__(self, process: subprocess.Popen):
+        super().__init__()
+        
+        self.process = process
+        self.queue = queue.Queue()
+        
+    def get_message(self):
+        return self.queue.get(block=True)

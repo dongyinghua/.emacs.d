@@ -248,6 +248,24 @@ See `buffer-invisibility-spec'."
   (set-frame-parameter nil 'fullscreen
 		       (if (frame-parameter nil 'fullscreen) nil 'fullboth)))
 
+
+;; (defun switch ()
+;;   (interactive)
+;;   (add-to-list 'load-path (expand-file-name "lsp-bridge" dragonli-emacs-tools-file-path))
+;;   (setq company-mode nil)
+;;   (require 'lsp-bridge)
+;;   (lsp-bridge-mode)
+;;   )
+
+(defun enable-lsp-bridge ()
+  "Enable the lsp-bridge."
+  (interactive)
+  (add-to-list 'load-path (expand-file-name "lsp-bridge" dragonli-emacs-tools-file-path))
+  (require 'lsp-bridge)
+  (lsp-bridge-mode)
+  )
+
+
 (provide 'init-funcs)
 
 ;;; init-funcs.el ends here

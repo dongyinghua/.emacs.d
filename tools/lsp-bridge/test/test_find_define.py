@@ -18,7 +18,7 @@ class SimpleFindDefinition(unittest.TestCase):
         def expectation(method: str, args: List[Any]) -> bool:
             if target_position is None:
                 return False
-            if method != "lsp-bridge--jump-to-def":
+            if method != "lsp-bridge-define--jump":
                 return False
             return args[1] == target_position
 
@@ -37,7 +37,7 @@ class SimpleFindDefinition(unittest.TestCase):
                 (setq-local major-mode '{file.mode})
                 (lsp-bridge-mode 1)
                 (goto-char (+ (point-min) {cursor_offset}))
-                (lsp-bridge-find-define)"""))
+                (lsp-bridge-find-def)"""))
 
         go()
         result_position = core.utils.epc_arg_transformer(
@@ -84,7 +84,7 @@ class JumpOtherFile(unittest.TestCase):
 
         def expectation(method: str, args: List[Any]) -> bool:
             nonlocal result
-            if method == "lsp-bridge--jump-to-def":
+            if method == "lsp-bridge-define--jump":
                 result = args[0]
                 return True
             return False
@@ -96,13 +96,10 @@ class JumpOtherFile(unittest.TestCase):
             (setq-local major-mode '{files[0].mode})
             (lsp-bridge-mode 1)
             (goto-char (+ (point-min) {cursor_offset}))
-            (lsp-bridge-find-define)
+            (lsp-bridge-find-def)
             """))
 
-        lsp_server_cnt_before = len(lsp_bridge.lsp_server_dict)
         go()
-        lsp_server_cnt_after = len(lsp_bridge.lsp_server_dict)
-        self.assertEqual(lsp_server_cnt_after, lsp_server_cnt_before + 1)
 
         return result
 
