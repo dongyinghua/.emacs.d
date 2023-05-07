@@ -12,26 +12,41 @@
 
 ;; 优化启动速度
 (add-hook 'after-init-hook
-  #'(lambda ()
-      ;; modeline上显示我的所有的按键和执行的命令
-      ;;(keycast-mode t)
+	  #'(lambda ()
+	      ;; modeline上显示我的所有的按键和执行的命令
+	      ;;(keycast-mode t)
 
-      ;; 取消emacs的自动备份
-      (setq make-backup-files nil)
+	      ;; 取消emacs的自动备份
+	      (setq make-backup-files nil)
 
-      ;; minibuffer模糊查找
-      (setq completion-styles '(orderless))
+	      ;; minibuffer模糊查找
+	      (setq completion-styles '(orderless))
 
-      ;; 让鼠标滚动更好用
-      (setq mouse-wheel-scroll-amount '(1 ((shift) . 1) ((control) . nil)))
-      (setq mouse-wheel-progressive-speed nil)
+	      ;; 让鼠标滚动更好用
+	      (setq mouse-wheel-scroll-amount '(1 ((shift) . 1) ((control) . nil)))
+	      (setq mouse-wheel-progressive-speed nil)
 
-      ;; 也许你并不喜欢听到错误时的“哔哔”的警告提示音，使用下面的代码你可以关闭 Emacs 中的警告音
-      (setq ring-bell-function 'ignore)
+	      ;; 也许你并不喜欢听到错误时的“哔哔”的警告提示音，使用下面的代码你可以关闭 Emacs 中的警告音
+	      (setq ring-bell-function 'ignore)
 
-      ;; 简化Emacs需要用户确认命令是否执行时的“yes or no”
-      (fset 'yes-or-no-p 'y-or-n-p)
-      ))
+	      ;; 简化Emacs需要用户确认命令是否执行时的“yes or no”
+	      (fset 'yes-or-no-p 'y-or-n-p)
+
+	      ;; 鼠标滚动
+	      ;; Vertical Scroll
+	      (setq scroll-step 1)
+	      (setq scroll-margin 1)
+	      (setq scroll-conservatively 101)
+	      (setq scroll-up-aggressively 0.01)
+	      (setq scroll-down-aggressively 0.01)
+	      (setq auto-window-vscroll nil)
+	      (setq fast-but-imprecise-scrolling nil)
+	      (setq mouse-wheel-scroll-amount '(1 ((shift) . 1)))
+	      (setq mouse-wheel-progressive-speed nil)
+	      ;; Horizontal Scroll
+	      (setq hscroll-step 1)
+	      (setq hscroll-margin 1)
+	      ))
 
 
 (define-advice show-paren-function (:around (fn) fix-show-paren-function)
@@ -39,9 +54,9 @@
 Emacs 有一个自带的 package 来高亮括号，那就是 `show-paren-mode'，
 但它只会在编辑器的光标处在括号上时才会生效，我们可以使用子龙山人的代码来使光标在括号内时高亮括号。"
   (cond ((looking-at-p "\\s(") (funcall fn))
-    (t (save-excursion
-         (ignore-errors (backward-up-list))
-         (funcall fn)))))
+	(t (save-excursion
+             (ignore-errors (backward-up-list))
+             (funcall fn)))))
 
 ;; 括号匹配
 (use-package electric-pair
@@ -50,9 +65,9 @@ Emacs 有一个自带的 package 来高亮括号，那就是 `show-paren-mode'�
   :hook (after-init . electric-pair-mode)
   :config
   (setq-default electric-pair-pairs '(
-                                       (?\{ . ?\})
-                                       (?\“ . ?\”)
-                                       )))
+                                      (?\{ . ?\})
+                                      (?\“ . ?\”)
+                                      )))
 
 ;; 历史文件
 ;; consult-buffer 中也有历史文件
@@ -84,13 +99,13 @@ Emacs 有一个自带的 package 来高亮括号，那就是 `show-paren-mode'�
   :defer t
   :hook (after-init . savehist-mode)
   :init (setq enable-recursive-minibuffers t ; Allow commands in minibuffers
-          history-length 1000
-          savehist-additional-variables '(mark-ring
-                                           global-mark-ring
-                                           search-ring
-                                           regexp-search-ring
-                                           extended-command-history)
-          savehist-autosave-interval 300)
+              history-length 1000
+              savehist-additional-variables '(mark-ring
+                                              global-mark-ring
+                                              search-ring
+                                              regexp-search-ring
+                                              extended-command-history)
+              savehist-autosave-interval 300)
   )
 
 ;; 记住光标位置

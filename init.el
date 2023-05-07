@@ -39,6 +39,7 @@
 
 ;; Package Management
 (require 'init-packages)
+(require 'init-avy)
 
 ;; Refer to https://github.com/purcell/emacs.d
 ;; 提高Emacs启动速度
@@ -75,6 +76,7 @@
 
 (require 'init-compile)
 (require 'init-org)
+;;(require 'init-org-gtd)
 (require 'init-org-roam)
 
 ;;(require 'init-asnippet)
@@ -98,3 +100,4 @@
 
 (provide 'init)
 ;;; init.el ends here
+(put 'set-goal-column 'disabled nil)

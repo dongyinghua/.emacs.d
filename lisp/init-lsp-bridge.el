@@ -21,6 +21,7 @@
   ("C-c C-l b" . lsp-bridge-jump-back)
   :init
   ;;(setq lsp-bridge-enable-log nil)
+  (require 'lsp-bridge)
   ;;(global-lsp-bridge-mode)
   :config
   ;;(lsp-bridge-install-tabnine)
@@ -39,7 +40,7 @@
      (t
       (require 'dumb-jump)
       (dumb-jump-go))))
-
+  
   (defun lsp-bridge-jump-back ()
     (interactive)
     (cond

@@ -129,6 +129,31 @@ For example, if the value is company, choicing the company-mode for completion."
   :group 'dragonli
   :type 'boolean)
 
+;; the display format of the bold text in org mode.
+;; 茶花红
+(defface hi-red-custom
+  '((t (:foreground "#ee3f4d")))
+  "Face for hi lock: `茶花红'."
+  :group 'dragonli)
+
+;; 琥珀黄
+(defface hi-yellow-custom
+  '((t (:foreground "#feba07")))
+  "Face for hi lock: `琥珀黄'."
+  :group 'dragonli)
+
+;; 竹绿
+(defface hi-green-custom
+  '((t (:foreground "#1ba784")))
+  "Face for hi lock: `竹绿'."
+  :group 'dragonli)
+
+;; ;; 青莲紫
+(defface hi-purple-custom
+  '((t (:foreground "#8b2671")))
+  "Face for hi lock: `青莲紫'."
+  :group 'dragonli)
+
 (provide 'init-custom)
 
 ;;; init-custom.el ends here

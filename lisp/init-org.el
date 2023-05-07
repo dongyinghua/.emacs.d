@@ -8,6 +8,7 @@
 ;;; Code:
 
 (require 'init-const)
+(require 'init-custom)
 
 ;; 由于org 9.6.1版本存在问题，即在headline折叠状态下按回车键，新建行被插入到折叠（隐藏）区域内。
 ;; 暂时使用Emacs自带org。
@@ -16,16 +17,19 @@
   :ensure nil
   :defer 1
   :bind
+  ("C-c b" . org-switchb)
+  ("C-c 。" . org-time-stamp)
+  ("C-c r" . org-refile)
+  ("C-c t" . org-tags-sparse-tree)
+  ("C-c g" . org-mark-ring-goto)
+  ("C-c m" . org-mark-ring-push)
   ("C-c a" . org-agenda)
   ("C-c x" . org-capture)
-  ("C-c b" . org-switchb)
   ("C-c C-f a" . consul-org-agenda)
-  ("C-c r" . org-refile)
-  ("C-c 。" . org-time-stamp)
   :config
   ;; 使 org-mode 中的 timestamp 格式为英文
   (setq system-time-locale "C")
-
+  
   ;; Add new template
   ;;(add-to-list 'org-structure-template-alist '("n" . "note"))
 
@@ -63,13 +67,13 @@
   (setq org-startup-numerated t)
 
   (setq org-image-actual-width nil)
-  ;;(org-display-inline-images t)
+  (setq-default org-startup-with-inline-images t)
 
-  ;;org-mode for GTD
-  ;;todo dependencies
+  ;; org-mode for GTD
+  ;; todo dependencies
   ;;(setq alert-default-style 'notifications)
 
-  ;;org-agenda
+  ;; org-agenda
   (load-library "find-lisp")
   (setq org-agenda-files (find-lisp-find-files org-gtd-path "\.org$"))
 
@@ -85,7 +89,9 @@
   ;;                            ("~/Documents/Org/GTD/Inbox.org" :maxlevel . 5)
   ;; 			     ("~/Documents/Org/org-roam-directory/2022070322_科研笔记.org" :maxlevel . 5)
   ;;                            ))
-
+  (setq-default org-deadline-warning-days 30)
+  
+  
   ;; org-capture
   ;; 快捷键“C-c x”
   (setq org-capture-templates
@@ -135,6 +141,8 @@
            ((tags-todo "+PRIORITY=\"A\"")))
 	  ;; ...other commands here
 	  ))
+  
+  ;; org tag 对齐
 
   ;; org for beamer
   (eval-after-load "ox-latex"
@@ -180,8 +188,31 @@
    '(org-level-3 ((t (:inherit outline-3 :height 200))))
    '(org-level-4 ((t (:inherit outline-4 :height 200))))
    ) ;; end custom-set-faces
+
+  (org-babel-do-load-languages
+   'org-babel-load-languages
+   '((emacs-lisp . t)
+     (C . t)
+     (java . t)
+     (js . t)
+     (ruby . t)
+     (ditaa . t)
+     (python . t)
+     (shell . t)
+     (latex . t)
+     (plantuml . t)
+     (R . t)))
   
-  ) ; use-package org
+  ) ; use-package org ends here
+
+(use-package hi-lock
+  :ensure nil
+  :init
+  (global-hi-lock-mode 1)
+  (setq hi-lock-file-patterns-policy #'(lambda (dummy) t))
+  :config
+  (add-hook 'org-mode-hook 'org-bold-highlight)
+  )
 
 ;; (use-package org-superstar
 ;;   :if (and (display-graphic-p) (char-displayable-p ?◉))
@@ -193,7 +224,7 @@
 
 (use-package ox-beamer
   :ensure nil
-  :defer t
+  ;;:defer t
   )
 
 ;; https://github.com/casouri/valign
@@ -279,11 +310,11 @@
 
 (use-package org-re-reveal
   :ensure t
-  :defer t
+  ;;:defer t
   ;;:hook (after-init . (lambda () (require 'org-re-reveal)))
   :init
   ;; reveal.js 的根目录
-  (setq org-re-reveal-root "file:///Users/yinghuadong/reveal.js"))
+  (setq org-re-reveal-root "file:///Users/dragonli/reveal.js"))
 
 
 (use-package ox-hugo
@@ -291,30 +322,30 @@
   :pin melpa  ;`package-archives' should already have ("melpa" . "https://melpa.org/packages/")
   :after ox)
 
-(with-eval-after-load 'org-capture
-  (defun org-hugo-new-subtree-post-capture-template ()
-    "Returns `org-capture' template string for new Hugo post.
+ (with-eval-after-load 'org-capture
+    (defun org-hugo-new-subtree-post-capture-template ()
+      "Returns `org-capture' template string for new Hugo post.
 See `org-capture-templates' for more information."
-    (let* ((title (read-from-minibuffer "Post Title: ")) ;Prompt to enter the post title
-	   (fname (org-hugo-slug title)))
-      (mapconcat #'identity
-		 `(
-		   ,(concat "* TODO " title)
-		   ":PROPERTIES:"
-		   ,(concat ":EXPORT_FILE_NAME: " fname)
-		   ":END:"
-		   "\n\n")          ;Place the cursor here finally
-		 "\n")))
+      (let* ((title (read-from-minibuffer "Post Title: ")) ;Prompt to enter the post title
+	     (fname (org-hugo-slug title)))
+	(mapconcat #'identity
+		   `(
+		     ,(concat "* TODO " title)
+		     ":PROPERTIES:"
+		     ,(concat ":EXPORT_FILE_NAME: " fname)
+		     ":END:"
+		     "\n\n")          ;Place the cursor here finally
+		   "\n")))
 
-  (add-to-list 'org-capture-templates
-	       '("h"                ;`org-capture' binding + h
-		 "Hugo post"
-		 entry
-		 ;; It is assumed that below file is present in `org-directory'
-		 ;; and that it has a "Blog Ideas" heading. It can even be a
-		 ;; symlink pointing to the actual location of all-posts.org!
-		 (file+headline "/Users/dragonli/Documents/Blogs/myblog/all-blog.org" "Blog Ideas")
-		 (function org-hugo-new-subtree-post-capture-template))))
+    (add-to-list 'org-capture-templates
+		 '("h"                ;`org-capture' binding + h
+		   "Hugo post"
+		   entry
+		   ;; It is assumed that below file is present in `org-directory'
+		   ;; and that it has a "Blog Ideas" heading. It can even be a
+		   ;; symlink pointing to the actual location of all-posts.org!
+		   (file+headline "/Users/dragonli/Documents/Blogs/myblog/all-blog.org" "Blog Ideas")
+		   (function org-hugo-new-subtree-post-capture-template))))
 
 (provide 'init-org)
 ;;; init-org.el ends here

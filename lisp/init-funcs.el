@@ -265,6 +265,15 @@ See `buffer-invisibility-spec'."
   (lsp-bridge-mode)
   )
 
+(defun dragonli-insert-setting-of-image ()
+  "Insert the setting of image in org mode."
+  (interactive)
+  (insert "#+ATTR_ORG: :width 900"))
+
+(defun org-bold-highlight ()
+  "利用`highlight-regexp'高亮指定的正则表达式."
+  (interactive)
+  (highlight-regexp "[ \\t]\\(\\*\\(\\S-[^*]+\\S-\\|[^*]\\{1,2\\}\\)\\*\\)[ \\t\\n]*" 'hi-red-custom))
 
 (provide 'init-funcs)
 

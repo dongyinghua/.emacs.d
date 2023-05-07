@@ -11,16 +11,24 @@
 (use-package org-roam
   :ensure t
   :defer t
+  ;;:hook (sqlite3 . org-roam-mode)
   :bind ("C-c o f" . org-roam-node-find)
-  :config
+  :init
   (setq org-roam-directory "~/Documents/Org/org-roam-directory")
 
   (setq find-file-visit-truename t)
+  
   ;; 如果不激活org-roam-db-autosync-mode，就会导致org-roam-directory里的笔记不是最新的，
   ;; 也就是说新创建的笔记用“M-x org-roam-node-find”找不到
   (org-roam-db-autosync-mode)
   (setq org-roam-completion-everywhere t)
 
+  ;; 必须要在init.el中加入(require 'org-roam-protocol)以及打开Emacs Server，
+  ;; 否则网页抓取会出现问题
+  ;; org-roam的网页抓取原理是利用 org-protocol 这样的外部程序和 Emacs 进行通信的机制
+  (require 'org-roam-protocol)
+  
+  :config
   (setq org-roam-capture-templates
 	'(("s" "simple default" plain "%?"
            :target (file+head "%<%Y%m%d%H>_${slug}.org"
@@ -54,11 +62,6 @@
 		   :unnarrowed t))
 		)
 
-  ;; 必须要在init.el中加入(require 'org-roam-protocol)以及打开Emacs Server，
-  ;; 否则网页抓取会出现问题
-  ;; org-roam的网页抓取原理是利用 org-protocol 这样的外部程序和 Emacs 进行通信的机制
-  (require 'org-roam-protocol)
-
   ;;网页抓取
   (setq-default org-roam-capture-ref-templates
 		'(("D" "Default" plain "\n"
@@ -75,7 +78,10 @@
 		   :unnarrowed t))
 		)
   )
+;; use-package org-roam ends here
 
+(use-package websocket
+  :after org-roam)
 
 (use-package org-roam-ui
   :ensure t

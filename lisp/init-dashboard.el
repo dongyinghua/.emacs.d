@@ -74,9 +74,9 @@
     ;; To disable shortcut "jump" indicators for each section, set
     (setq dashboard-show-shortcuts nil)
 
-    (setq dashboard-items '((agenda . 5)
-                             (projects . 10)
-                             (recents  . 10)   ; 显示多少个最近文件
+    (setq dashboard-items '((agenda . 10)
+                             ;;(projects . 10)
+                             ;;(recents  . 10)   ; 显示多少个最近文件
 			     ; (bookmarks . 10) ; 显示多少个最近书签
 			     ))
 
@@ -84,9 +84,9 @@
     (setq dashboard-set-heading-icons t)
     (setq dashboard-set-file-icons t)
     ;; To modify heading icons with another icon from all-the-icons octicons:
-    (setq dashboard-heading-icons '((recents   . "history")
-                                     (projects  . "briefcase")
-                                     (agenda    . "calendar")
+    (setq dashboard-heading-icons '((agenda    . "calendar")
+				    ;;(recents   . "history")
+                                     ;;(projects  . "briefcase")
                                      ;;(bookmarks . "bookmark")
 				     ))
 

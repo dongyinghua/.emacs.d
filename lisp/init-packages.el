@@ -106,7 +106,7 @@
   (setq visual-fill-column-enable-sensible-window-split t)
   ;;(setq-default visual-fill-column-center-text t)
   (advice-add 'text-scale-adjust :after 'visual-fill-column-adjust)
-  (setq-default fill-column 110)
+  (setq-default fill-column 125)
   ;; visual-fill-column-extra-text-width可以调节文本在中间时，文本两边距屏幕边缘的距离
   ;;(setq-default visual-fill-column-extra-text-width '(5 . 10))
   )
@@ -165,22 +165,6 @@
 ;; https://github.com/Malabarba/smart-mode-line
 ;;(use-package smart-mode-line
 ;;  :config (sml/setup))
-
-;; https://github.com/abo-abo/avy
-(use-package avy
-  :ensure t
-  :defer t
-  :bind (("C-c '" . avy-goto-char-timer)
-          ("M-g l" . avy-goto-line)
-          ("M-g w" . avy-goto-word-1)
-          ("M-g o" . avy-org-goto-heading-timer))
-  :config
-  (setq avy-timeout-seconds 2)
-  (setf (alist-get ?e avy-dispatch-alist) 'avy-action-embark)
-  (setq avy-all-windows nil
-    avy-all-windows-alt t
-    avy-background t
-    avy-style 'pre))
 
 ;;(use-package tiny)
 

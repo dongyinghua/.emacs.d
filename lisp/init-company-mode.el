@@ -17,7 +17,7 @@
   :init
   ;;(setq global-company-mode t)
   :config
-  (setq company-minimum-prefix-length 0)
+  (setq company-minimum-prefix-length 2)
   (setq company-idle-delay 0.0)
   (setq company-show-quick-access t) ; 给选项编号 (按快捷键 M-1、M-2 等等来进行选择).
   (setq company-selection-wrap-around t)
