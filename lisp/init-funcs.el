@@ -73,22 +73,86 @@ file to wdeired, and consult-location to occur-edit"
     )
   )
 
-;;从Emacs打开电脑文件
-;;注：子龙山人是在Windows平台上配置的，有些语句在macOS上不需要可以不用管
-(defun consult-directory-externally (file)
+;; 从Emacs打开电脑文件
+;; 注：子龙山人是在 Windows 平台上配置的，有些语句在 macOS 上不需要可以不用管
+;; 子龙山人写的function一开始只能打开文件所在的文件夹，而不是该文件。
+;; 原因在于他用了函数 file-name-directory，该函数是返回文件所在的文件夹的目录。
+;; 把这个函数去除之后就可以了，所以我写了两个函数，一个是打开文件夹，一个是打开文件。
+(defun consult-file-externally (file)
   "Open FILE externally using the default application of the system."
   (interactive "fOpen externally: ")
   (if (and (eq system-type 'windows-nt)
            (fboundp 'w32-shell-execute))
-      (shell-command-to-string (encode-coding-string (replace-regexp-in-string "/" "\\\\"(format "explorer.exe %s" (file-name-directory (expand-file-name file)))) 'gbk))
+      (shell-command-to-string (encode-coding-string (replace-regexp-in-string "/" "\\\\" (format "explorer.app %s" (file-name-directory (expand-file-name file)))) 'gbk))
     (call-process (pcase system-type
                     ('darwin "open")
                     ('cygwin "cygstart")
                     (_ "xdg-open"))
 		  nil 0 nil
-		  (file-name-directory (expand-file-name file)))
+		  ;; another function that open the directory where the `file' is.
+		  ;; (file-name-directory (expand-file-name file))
+		  ;; (file-name-directory FILENAME)
+		  ;; Return the directory component in file name FILENAME. More details see "C-h f"
+		  (expand-file-name file))
     )
   )
+
+(defun consult-directory-externally (file)
+  "Open the FILE's directory externally by system."
+  (interactive "fOpen externally: ")
+  (if (and (eq system-type 'windows-nt)
+	   (fboundp 'w32-shell-execute))
+      (shell-command-to-string (encode-coding-string (replace-regexp-in-string "/" "\\\\" (format "explorer.exe %s" (file-name-directory (expand-file-name file)))) 'gbk))
+    (call-process (pcase system-type
+		    ('darwin "open")
+		    ('cygwin "cygstart")
+		    (_ "xdg-open"))
+		  nil 0 nil
+		  (file-name-directory (expand-file-name file)))))
+
+;; From Xah Lee http://xahlee.info/emacs/emacs/emacs_dired_open_file_in_ext_apps.html
+(defun xah-open-in-external-app (&optional Fname)
+  "Open the current file or Dired marked files in external app.
+When called in `Emacs' Lisp, if `FNAME' is given, open that.
+
+URL `http://xahlee.info/emacs/emacs/emacs_dired_open_file_in_ext_apps.html'
+Version: 2019-11-04 2021-07-21 2022-08-19 2023-02-28 2023-03-10"
+  (interactive)
+  (let (xfileList xdoIt)
+    (setq xfileList
+          (if Fname
+              (list Fname)
+            (if (string-equal major-mode "dired-mode")
+                (dired-get-marked-files)
+              (list buffer-file-name))))
+    (setq xdoIt (if (<= (length xfileList) 10) t (y-or-n-p "Open more than 10 files? ")))
+    (when xdoIt
+      (cond
+       ((string-equal system-type "windows-nt")
+        (let ((xoutBuf (get-buffer-create "*xah open in external app*"))
+              (xcmdlist (list "PowerShell" "-Command" "Invoke-Item" "-LiteralPath")))
+          (mapc
+           (lambda (x)
+             (message "%s" x)
+             (apply 'start-process (append (list "xah open in external app" xoutBuf) xcmdlist (list (format "'%s'" (if (string-match "'" x) (replace-match "`'" t t x) x))) nil)))
+           xfileList)
+
+          (switch-to-buffer-other-window xoutBuf))
+        ;; old code. calling shell. also have a bug if filename contain apostrophe
+        ;; (mapc (lambda (xfpath) (shell-command (concat "PowerShell -Command \"Invoke-Item -LiteralPath\" " "'" (shell-quote-argument (expand-file-name xfpath)) "'"))) xfileList)
+        )
+       ((string-equal system-type "darwin")
+        (mapc (lambda (xfpath) (shell-command (concat "open " (shell-quote-argument xfpath)))) xfileList))
+       ((string-equal system-type "gnu/linux")
+        (mapc (lambda (xfpath)
+                (call-process shell-file-name nil nil nil
+                              shell-command-switch
+                              (format "%s %s"
+                                      "xdg-open"
+                                      (shell-quote-argument xfpath))))
+              xfileList))
+       ((string-equal system-type "berkeley-unix")
+        (mapc (lambda (xfpath) (let ((process-connection-type nil)) (start-process "" nil "xdg-open" xfpath))) xfileList))))))
 
 ;;在所有由text-mode衍生出来的mode中禁用toggle-truncate-lines
 (defun toggle-truncate-lines-off()
@@ -273,7 +337,9 @@ See `buffer-invisibility-spec'."
 (defun org-bold-highlight ()
   "利用`highlight-regexp'高亮指定的正则表达式."
   (interactive)
-  (highlight-regexp "[ \\t]\\(\\*\\(\\S-[^*]+\\S-\\|[^*]\\{1,2\\}\\)\\*\\)[ \\t\\n]*" 'hi-red-custom))
+  (highlight-regexp "[ \\t]\\(\\*\\(\\S-[^*]+\\S-\\|[^*]\\{1,2\\}\\)\\*\\)[ \\t\\n]*" 'hi-red-custom)
+  ;;(highlight-regexp "(\\*\\(\\S-[^*]+\\S-\\|[^*]\\{1,2\\}\\)\\*\\)[ \\t\\n]*" 'hi-red-custom)
+  )
 
 (provide 'init-funcs)
 

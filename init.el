@@ -98,6 +98,8 @@
 (require 'init-latex)
 (require 'init-markdown)
 
+;;(require 'init-chatgpt-shell)
+
 (provide 'init)
 ;;; init.el ends here
 (put 'set-goal-column 'disabled nil)

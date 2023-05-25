@@ -61,7 +61,8 @@
 
   (setq org-preview-latex-default-process 'xdvsvgm)
 
-
+  (org-zotxt-mode)
+  
   ;; To speed up startup, don't put to init section
   (setq org-modules nil)     ;; Faster loading
   (setq org-startup-numerated t)
@@ -222,11 +223,6 @@
 ;;   (setq org-ellipsis " ▼ ")
 ;;   )
 
-(use-package ox-beamer
-  :ensure nil
-  ;;:defer t
-  )
-
 ;; https://github.com/casouri/valign
 ;; 表格对齐
 (use-package valign
@@ -308,6 +304,12 @@
 	'dummy-org-download-annotate-function)
   )
 
+(use-package ox-beamer
+  :ensure nil
+  :defer t
+  )
+
+;; Reveal.js 幻灯片
 (use-package org-re-reveal
   :ensure t
   ;;:defer t

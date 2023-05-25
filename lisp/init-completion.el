@@ -77,7 +77,8 @@
 
 ;;将自定义的函数加到 embark-file-map 中
 (with-eval-after-load 'embark
-  (define-key embark-file-map (kbd "E") #'consult-directory-externally))
+  (define-key embark-file-map (kbd "C-f") #'consult-file-externally)
+  (define-key embark-file-map (kbd "C-d") #'consult-directory-externally))
 
 ;; ---------------------------------------------------------------------------
 

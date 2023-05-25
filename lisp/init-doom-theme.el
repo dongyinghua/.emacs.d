@@ -24,7 +24,7 @@
   ;; doom-henna
   ;; doom-opera感觉像是莫兰迪色系
   ;; 亮色系：doom-tomorrow-day、doom-opera-light、doom-one-light
-  (setq-default my-theme 'doom-molokai)
+  (setq-default my-theme 'doom-gruvbox)
   (load-theme my-theme t)
 
   ;; Enable flashing mode-line on errors
