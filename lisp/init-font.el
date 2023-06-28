@@ -17,7 +17,6 @@
 ;;     (if window-system
 ;;       (s-font))))
 
-
 (setq-default english-font "Fira Code Retina")
 (setq-default chinese-font "Sarasa Term SC Light")
 

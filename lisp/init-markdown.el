@@ -6,6 +6,8 @@
 (use-package markdown-mode
   :ensure t
   :defer t
+  :mode ("README\\.md\\'" . gfm-mode)
+  
   :config
   (with-eval-after-load 'org
     (add-to-list 'org-export-backends 'md)))

@@ -7,7 +7,7 @@
 
 ;;; Code:
 
-(unless (package-installed-p 'auctex)  
+(unless (package-installed-p 'auctex)
   (package-install 'auctex))
 
 (setq-default TeX-engine 'xetex)

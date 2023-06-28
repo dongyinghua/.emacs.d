@@ -19,11 +19,11 @@
 	      (setq-default line-spacing 0.15) ; 修改行间距
 	      (setq inhibit-startup-screen 1) ; 隐藏开始界面
 
-	      ;; 启动最大化
+	      ;; 启动最大化，适配 Emacs 29
 	      ;; 以函数调用的方式写在配置文件中，就可以在启动时执行这些函数
-	      ;;(toggle-frame-maximized)
+	      ;; (toggle-frame-maximized)
 	      ;; Start maximised (cross-platf)
-	      ;;(add-hook 'window-setup-hook 'toggle-frame-maximized t)
+	      ;; (add-hook 'window-setup-hook 'toggle-frame-maximized t)
 	      ;; 使用下面这种配置方法可以保证在使用emacs server和client时，也能保证在启动的时候窗口最大化
 	      ;; 问题的关键在于frame
 	      (add-to-list 'default-frame-alist '(fullscreen . maximized))

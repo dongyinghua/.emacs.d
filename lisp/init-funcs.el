@@ -341,6 +341,12 @@ See `buffer-invisibility-spec'."
   ;;(highlight-regexp "(\\*\\(\\S-[^*]+\\S-\\|[^*]\\{1,2\\}\\)\\*\\)[ \\t\\n]*" 'hi-red-custom)
   )
 
+(defun dragonli-insert-how-to-read-paper-first-pass ()
+  "Insert the templet of the 5Cs which were proposed in 'how to read a paper'."
+  (interactive)
+  (insert "** First Pass\n*** Category\n\n*** Context\n\n*** Correctness\n\n*** Contribution\n\n*** Clarity\n\n")
+  )
+
 (provide 'init-funcs)
 
 ;;; init-funcs.el ends here

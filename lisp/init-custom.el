@@ -49,7 +49,7 @@
                 :value-type (alist :key-type (string :tag "Archive name")
                                    :value-type (string :tag "URL or directory name"))))
 
-(defcustom dragonli-package-archives 'bfsu
+(defcustom dragonli-package-archives 'tuna
   "Set package archives from which to fetch."
   :group 'dragonli
   :set (lambda (symbol value)

@@ -38,8 +38,8 @@
 
 ;; 这个配置一定要配置在 use-package 的初始化之前，否则无法正常安装
 ;; 目的是不使用emacs内置的org
-;;(assq-delete-all 'org package--builtins)
-;;(assq-delete-all 'org package--builtin-versions)
+;; (assq-delete-all 'org package--builtins)
+;; (assq-delete-all 'org package--builtin-versions)
 
 ;; Setup `use-package'
 ;; (package-installed-p 'use-package) 如果没有安装use-package，就返回nil
@@ -66,19 +66,19 @@
   :ensure t
   :init
   (cl-defun pretty-hydra-title (title &optional icon-type icon-name
-                                 &key face height v-adjust)
+                                      &key face height v-adjust)
     "Add an icon in the hydra title."
     (let ((face (or face `(:foreground ,(face-background 'highlight))))
-           (height (or height 1.0))
-           (v-adjust (or v-adjust 0.0)))
+          (height (or height 1.0))
+          (v-adjust (or v-adjust 0.0)))
       (concat
-        (when (and (icon-displayable-p) icon-type icon-name)
-          (let ((f (intern (format "all-the-icons-%s" icon-type))))
-            (when (fboundp f)
-              (concat
-                (apply f (list icon-name :face face :height height :v-adjust v-adjust))
-                " "))))
-        (propertize title 'face face)))))
+       (when (and (icon-displayable-p) icon-type icon-name)
+         (let ((f (intern (format "all-the-icons-%s" icon-type))))
+           (when (fboundp f)
+             (concat
+              (apply f (list icon-name :face face :height height :v-adjust v-adjust))
+              " "))))
+       (propertize title 'face face)))))
 
 
 
@@ -106,7 +106,7 @@
   (setq visual-fill-column-enable-sensible-window-split t)
   ;;(setq-default visual-fill-column-center-text t)
   (advice-add 'text-scale-adjust :after 'visual-fill-column-adjust)
-  (setq-default fill-column 125)
+  (setq-default fill-column 140)
   ;; visual-fill-column-extra-text-width可以调节文本在中间时，文本两边距屏幕边缘的距离
   ;;(setq-default visual-fill-column-extra-text-width '(5 . 10))
   )
@@ -180,7 +180,6 @@
   :init
   (global-hungry-delete-mode)
   (setq hungry-delete-join-reluctantly t))
-
 
 (provide 'init-packages)
 ;;; init-packages.el ends here

@@ -10,10 +10,7 @@
 (require 'init-const)
 (require 'init-custom)
 
-;; 由于org 9.6.1版本存在问题，即在headline折叠状态下按回车键，新建行被插入到折叠（隐藏）区域内。
-;; 暂时使用Emacs自带org。
 (use-package org
-  :pin melpa
   :ensure nil
   :defer 1
   :bind
@@ -42,8 +39,8 @@
   ;; (setq exec-path (append exec-path '("/Library/TeX/texbin/")))
 
   ;;使用 XeLaTeX 程序进行编译转换
-  (setq org-latex-compiler "xelatex")
-  (setq org-latex-pdf-process '("xelatex %f"))
+  (setq-default org-latex-compiler "xelatex")
+  (setq-default org-latex-pdf-process '("xelatex %f"))
   (add-to-list 'org-latex-default-packages-alist '("" "ctex" t ("xelatex")))
 
   ;; 解决org-mode中LaTeX数学公式中的中文渲染问题
@@ -55,7 +52,7 @@
 			 :message "you need install the programs: xelatex and dvisvgm."
 			 :image-input-type "xdv"
 			 :image-output-type "svg"
-			 :image-size-adjust (6.2 . 6) ; 调整 svg 的 size
+			 :image-size-adjust (7.1 . 7) ; 调整 svg 的 size
 			 :latex-compiler ("xelatex -interaction nonstopmode -no-pdf -output-directory %o %f")
 			 :image-converter ("dvisvgm %f -n -b min -c %S -o %O")))
 
@@ -78,12 +75,12 @@
   (load-library "find-lisp")
   (setq org-agenda-files (find-lisp-find-files org-gtd-path "\.org$"))
 
-  (setq org-refile-targets '((org-gtd-path-projects :maxlevel . 5)
-                             (org-gtd-path-todos :maxlevel . 5)
-                             (org-gtd-path-schedule :maxlevel . 5)
-                             (org-gtd-path-inbox :maxlevel . 5)
-			     ("~/Documents/Org/org-roam-directory/2022070322_科研笔记.org" :maxlevel . 5)
-                             ))
+  (setq-default org-refile-targets '((org-gtd-path-projects :maxlevel . 5)
+				     (org-gtd-path-todos :maxlevel . 5)
+				     (org-gtd-path-schedule :maxlevel . 5)
+				     (org-gtd-path-inbox :maxlevel . 5)
+				     ("~/Documents/Org/org-roam-directory/2022070322_科研笔记.org" :maxlevel . 5)
+				     ))
   ;; (setq org-refile-targets '(("~/Documents/Org/GTD/Projects.org" :maxlevel . 5)
   ;;                            ("~/Documents/Org/GTD/TODOs.org" :maxlevel . 5)
   ;;                            ("~/Documents/Org/GTD/Schedule.org" :maxlevel . 5)
@@ -95,25 +92,25 @@
   
   ;; org-capture
   ;; 快捷键“C-c x”
-  (setq org-capture-templates
-	'(("i" "Inbox" entry
-           (file+headline org-gtd-path-inbox "Tasks")
-           "* TODO %?\n  %i\n"
-           :empty-lines 0)
-	  ("s" "Schedule" entry
-           (file+headline org-gtd-path-schedule "Schedule")
-           "* TODO %?\n  %i\n"
-           :empty-lines 1)
-	  ("t" "TODOs" entry
-           (file+headline org-gtd-path-todos "TODOs")
-           "* TODO %?\n  %i\n"
-           :empty-lines 1)
-	  ("p" "Projects" entry
-           (file+headline org-gtd-path-projects "Projects")
-           "* TODO %?\n  %i\n"
-           :empty-lines 1)
-	  )
-	)
+  (setq-default org-capture-templates
+		'(("i" "Inbox" entry
+		   (file+headline org-gtd-path-inbox "Tasks")
+		   "* TODO %?\n  %i\n"
+		   :empty-lines 0)
+		  ("s" "Schedule" entry
+		   (file+headline org-gtd-path-schedule "Schedule")
+		   "* TODO %?\n  %i\n"
+		   :empty-lines 1)
+		  ("t" "TODOs" entry
+		   (file+headline org-gtd-path-todos "TODOs")
+		   "* TODO %?\n  %i\n"
+		   :empty-lines 1)
+		  ("p" "Projects" entry
+		   (file+headline org-gtd-path-projects "Projects")
+		   "* TODO %?\n  %i\n"
+		   :empty-lines 1)
+		  )
+		)
 
   ;; 设置任务流程
   ;; This is achieved by adding special markers ‘!’ (for a timestamp)
@@ -134,14 +131,14 @@
   (setq org-log-done t)
   (setq org-log-into-drawer t)
 
-  (setq org-agenda-span 'day)
+  (setq-default org-agenda-span 'day)
   ;;(add-hook org-capture-mode-hook 'evil-mode)
 
-  (setq org-agenda-custom-commands
-	'(("i" "重要且紧急的事" ;; 不显示没有加org-todo-keywords以及keyword是DONE的任务
-           ((tags-todo "+PRIORITY=\"A\"")))
-	  ;; ...other commands here
-	  ))
+  (setq-default org-agenda-custom-commands
+		'(("i" "重要且紧急的事" ;; 不显示没有加org-todo-keywords以及keyword是DONE的任务
+		   ((tags-todo "+PRIORITY=\"A\"")))
+		  ;; ...other commands here
+		  ))
   
   ;; org tag 对齐
 
@@ -159,7 +156,7 @@
 		    ("\\section{%s}" . "\\section*{%s}")
 		    ("\\subsection{%s}" . "\\subsection*{%s}")
 		    ("\\subsubsection{%s}" . "\\subsubsection*{%s}"))))
-  (setq org-latex-listings t)
+  (setq-default org-latex-src-block-backend t)
   ;;     (setq org-emphasis-alist (quote (("*" bold "<b>" "</b>")
   ;;                                       ("/" italic "<i>" "</i>")
   ;;                                       ("_" underline "<span
@@ -284,10 +281,14 @@
 (use-package org-fragtog
   :ensure t
   :defer t
-  ;; :hook
-  ;; (org-mode . org-fragtog-mode)
+  :hook (org-mode . org-fragtog-mode)
   ;; (org-roam-mode . org-fragtog-mode)
   )
+
+;; (use-package xenops
+;;   :ensure t
+;;   :defer t
+;;   :hook (org-mode . xenops-mode))
 
 (use-package org-download
   :ensure t
@@ -324,30 +325,30 @@
   :pin melpa  ;`package-archives' should already have ("melpa" . "https://melpa.org/packages/")
   :after ox)
 
- (with-eval-after-load 'org-capture
-    (defun org-hugo-new-subtree-post-capture-template ()
-      "Returns `org-capture' template string for new Hugo post.
+(with-eval-after-load 'org-capture
+  (defun org-hugo-new-subtree-post-capture-template ()
+    "Returns `org-capture' template string for new Hugo post.
 See `org-capture-templates' for more information."
-      (let* ((title (read-from-minibuffer "Post Title: ")) ;Prompt to enter the post title
-	     (fname (org-hugo-slug title)))
-	(mapconcat #'identity
-		   `(
-		     ,(concat "* TODO " title)
-		     ":PROPERTIES:"
-		     ,(concat ":EXPORT_FILE_NAME: " fname)
-		     ":END:"
-		     "\n\n")          ;Place the cursor here finally
-		   "\n")))
+    (let* ((title (read-from-minibuffer "Post Title: ")) ;Prompt to enter the post title
+	   (fname (org-hugo-slug title)))
+      (mapconcat #'identity
+		 `(
+		   ,(concat "* TODO " title)
+		   ":PROPERTIES:"
+		   ,(concat ":EXPORT_FILE_NAME: " fname)
+		   ":END:"
+		   "\n\n")          ;Place the cursor here finally
+		 "\n")))
 
-    (add-to-list 'org-capture-templates
-		 '("h"                ;`org-capture' binding + h
-		   "Hugo post"
-		   entry
-		   ;; It is assumed that below file is present in `org-directory'
-		   ;; and that it has a "Blog Ideas" heading. It can even be a
-		   ;; symlink pointing to the actual location of all-posts.org!
-		   (file+headline "/Users/dragonli/Documents/Blogs/myblog/all-blog.org" "Blog Ideas")
-		   (function org-hugo-new-subtree-post-capture-template))))
+  (add-to-list 'org-capture-templates
+	       '("h"                ;`org-capture' binding + h
+		 "Hugo post"
+		 entry
+		 ;; It is assumed that below file is present in `org-directory'
+		 ;; and that it has a "Blog Ideas" heading. It can even be a
+		 ;; symlink pointing to the actual location of all-posts.org!
+		 (file+headline "/Users/dragonli/Documents/Blogs/myblog/all-blog.org" "Blog Ideas")
+		 (function org-hugo-new-subtree-post-capture-template))))
 
 (provide 'init-org)
 ;;; init-org.el ends here
