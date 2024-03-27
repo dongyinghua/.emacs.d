@@ -39,6 +39,13 @@
 
 (global-set-key (kbd "C-c C-e b") 'eval-buffer)
 
+;; (global-unset-key (kbd "C-o"))
+
+(define-key global-map (kbd "C-o") nil)
+(define-key global-map (kbd "C-x C-；") 'comment-line)
+
+(global-set-key (kbd "C-c f") 'dragonli-insert-in-line-formula-symbel-for-latex-formula)
+
 (provide 'init-keybindings)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

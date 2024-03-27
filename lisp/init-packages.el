@@ -106,7 +106,7 @@
   (setq visual-fill-column-enable-sensible-window-split t)
   ;;(setq-default visual-fill-column-center-text t)
   (advice-add 'text-scale-adjust :after 'visual-fill-column-adjust)
-  (setq-default fill-column 140)
+  (setq-default fill-column 150)
   ;; visual-fill-column-extra-text-width可以调节文本在中间时，文本两边距屏幕边缘的距离
   ;;(setq-default visual-fill-column-extra-text-width '(5 . 10))
   )
@@ -130,9 +130,13 @@
   :ensure t
   :defer t)
 
-;;(use-package which-key
-;;  :hook (after-init . which-key-mode)
-;;  :config (setq which-key-idle-delay 0))
+;; 快捷键提示
+(use-package which-key
+  :ensure t
+  :defer t
+  :hook (after-init . which-key-mode)
+  :config (setq which-key-idle-delay 0.5))
+
 
 ;; https://github.com/DarwinAwardWinner/amx
 ;; (use-package amx
@@ -159,7 +163,8 @@
   :config
   (setq undo-tree-visualizer-timestamps t)
   (setq undo-tree-visualizer-diff t)
-  (setq undo-tree-auto-save-history t))
+  (setq undo-tree-auto-save-history t)
+  )
 ;;(evil-set-undo-system 'undo-tree))
 
 ;; https://github.com/Malabarba/smart-mode-line
@@ -180,6 +185,39 @@
   :init
   (global-hungry-delete-mode)
   (setq hungry-delete-join-reluctantly t))
+
+
+(use-package helpful
+  :ensure t
+  :defer t
+  :bind
+  ;; 重新定向 C-h 开始的命令
+  (([remap describe-function] . #'helpful-callable)
+   ([remap describe-variable] . #'helpful-variable)
+   ([remap describe-key] . #'helpful-key)
+   ([remap describe-command] . #'helpful-command)
+   ([remap describe-symbol] . #'helpful-symbol)
+   ("C-h C-d" . #'helpful-at-point)
+   ("C-h F" . #'helpful-function)))
+
+;; 在中英文之间自动加空格
+(use-package pangu-spacing
+  ;;:load-path (lambda () (expand-file-name "pangu-spacing" dragonli-emacs-tools-file-path))
+  :ensure t
+  ;; :defer t
+  ;; :hook (after-init . pangu-spacing-mode)
+  ;; 只有在text-mode模式下才a写到磁盘里，其他模式只是显示
+  ;; :hook (text-mode . (lambda ()
+  ;; 		       (set (make-local-variable 'pangu-spacing-real-insert-separtor) t)))
+  :config
+  (global-pangu-spacing-mode 1)
+  )
+
+;; 自动保存
+(use-package super-save
+  :ensure t
+  :config
+  (super-save-mode +1))
 
 (provide 'init-packages)
 ;;; init-packages.el ends here

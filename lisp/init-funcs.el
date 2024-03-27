@@ -347,6 +347,34 @@ See `buffer-invisibility-spec'."
   (insert "** First Pass\n*** Category\n\n*** Context\n\n*** Correctness\n\n*** Contribution\n\n*** Clarity\n\n")
   )
 
+(defun dragonli-insert-setting-of-image ()
+  "Insert the setting of image in org mode."
+  (interactive)
+  (setq size (read-from-minibuffer
+	      (concat
+	       (propertize "Image Size: " 'face '(bold default)))))
+  (if (string= size "")
+      ;; 默认值是700
+      (insert (concat "#+ATTR_ORG: :width 700"))
+    (insert (concat "#+ATTR_ORG: :width " size)))
+  )
+
+(defun dragonli-insert-in-line-formula-symbel-for-latex-formula ()
+  "Insert `\(\)' at cursor point for latex formula in `org-mode' and `latex-mode'."
+  (interactive)
+  (insert " \\(\\) ")
+  (backward-char 3)
+  )
+
+
+(defun dragonli-insert-inter-row-formula-symbel-for-latex-formula ()
+  "Insert `\[\]' at cursor point for latex formula in `org-mode' and `latex-mode'."
+  (interactive)
+  (insert " \\[\\] ")
+  (backward-char 3)
+  )
+
+
 (provide 'init-funcs)
 
 ;;; init-funcs.el ends here

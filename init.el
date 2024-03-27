@@ -47,9 +47,13 @@
 
 (require 'init-exec-path) ; Set up $PATH. If you startup emacs in terminal, this is not necessary.
 
+;; Key Bindings
+(require 'init-keybindings)
+
 ;; Emacs Basic Settings (Emacs内置功能的配置)
 (require 'init-basic)
 (require 'init-hydra)
+(require 'init-outline)
 
 ;; Font Setting
 (require 'init-font)
@@ -62,10 +66,7 @@
 
 (require 'init-persp)
 
-(require 'init-evil)
-
-;; Key Bindings
-(require 'init-keybindings)
+;; (require 'init-evil)
 
 (require 'init-completion)
 (require 'init-company-mode)
@@ -81,8 +82,8 @@
 
 ;;(require 'init-asnippet)
 ;;(require 'init-lsp)
-(require 'init-yasnippet) ;;init-yasnippet需要在init-lsp-bridge前
-(require 'init-lsp-bridge)
+;; (require 'init-yasnippet) ;;init-yasnippet需要在init-lsp-bridge前
+;; (require 'init-lsp-bridge)
 
 ;;(require 'init-eshell)
 (require 'init-vterm)
@@ -95,11 +96,12 @@
 ;;(require 'init-java)
 ;;(require 'init-python)
 
+
 (require 'init-latex)
 (require 'init-markdown)
 
+;; (require 'init-pdf-tools)
 ;;(require 'init-chatgpt-shell)
 
 (provide 'init)
 ;;; init.el ends here
-(put 'set-goal-column 'disabled nil)

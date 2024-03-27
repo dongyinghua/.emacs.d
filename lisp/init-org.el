@@ -24,13 +24,15 @@
   ("C-c x" . org-capture)
   ("C-c C-f a" . consul-org-agenda)
   :config
+  (define-key org-mode-map (kbd "C-c C-，") 'org-insert-structure-template)
+  
   ;; 使 org-mode 中的 timestamp 格式为英文
   (setq system-time-locale "C")
   
   ;; Add new template
   ;;(add-to-list 'org-structure-template-alist '("n" . "note"))
 
-  ;;org-mode缩进
+  ;; org-mode缩进
   ;; org-bars-mode 开启时会自动开启 org-indent-mode
   ;;(setq org-startup-indented t)
 
@@ -38,11 +40,15 @@
   ;; (setenv "PATH" (concat (getenv "PATH") ":/Library/TeX/texbin/"))
   ;; (setq exec-path (append exec-path '("/Library/TeX/texbin/")))
 
-  ;;使用 XeLaTeX 程序进行编译转换
+  
+  ;; org latex
+  ;; 使用 XeLaTeX 程序进行编译转换
   (setq-default org-latex-compiler "xelatex")
   (setq-default org-latex-pdf-process '("xelatex %f"))
   (add-to-list 'org-latex-default-packages-alist '("" "ctex" t ("xelatex")))
 
+  (setq-default org-latex-prefer-user-labels t)
+  
   ;; 解决org-mode中LaTeX数学公式中的中文渲染问题
   ;; https://q3yi.me/post/4_use_xelatex_instead_of_latex_in_org_preview_latex_process/
   (add-to-list 'org-preview-latex-process-alist
@@ -52,12 +58,62 @@
 			 :message "you need install the programs: xelatex and dvisvgm."
 			 :image-input-type "xdv"
 			 :image-output-type "svg"
-			 :image-size-adjust (7.1 . 7) ; 调整 svg 的 size
+			 :image-size-adjust (6.5 . 6.5) ; 调整 svg 的 size
 			 :latex-compiler ("xelatex -interaction nonstopmode -no-pdf -output-directory %o %f")
 			 :image-converter ("dvisvgm %f -n -b min -c %S -o %O")))
 
   (setq org-preview-latex-default-process 'xdvsvgm)
 
+  ;; org-mode美化公式预览https://emacs-china.org/t/org-mode-latex-mode/22490
+  ;; 只借鉴了公式编号部分
+  ;; from: https://kitchingroup.cheme.cmu.edu/blog/2016/11/07/
+  ;; Better-equation-numbering-in-LaTeX-fragments-in-org-mode/
+  (defun org-renumber-environment (orig-func &rest args)
+    (let ((results '()) 
+          (counter -1)
+          (numberp))
+      (setq results (cl-loop for (begin .  env) in 
+                             (org-element-map (org-element-parse-buffer)
+                                 'latex-environment
+                               (lambda (env)
+                                 (cons
+                                  (org-element-property :begin env)
+                                  (org-element-property :value env))))
+                             collect
+                             (cond
+                              ((and (string-match "\\\\begin{equation}" env)
+                                    (not (string-match "\\\\tag{" env)))
+                               (cl-incf counter)
+                               (cons begin counter))
+                              ((and (string-match "\\\\begin{align}" env)
+                                    (string-match "\\\\notag" env))
+                               (cl-incf counter)
+                               (cons begin counter))
+                              ((string-match "\\\\begin{align}" env)
+                               (prog2
+                                   (cl-incf counter)
+                                   (cons begin counter)                          
+                                 (with-temp-buffer
+                                   (insert env)
+                                   (goto-char (point-min))
+                                   ;; \\ is used for a new line. Each one leads
+                                   ;; to a number
+                                   (cl-incf counter (count-matches "\\\\$"))
+                                   ;; unless there are nonumbers.
+                                   (goto-char (point-min))
+                                   (cl-decf counter
+                                            (count-matches "\\nonumber")))))
+                              (t
+                               (cons begin nil)))))
+      (when (setq numberp (cdr (assoc (point) results)))
+        (setf (car args)
+              (concat
+               (format "\\setcounter{equation}{%s}\n" numberp)
+               (car args)))))
+    (apply orig-func args))
+  (advice-add 'org-create-formula-image :around #'org-renumber-environment)
+  
+  
   (org-zotxt-mode)
   
   ;; To speed up startup, don't put to init section
@@ -284,11 +340,6 @@
   :hook (org-mode . org-fragtog-mode)
   ;; (org-roam-mode . org-fragtog-mode)
   )
-
-;; (use-package xenops
-;;   :ensure t
-;;   :defer t
-;;   :hook (org-mode . xenops-mode))
 
 (use-package org-download
   :ensure t

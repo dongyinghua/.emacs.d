@@ -130,22 +130,32 @@
 	    :color teal :quit-key "q")
     ("Basic"
      (("B" org-bars-mode "org bars" :toggle t :color amaranth)
-      ("V" valign-mode "table optimization" :toggle t :color amaranch)
+      ;;("V" valign-mode "table optimization" :toggle t :color amaranch)
       ("N" org-num-mode :toggle t :color amaranch)
       ("z s" org-zotxt-mode :toggle t :color amaranch)
       ("z i" org-zotxt-insert-reference-link)
       ;;("i" org-indent-mode "org indent" :toggle t :color amaranth)
       ("f" org-fragtog-mode :toggle t :color amaranth)
-      ("l" org-latex-preview :color amaranth)
-      ("c" org-capture)
       ("t" org-insert-structure-template "org template")
       ("b" org-mark-ring-goto)
-      ("R" org-refile)
-      ("s p" org-set-property)
       ("s t" org-set-tags-command)
-      ("C h" consult-org-heading)
-      ("C a" consult-org-agenda)
-      ("o c" open-init-org))
+      ("o c" open-init-org)
+      
+      ;; org agenda
+      ;; ("c" org-capture)
+      ;; ("R" org-refile)
+      ;; ("s p" org-set-property)
+      ;; ("C h" consult-org-heading)
+      ;; ("C a" consult-org-agenda)
+
+      ;; Org Image
+      ("i t" org-toggle-inline-images "toggle images" :color amaranth)
+      ("i d" org-display-inline-images)
+      ("i D" org-download-delete)
+      ("i p" org-download-clipboard)
+      ("i r" org-download-rename-at-point) 
+      )
+     
      "Org Roam"
      (("r d" org-roam-dailies-goto-date "org roam dailies")
       ("r f" org-roam-node-find)
@@ -159,14 +169,12 @@
       ("o o" open-org-learning-note)
       ("o m" open-mac-learning-note)
       ("o d" open-org-roam-diary)
-      )
-     "Org Image"
-     (("i t" org-toggle-inline-images "toggle images" :color amaranth)
-      ("i d" org-display-inline-images)
-      ("i D" org-download-delete)
-      ("i p" org-download-clipboard)
-      ("i r" org-download-rename-at-point)
-      )
+      ) 
+     "LaTeX"
+     (("l p" org-latex-preview :color amaranth)
+      ("l m" cdlatex-math-symbol)
+      ("l h" cdlatex-command-help)
+      ("l e" cdlatex-environment))
      )))
 (global-set-key (kbd "M-SPC") 'hydra-my-org-launcher/body)
 

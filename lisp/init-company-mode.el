@@ -12,10 +12,10 @@
 (use-package company
   :defer t
   :ensure t
-  :hook(text-mode . company-mode)
+  ;; :hook(text-mode . company-mode)
   ;;(text-mode . company-mode)
   :init
-  ;;(setq global-company-mode t)
+  (global-company-mode)
   :config
   (setq company-minimum-prefix-length 2)
   (setq company-idle-delay 0.0)
