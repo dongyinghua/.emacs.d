@@ -19,10 +19,10 @@
   :defer t
   :init
   ;; (add-hook 'org-mode-hook #'turn-on-org-cdlatex)
-  (add-hook 'org-mode-hook #'turn-on-cdlatex)
-  (add-hook 'LaTeX-mode-hook #'turn-on-cdlatex)   ; with AUCTeX LaTeX mode
-  (add-hook 'latex-mode-hook #'turn-on-cdlatex)   ; with Emacs latex mode
-  (add-hook 'tex-mode-hook 'turn-on-cdlatex)   ; with Emacs latex mode
+  ;; (add-hook 'org-mode-hook #'turn-on-cdlatex)
+  ;; (add-hook 'LaTeX-mode-hook #'turn-on-cdlatex)   ; with AUCTeX LaTeX mode
+  ;; (add-hook 'latex-mode-hook #'turn-on-cdlatex)   ; with Emacs latex mode
+  ;; (add-hook 'tex-mode-hook 'turn-on-cdlatex)   ; with Emacs latex mode
   :config
   (define-key cdlatex-mode-map (kbd "TAB") nil)
   (define-key cdlatex-mode-map (kbd "C-<tab>") 'cdlatex-tab)

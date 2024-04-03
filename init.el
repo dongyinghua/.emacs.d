@@ -103,5 +103,8 @@
 ;; (require 'init-pdf-tools)
 ;;(require 'init-chatgpt-shell)
 
+(require 'init-matlab)
+(require 'init-copilot)
+
 (provide 'init)
 ;;; init.el ends here
