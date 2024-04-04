@@ -1,4 +1,4 @@
-;;; acm-frame.el --- Description -*- lexical-binding: t; -*-
+;;; acm-frame.el --- Description -*- lexical-binding: t; no-byte-compile: t; -*-*-
 ;;
 ;; Copyright (C) 2022 royokong
 ;;
@@ -50,9 +50,12 @@
     'fit-frame-to-buffer)
   "Function used to fit frame to buffer.")
 
+(defun acm-frame-border-face ()
+  (if (facep 'child-frame-border) 'child-frame-border 'internal-border))
+
 (defun acm-frame-set-frame-colors (frame)
   ;; Set frame border color.
-  (let* ((face (if (facep 'child-frame-border) 'child-frame-border 'internal-border))
+  (let* ((face (acm-frame-border-face))
          (new (face-attribute 'acm-frame-border-face :background nil 'default)))
     (unless (equal (face-attribute face :background frame 'default) new)
       (set-face-background face new frame)))
@@ -62,10 +65,13 @@
     (unless (equal (frame-parameter frame 'background-color) new)
       (set-frame-parameter frame 'background-color new))))
 
+(defvar acm-frame-font nil)
 (defvar x-gtk-resize-child-frames) ;; not present on non-gtk builds
 (defun acm-frame-make-frame (frame-name &optional no-accept-focus)
   (let* ((after-make-frame-functions nil)
          (parent (selected-frame))
+         (parent-font (with-selected-frame parent
+                        (face-attribute 'default :font)))
          (border-width (if no-accept-focus 0 1)) ;; no border if no-accept-focus
          (x-gtk-resize-child-frames
           (let ((case-fold-search t))
@@ -111,8 +117,11 @@
 
     ;; Make sure popup frame's font same as parent frame.
     (with-selected-frame frame
-      (set-frame-font (with-selected-frame parent
-                        (face-attribute 'default :font))))
+      (set-frame-font parent-font)
+
+      ;; Record frame font to restore frame font after computer suspend.
+      (unless acm-frame-font
+        (setq acm-frame-font parent-font)))
 
     ;; Set popup frame colors.
     (acm-frame-set-frame-colors frame)
@@ -125,6 +134,41 @@
         (redirect-frame-focus frame parent)
       (select-frame-set-input-focus frame))
     frame))
+
+;; In Emacs 30, if you use 4k screen,
+;; font will become small when system return from suspend.
+;; I don't know why Emacs 30 does this,
+;; so I call `acm-frame-restore-font' on hook `after-focus-change-function'
+;; make sure font size restore to normal size when system return from suspend.
+(defun acm-frame-restore-font ()
+  (ignore-errors
+    (with-selected-frame acm-menu-frame
+      (set-frame-font acm-frame-font))
+
+    (with-selected-frame acm-doc-frame
+      (set-frame-font acm-frame-font))))
+
+(if (daemonp)
+    (add-hook 'server-after-make-frame-hook
+              (lambda ()
+                (add-function :after after-focus-change-function #'acm-frame-restore-font)
+                ))
+  (add-function :after after-focus-change-function #'acm-frame-restore-font))
+
+(cl-defmacro acm-frame-new (frame frame-buffer buffer-name &optional max-width max-height popup-pos)
+  `(progn
+     (when (and (frame-live-p ,frame)
+                (not (eq (frame-parent ,frame) (selected-frame))))
+       (acm-frame-delete-frame ,frame))
+
+     (acm-frame-create-frame-if-not-exist ,frame ,frame-buffer ,buffer-name 1 t)
+
+     (acm-frame-set-frame-max-size ,frame ,max-width ,max-height)
+
+     (let ((pos (acm-frame-get-popup-position (point) 1)))
+       (acm-frame-set-frame-position ,frame (car pos) (cdr pos)))
+
+     (acm-frame-adjust-frame-pos ,frame ,popup-pos)))
 
 (cl-defmacro acm-frame-create-frame-if-not-exist (frame frame-buffer frame-name margin no-accept-focus)
   `(unless (frame-live-p ,frame)
@@ -186,7 +230,7 @@
          (y (+ (frame-parameter frame 'top) (/ (- parent-height frame-height) 2))))
     (acm-frame-set-frame-position frame x y)))
 
-(defun acm-frame-get-popup-position (frame-popup-point)
+(defun acm-frame-get-popup-position (frame-popup-point &optional line-bias)
   (let* ((edges (window-pixel-edges))
          (window-left (+ (nth 0 edges)
                          ;; We need adjust left margin for buffer centering module.
@@ -196,7 +240,7 @@
          (window-top (nth 1 edges))
          (pos (posn-x-y (posn-at-point frame-popup-point)))
          (x (car pos))
-         (y (cdr pos))
+         (y (+ (cdr pos) (* (or line-bias 0) (line-pixel-height))))
          (offset-y
           ;; We need move down to skip tab-line and header-line.
           (if (version< emacs-version "27.0")
@@ -256,31 +300,49 @@ influence of C1 on the result."
   (when (acm-frame-visible-p frame)
     (make-frame-invisible frame)))
 
-(defun acm-frame-adjust-frame-pos (frame &optional margin)
-  "Adjust position to avoid out of screen."
-  (let* ((frame-pos (frame-position frame))
-         (main-frame-pos (frame-position acm-frame--emacs-frame))
-         (frame-x (car frame-pos))
-         (frame-y (cdr frame-pos))
+(defun acm-frame-adjust-frame-pos (frame &optional popup-pos margin action-menu-p)
+  "Adjust position to avoid out of screen.
+ACTION-MENU-P is used to give code action menu a special treat to make it more useful.
+Only when calling this function from code-action file should make this variable be true."
+  (let* ((margin (or margin 50))
+         (popup-pos (or popup-pos "point"))
+         (main-window-x (car (frame-position acm-frame--emacs-frame)))
+         (main-window-y (cdr (frame-position acm-frame--emacs-frame)))
+         (main-window-width (frame-pixel-width acm-frame--emacs-frame))
+         (main-window-height (frame-pixel-height acm-frame--emacs-frame))
+         (main-window-right-limit (- (+ main-window-x main-window-width) margin))
+         (main-window-bottom-limit (- (+ main-window-y main-window-height) margin))
+         (frame-x (car (frame-position frame)))
+         (frame-y (cdr (frame-position frame)))
          (frame-width (frame-pixel-width frame))
          (frame-height (frame-pixel-height frame))
-         (frame-right-coordinate (+ frame-x frame-width))
-         (frame-bottom-coordinate (+ frame-y frame-height))
-         (margin (or margin 50))
-         (emacs-frame-right-coordinate (- (+ (car main-frame-pos)
-                                             (frame-pixel-width acm-frame--emacs-frame))
-                                          margin))
-         (emacs-frame-bottom-coordinate (- (+ (cdr main-frame-pos)
-                                              (frame-pixel-height acm-frame--emacs-frame))
-                                           margin)))
-    (if (> frame-right-coordinate emacs-frame-right-coordinate)
-        (set-frame-position frame
-                            (- frame-x (- frame-right-coordinate emacs-frame-right-coordinate))
-                            frame-y))
-    (if (> frame-bottom-coordinate emacs-frame-bottom-coordinate)
-        (set-frame-position frame
-                            frame-x
-                            (- frame-y frame-height (line-pixel-height))))))
+         (frame-right-edge (+ frame-x frame-width))
+         (frame-bottom-edge (+ frame-y frame-height)))
+    (pcase popup-pos
+      ("top-left"
+       (set-frame-position frame main-window-x main-window-y))
+      ("top-right"
+       (set-frame-position frame (- main-window-width frame-width) main-window-y))
+      ("bottom-left"
+       (set-frame-position frame main-window-x (- main-window-height frame-height)))
+      ("bottom-right"
+       (set-frame-position frame (- main-window-width frame-width) (- main-window-height frame-height)))
+      ("point"
+       (when (> frame-right-edge main-window-right-limit)
+         (set-frame-position frame
+                             (- (+ main-window-x main-window-width) frame-width margin)
+                             frame-y))
+       (when (> frame-bottom-edge main-window-bottom-limit)
+         (if action-menu-p
+             (set-frame-position frame frame-x main-window-y)
+           (set-frame-position frame
+                               frame-x
+                               (- (+ main-window-y main-window-height) frame-height margin))))))))
+
+(defun acm-frame-can-display-p ()
+  (not (or noninteractive
+           emacs-basic-display
+           (not (display-graphic-p)))))
 
 (provide 'acm-frame)
 ;;; acm-frame.el ends here

@@ -21,7 +21,6 @@
 
 import threading
 import os
-import re
 import functools
 
 from core.utils import eval_in_emacs, cmp
@@ -55,7 +54,7 @@ class SearchPaths:
                     "key": file,
                     "icon": file_type,
                     "label": file,
-                    "display-label": file,
+                    "displayLabel": file,
                     "annotation": file_type.upper(),
                     "backend": "path"
                 })
@@ -64,7 +63,7 @@ class SearchPaths:
                     break
                 
         if ticker == self.search_ticker:
-            eval_in_emacs("lsp-bridge-search-backend--record-items", "paths", sorted(candidates, key=functools.cmp_to_key(lambda a, b: self.sort_files(prefix, a, b))))
+            eval_in_emacs("lsp-bridge-search-backend--record-items", "path", sorted(candidates, key=functools.cmp_to_key(lambda a, b: self.sort_files(prefix, a, b))))
 
     def sort_files(self, prefix, file_a, file_b):
         file_a_starts_with_prefix = file_a["key"].startswith(prefix)

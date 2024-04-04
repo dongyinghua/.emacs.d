@@ -12,15 +12,18 @@ class FindReferences(Handler):
     method = "textDocument/references"
 
     def process_request(self, position) -> dict:
+        self.pos = position
         return dict(
             position=position,
             context=dict(includeDeclaration=False)
         )
 
-    def process_response(self, response: dict) -> None:
+    def process_response(self, response) -> None:
         if response is None:
-            message_emacs("No references found")
+            eval_in_emacs("lsp-bridge-find-ref-fallback", self.pos)
         else:
+            response = remove_duplicate_references(response)
+
             references_dict = {}
             for uri_info in response:
                 path = uri_to_path(uri_info["uri"])
@@ -31,8 +34,9 @@ class FindReferences(Handler):
 
             references_counter = 0
             references_content = ""
+            remote_connection_info = get_remote_connection_info()
             for i, (path, ranges) in enumerate(references_dict.items()):
-                references_content += "".join(["\n", REFERENCE_PATH, path, REFERENCE_ENDC, "\n"])
+                references_content += "".join(["\n", REFERENCE_PATH, remote_connection_info, path, REFERENCE_ENDC, "\n"])
 
                 for rg in ranges:
                     line = rg["start"]["line"]
@@ -49,4 +53,4 @@ class FindReferences(Handler):
 
             linecache.clearcache()  # clear line cache
 
-            eval_in_emacs("lsp-bridge-references--popup", references_content, references_counter)
+            eval_in_emacs("lsp-bridge-references--popup", references_content, references_counter, self.pos)

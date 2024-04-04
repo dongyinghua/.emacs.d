@@ -1,4 +1,4 @@
-;;; lsp-bridge-code-action.el --- Code action for lsp-bridge   -*- lexical-binding: t; -*-
+;;; lsp-bridge-code-action.el --- Code action for lsp-bridge   -*- lexical-binding: t; no-byte-compile: t; -*-*-
 
 ;; Filename: lsp-bridge-code-action.el
 ;; Description: Code action for lsp-bridge
@@ -93,7 +93,18 @@ Default is 0.5 second, preview window will stick if this value too small."
   :type 'float
   :group 'lsp-bridge)
 
-(defvar-local lsp-bridge-code-action-notify nil)
+(defcustom lsp-bridge-code-action-enable-popup-menu t
+  "Enable code action menu and changes preview popup,
+Set it `nil' to improve performance."
+  :type 'boolean
+  :group 'lsp-bridge)
+
+(defcustom lsp-bridge-code-action-command-handlers
+  '(java.apply.workspaceEdit lsp-bridge-jdtls-apply-workspace-edit
+                             java.action.overrideMethodsPrompt lsp-bridge-jdtls-override-methods-prompt)
+  "LSP extra command handlers"
+  :type 'cons
+  :group 'lsp-bridge)
 
 (defvar lsp-bridge-code-action--current-buffer nil)
 (defvar lsp-bridge-code-action-popup-maybe-preview-timer nil)
@@ -135,8 +146,6 @@ Please read https://microsoft.github.io/language-server-protocol/specifications/
                                 (lsp-bridge--point-position (car range))
                                 (lsp-bridge--point-position (cdr range))
                                 action-kind)
-
-      (setq-local lsp-bridge-code-action-notify t)
       )))
 
 (defun lsp-bridge-code-action-popup-select ()
@@ -155,13 +164,17 @@ Please read https://microsoft.github.io/language-server-protocol/specifications/
   (advice-remove 'lsp-bridge-call-hierarchy-maybe-preview #'lsp-bridge-code-action-popup-maybe-preview)
   (advice-remove 'lsp-bridge-call-hierarchy-select #'lsp-bridge-code-action-popup-select)
   (advice-remove 'lsp-bridge-call-hierarchy-quit #'lsp-bridge-code-action-popup-quit)
-  (select-window (get-buffer-window lsp-bridge-code-action--current-buffer)))
+  (when (get-buffer-window lsp-bridge-code-action--current-buffer)
+    (select-window (get-buffer-window lsp-bridge-code-action--current-buffer))))
 
 (defun lsp-bridge-code-action-popup-maybe-preview-show (&optional buffer-content)
   (when-let* ((pos (frame-position lsp-bridge-call-hierarchy--frame))
               (call-frame-height (frame-height lsp-bridge-call-hierarchy--frame))
               (call-frame-width (frame-width lsp-bridge-call-hierarchy--frame))
               (width 0) (height 0)
+              (menu-window-height
+               (min (length lsp-bridge-call-hierarchy--popup-response)
+                    (/ (frame-height acm-frame--emacs-frame) 4))) ;; make sure menu-window not exceed 1/4 of frame height
               (window-min-height 0) (window-min-width 0)
               (live-p (frame-live-p lsp-bridge-call-hierarchy--frame)))
     (with-current-buffer  "*lsp-bridge-code-action-preview*"
@@ -173,9 +186,11 @@ Please read https://microsoft.github.io/language-server-protocol/specifications/
         (insert buffer-content))
        (t
         (goto-char (point-min))
-        ;; delete info lines
+
+        ;; Delete info lines.
         (kill-line 3)
-        ;; delete finish
+
+        ;; Delete finish.
         (goto-char (point-min))
         (when (search-forward "Diff finished." nil t)
           (beginning-of-line)
@@ -183,7 +198,7 @@ Please read https://microsoft.github.io/language-server-protocol/specifications/
         (push (cons lsp-bridge-code-action--preview-index (buffer-string))
               lsp-bridge-code-action--preview-alist)))
 
-      ;; get width and height
+      ;; Get width and height.
       (goto-char (point-min))
       (while (not (eobp))
         (cl-incf height)
@@ -192,16 +207,22 @@ Please read https://microsoft.github.io/language-server-protocol/specifications/
                          width))
         (forward-line))
       (setq width (min width 80))
-      ;; show top
+
+      ;; Show top.
       (goto-char (point-min))
-      ;; truncate lines
+
+      ;; Truncate lines.
       (setq-local cursor-type nil)
       (setq-local mode-line-format nil)
-      (setq-local truncate-lines t))
+      (setq-local truncate-lines t)
 
-    (acm-frame-set-frame-size lsp-bridge-call-hierarchy--frame (max width call-frame-width)
-                              (+ height (length lsp-bridge-call-hierarchy--popup-response)))
-    (acm-frame-adjust-frame-pos lsp-bridge-call-hierarchy--frame)
+      ;; Render ANSI string.
+      (ansi-color-apply-on-region (point-min) (point-max)))
+
+    (acm-frame-set-frame-size lsp-bridge-call-hierarchy--frame
+                              (max width call-frame-width)
+                              (+ height menu-window-height))
+    (acm-frame-adjust-frame-pos lsp-bridge-call-hierarchy--frame nil nil t)
     (select-frame-set-input-focus lsp-bridge-call-hierarchy--frame)
 
     (let ((menu-window (get-buffer-window "*lsp-bridge-code-action-menu*"
@@ -220,8 +241,7 @@ Please read https://microsoft.github.io/language-server-protocol/specifications/
           (unless (eq window menu-window)
             (set-window-buffer window "*lsp-bridge-code-action-preview*")))
         (select-window menu-window)
-        (set-window-text-height menu-window
-                                (length lsp-bridge-call-hierarchy--popup-response))))))
+        (set-window-text-height menu-window menu-window-height)))))
 
 (defun lsp-bridge-code-action-popup-maybe-preview-do ()
   (let* ((buffer (buffer-name lsp-bridge-code-action--current-buffer))
@@ -260,24 +280,32 @@ Please read https://microsoft.github.io/language-server-protocol/specifications/
 (defun lsp-bridge-code-action-popup-menu (menu-items default-action)
   (let ((recentf-keep '(".*" . nil)) ;; not push temp file in recentf-list
         (recentf-exclude '(".*"))
-        (menu-lenght (length menu-items))
+        (menu-length (length menu-items))
         (menu-buffer (get-buffer-create "*lsp-bridge-code-action-menu*"))
         (menu-width 0)
-        (cursor (acm-frame-get-popup-position (point))))
-    ;; prepare for previewing
-    (setq lsp-bridge-code-action--current-buffer (current-buffer))
+        (menu-frame-exist (frame-live-p lsp-bridge-call-hierarchy--frame))
+        cursor)
+    ;; Calcuate cursor position when menu frame is not visible.
+    (unless menu-frame-exist
+      (setq cursor (acm-frame-get-popup-position (point))))
 
+    ;; Prepare for previewing.
+    (setq lsp-bridge-code-action--current-buffer (current-buffer))
     (setq lsp-bridge-code-action--oldfile (make-temp-file
                                            (buffer-name) nil nil (buffer-string)))
     (setq lsp-bridge-code-action--preview-alist '())
 
-    ;; reuse hierarchy popup keymap and mode here
+    ;; Reuse hierarchy popup keymap and mode here.
     (setq lsp-bridge-call-hierarchy--popup-response menu-items)
 
     (acm-frame-create-frame-if-not-exist lsp-bridge-call-hierarchy--frame
                                          menu-buffer "code action" 0 nil)
 
     (with-current-buffer menu-buffer
+      ;; Erase menu buffer for multiple code-action response from Python side.
+      (read-only-mode -1)
+      (erase-buffer)
+
       (cl-loop for i from 0 to (1- (length menu-items))
                do (let* ((title (car (nth i menu-items)))
                          (format-line (format "%d. %s\n" (1+ i) title))
@@ -290,53 +318,68 @@ Please read https://microsoft.github.io/language-server-protocol/specifications/
       (setq-local truncate-lines t)
       (setq-local mode-line-format nil))
 
-    (acm-frame-set-frame-position lsp-bridge-call-hierarchy--frame (car cursor) (+ (cdr cursor) (line-pixel-height)))
-    (acm-frame-set-frame-size lsp-bridge-call-hierarchy--frame menu-width menu-lenght)
+    ;; Don't adjust frame position if code action menu current is visible.
+    (unless menu-frame-exist
+      (acm-frame-set-frame-position lsp-bridge-call-hierarchy--frame (car cursor) (+ (cdr cursor) (line-pixel-height)))
+      (acm-frame-set-frame-size lsp-bridge-call-hierarchy--frame menu-width
+                                (min menu-length (/ (frame-height acm-frame--emacs-frame) 4))))
 
     (advice-add 'lsp-bridge-call-hierarchy-maybe-preview :override #'lsp-bridge-code-action-popup-maybe-preview)
     (advice-add 'lsp-bridge-call-hierarchy-select :override #'lsp-bridge-code-action-popup-select)
     (advice-add 'lsp-bridge-call-hierarchy-quit :override #'lsp-bridge-code-action-popup-quit)
 
-    (lsp-bridge-code-action-popup-maybe-preview)
-    ))
-
+    (lsp-bridge-code-action-popup-maybe-preview)))
 
 (defun lsp-bridge-code-action--fix-do (action &optional temp-buffer)
   (let* ((command (plist-get action :command))
          (edit (plist-get action :edit))
-         (arguments (plist-get action :arguments)))
-    (cond (edit
-           (lsp-bridge-workspace-apply-edit edit temp-buffer))
-          (arguments
-           (dolist (argument arguments)
-             (lsp-bridge-workspace-apply-edit argument temp-buffer)))
-          (command
-           (let (arguments)
-             ;; Pick command and arguments.
-             (cond ((consp command)
-                    (setq arguments (plist-get command :arguments))
-                    (setq command (plist-get command :command)))
-                   ((stringp command)
-                    (setq arguments (plist-get action :arguments))))
-
-             (if (member command lsp-bridge-apply-edit-commands)
-                 ;; Apply workspace edit if command match `lsp-bridge-apply-edit-commands'.
-                 (dolist (argument arguments)
-                   (lsp-bridge-workspace-apply-edit argument temp-buffer))
-               ;; Otherwise send `workspace/executeCommand' request to LSP server.
-               ;; TODO execute_command with temp-buffer
-               (lsp-bridge-call-file-api "execute_command" command)))))
+         (server_name (plist-get action :server-name))
+         (arguments (plist-get action :arguments))
+         (handler (when (stringp command)
+                    (plist-get lsp-bridge-code-action-command-handlers (intern command)))))
+    (cond
+     ;; Apply workspace if found `edit' argument.
+     (edit
+      (lsp-bridge-workspace-apply-edit edit temp-buffer))
+     ;; Prioritize custom handlers.
+     (handler
+      (funcall handler action temp-buffer))
+     ;; Arguments are for `workspaceApplyEdit'.
+     ((and arguments
+           (cl-every (lambda (x) (or (plist-get x :documentChanges) (plist-get x :changes))) arguments))
+      (dolist (argument arguments)
+        (lsp-bridge-workspace-apply-edit argument temp-buffer)))
+     ;; Command is string, send `workspace/executeCommand' request to LSP server. arguments are cached in Python side.
+     ((stringp command)
+      ;; Execute command with temp-buffer.
+      (lsp-bridge-call-file-api "execute_command" server_name command))
+     ;; Parse command argument if command is plist, and call `lsp-bridge-code-action--fix-do' again.
+     ((lsp-bridge-plistp command)
+      ;; We need add server-name in `command', otherwise `lsp-bridge-code-action--fix-do' will send empty server name to Python.
+      (let ((server-command command))
+        (plist-put server-command :server-name server_name)
+        (lsp-bridge-code-action--fix-do command temp-buffer))))
     (unless temp-buffer
       (message "[LSP-BRIDGE] Execute code action '%s'" (plist-get action :title)))))
+
+(defun lsp-bridge-plistp (object)
+  "Non-nil if and only if OBJECT is a valid plist."
+  (declare (pure t) (side-effect-free error-free))
+  (let ((len (proper-list-p object)))
+    (and len (zerop (% len 2)))))
+
+(defun lsp-bridge-code-action--filter (action action-kind)
+  (when (or (not action-kind)
+            (equal action-kind (plist-get action :kind)))
+    (cons (plist-get action :title) action)))
 
 (defun lsp-bridge-code-action--fix (actions action-kind)
   (let* ((menu-items
           (or
-           (cl-remove-if #'null (mapcar #'(lambda (action)
-                                         (when (or (not action-kind)
-                                                   (equal action-kind (plist-get action :kind)))
-                                           (cons (plist-get action :title) action)))
-                                     actions))
+           (cl-remove-if #'null
+                         (mapcar #'(lambda (action)
+                                     (lsp-bridge-code-action--filter action action-kind))
+                                 actions))
            (apply #'error
                   (if action-kind
                       (format "No '%s' code action here" action-kind)
@@ -349,11 +392,15 @@ Please read https://microsoft.github.io/language-server-protocol/specifications/
          (action (if (and action-kind (null (cadr menu-items)))
                      (cdr (car menu-items)) nil)))
     (cond
+     ;; Fix action if only one match.
      (action
       (lsp-bridge-code-action--fix-do action))
-     ((posframe-workable-p) ;;posframe
+     ;; Popup menu if `lsp-bridge-code-action-enable-popup-menu' option is non-nil.
+     ((and lsp-bridge-code-action-enable-popup-menu
+           (acm-frame-can-display-p))
       (lsp-bridge-code-action-popup-menu menu-items default-action))
      (t
+      ;; Choose action from minibuffer.
       (let ((select-name
              (completing-read
               (format "[LSP-BRIDGE] Pick an action (default: %s): " default-action)

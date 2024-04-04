@@ -1,8 +1,9 @@
-;;; init-matlab.el --- Initialize matlab configurations. -*- lexical-binding: t -*-
+;;; init-copilot.el --- Initialize GitHub Copilot configurations. -*- lexical-binding: t -*-
 
 ;;; Commentary:
 ;;
-;; matlab configurations.
+;; GitHub Copilot configurations.
+;; 参考：https://cloud.tencent.com/developer/article/2347983
 ;;
 
 ;;; Code:
@@ -12,6 +13,7 @@
   :ensure nil
   :hook (prog-mode . copilot-mode)
   :config
+  (setq copilot-indent-offset-warning-disable t) ;; 不打开这个会有警告，影响体验
   ;; complete by copilot first, then auto-complete
   (defun my-tab ()
     (interactive)

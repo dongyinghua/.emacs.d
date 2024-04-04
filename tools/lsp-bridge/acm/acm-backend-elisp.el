@@ -1,4 +1,4 @@
-;;; acm-backend-elisp.el --- Elisp backend for acm  -*- lexical-binding: t -*-
+;;; acm-backend-elisp.el --- Elisp backend for acm  -*- lexical-binding: t; no-byte-compile: t; -*-
 
 ;; Filename: acm-backend-elisp.el
 ;; Description: Elisp backend for acm
@@ -88,6 +88,11 @@
   "Elisp backend for acm."
   :group 'acm)
 
+(defcustom acm-backend-elisp-candidate-min-length 0
+  "Minimal length of candidate."
+  :type 'integer
+  :group 'acm-backend-elisp)
+
 (defcustom acm-backend-elisp-search-max-number 300
   "The maximum number of search candidates."
   :type 'integer
@@ -106,19 +111,18 @@
 (defvar acm-backend-elisp-symbols-update-size 0)
 
 (defun acm-backend-elisp-candidates (keyword)
-  (let* ((candidates (list)))
-    (when (and (acm-is-elisp-mode-p))
-      (dolist (elisp-symbol acm-backend-elisp-items)
-        (let ((symbol-type (acm-backend-elisp-symbol-type (intern elisp-symbol))))
-          (add-to-list 'candidates (list :key elisp-symbol
-                                         :icon symbol-type
-                                         :label elisp-symbol
-                                         :display-label elisp-symbol
-                                         :annotation (capitalize symbol-type)
-                                         :backend "elisp")
-                       t))))
-
-    candidates))
+  (acm-with-cache-candidates
+   acm-backend-elisp-cache-candiates
+   (mapcar
+    (lambda (elisp-symbol)
+      (let ((symbol-type (acm-backend-elisp-symbol-type (intern elisp-symbol))))
+        (list :key elisp-symbol
+              :icon symbol-type
+              :label elisp-symbol
+              :displayLabel elisp-symbol
+              :annotation (capitalize symbol-type)
+              :backend "elisp")))
+    acm-backend-elisp-items)))
 
 (defun acm-backend-elisp-candidate-doc (candidate)
   (let* ((symbol (intern (plist-get candidate :label)))
@@ -147,6 +151,26 @@
          "constant")
         (t
          "variable")))
+
+(defun acm-backend-elisp-open-feature-file (feature-string)
+  "Open the file that defines the given FEATURE-STRING."
+  (let ((library-path (locate-library feature-string)))
+    (if library-path
+        (find-file library-path)
+      (message "Feature not found: %s" feature-string))))
+
+(defun acm-backend-elisp-find-def ()
+  (let* ((symbol-string (thing-at-point 'symbol t))
+         (symbol (intern symbol-string)))
+    (pcase (acm-backend-elisp-symbol-type symbol)
+      ("feature" (acm-backend-elisp-open-feature-file symbol-string))
+      ("special form" (find-variable symbol))
+      ("function" (find-function symbol))
+      ("macro" (find-function symbol))
+      ("face" (find-face-definition symbol))
+      ("custom" (find-variable symbol))
+      ("constant" (find-variable symbol))
+      ("variable" (find-variable symbol)))))
 
 (defun acm-backend-elisp-global-symbols ()
   (all-completions ""
@@ -196,6 +220,10 @@
 (defun acm-backend-elisp-get-symbols ()
   (append (acm-backend-elisp-local-symbols)
           (acm-backend-elisp-global-symbols)))
+
+(defun acm-backend-elisp-clean ()
+  (setq-local acm-backend-elisp-items nil)
+  (setq-local acm-backend-elisp-cache-candiates nil))
 
 (provide 'acm-backend-elisp)
 

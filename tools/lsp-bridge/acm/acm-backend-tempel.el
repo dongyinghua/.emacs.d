@@ -1,4 +1,4 @@
-;;; acm-backend-tempel.el -*- lexical-binding: t -*-
+;;; acm-backend-tempel.el -*- lexical-binding: t; no-byte-compile: t; -*-
 
 (defgroup acm-backend-tempel nil
   "Tempel backend for acm."
@@ -17,19 +17,20 @@
 (defun acm-backend-tempel-candidates (keyword)
   (when (and acm-enable-tempel
              (featurep 'tempel))
-    (let* ((candidates (list))
-           (snippets (cl-loop for template in (tempel--templates)
+    (let* ((snippets (cl-loop for template in (tempel--templates)
                               collect (format "%s" (car template))))
            (match-snippets (seq-filter (lambda (s) (acm-candidate-fuzzy-search keyword s)) snippets)))
-      (dolist (snippet (cl-subseq match-snippets 0 (min (length match-snippets) acm-backend-tempel-candidates-number)))
-        (add-to-list 'candidates (list :key snippet
-                                       :icon "snippet"
-                                       :label snippet
-                                       :display-label snippet
-                                       :annotation "Tempel"
-                                       :backend "tempel")
-                     t))
-      (acm-candidate-sort-by-prefix keyword candidates))))
+      (acm-candidate-sort-by-prefix
+       keyword
+       (mapcar
+        (lambda (snippet)
+          (list :key snippet
+                :icon "snippet"
+                :label snippet
+                :displayLabel snippet
+                :annotation "Tempel"
+                :backend "tempel"))
+        (cl-subseq match-snippets 0 (min (length match-snippets) acm-backend-tempel-candidates-number)))))))
 
 (defun acm-backend-tempel-candidate-expand (candidate-info bound-start)
   (delete-region bound-start (point))
@@ -39,7 +40,7 @@
   (let ((snippet
          (alist-get (intern-soft (plist-get candidate :label))
                     (tempel--templates))))
-    (mapconcat #'tempel--print-element snippet " ")))
+    (mapconcat #'tempel--print-template snippet " ")))
 
 (provide 'acm-backend-tempel)
 

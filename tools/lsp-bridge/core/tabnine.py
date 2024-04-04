@@ -27,8 +27,14 @@ import traceback
 
 from core.utils import *
 from subprocess import PIPE
-from sys import stderr
-from distutils.version import StrictVersion
+from sys import stderr,version_info
+
+if version_info[1] < 12 :
+    from distutils.version import StrictVersion
+    version_function = StrictVersion
+else: 
+    from pkg_resources import parse_version
+    version_function = parse_version
 
 TABNINE_PROTOCOL_VERSION = "1.0.14"
 TABNINE_EXECUTABLE = "TabNine.exe" if get_os_name() == "windows" else "TabNine"
@@ -46,10 +52,10 @@ class TabNine:
         
         self.try_completion_timer = None
         
-        self.tabnine_binaries_folder = get_emacs_var("tabnine-bridge-binaries-folder")        
+        [self.tabnine_binaries_folder] = get_emacs_vars(["tabnine-bridge-binaries-folder"])
         
     def complete(self, before, after, filename, region_includes_beginning, region_includes_end, max_num_results):
-        if self.is_tabnine_exist() and type(filename) == str:
+        if self.is_tabnine_exist() and isinstance(filename, str):
             if self.try_completion_timer is not None and self.try_completion_timer.is_alive():
                 self.try_completion_timer.cancel()
             
@@ -78,7 +84,7 @@ class TabNine:
             try:
                 versions = os.listdir(self.tabnine_binaries_folder)
                 versions = list(filter(lambda f: os.path.isdir(os.path.join(self.tabnine_binaries_folder, f)), versions))
-                versions.sort(key=StrictVersion, reverse=True)
+                versions.sort(key=version_function, reverse=True)
                 for version in versions:
                     version_path = os.path.join(self.tabnine_binaries_folder, version)
                     if os.path.isdir(version_path):
@@ -134,7 +140,7 @@ class TabNine:
                             "key": label,
                             "icon": "tabnine",
                             "label": label,
-                            "display-label": label,
+                            "displayLabel": label,
                             "annotation": result["detail"] if "detail" in result else "",
                             "backend": "tabnine",
                             "new_suffix": result["new_suffix"],

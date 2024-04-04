@@ -1,4 +1,4 @@
-;;; acm-backend-yas.el --- Yasnippet backend for acm  -*- lexical-binding: t -*-
+;;; acm-backend-yas.el --- Yasnippet backend for acm  -*- lexical-binding: t; no-byte-compile: t; -*-
 
 ;; Filename: acm-backend-yas.el
 ;; Description: Yasnippet backend for acm
@@ -94,6 +94,11 @@
   :type 'boolean
   :group 'acm-backend-yas)
 
+(defcustom acm-backend-yas-candidate-min-length 0
+  "Minimal length of candidate."
+  :type 'integer
+  :group 'acm-backend-yas)
+
 (defcustom acm-backend-yas-candidates-number 2
   "Maximal number of yas candidate of menu."
   :type 'integer
@@ -165,6 +170,7 @@ Default matching use snippet filename."
 
 (defun acm-backend-yas-candidates (keyword)
   (when (and acm-enable-yas
+             (>= (length keyword) acm-backend-yas-candidate-min-length)
              (not (string-empty-p keyword)))
     (when (or acm-backend-yas--cache-expire-p
               (null acm-backend-yas--cache)
@@ -172,8 +178,7 @@ Default matching use snippet filename."
       (setq acm-backend-yas--cache (yas--all-templates (yas--get-snippet-tables)))
       (setq acm-backend-yas--cache-expire-p nil)
       (setq acm-backend-yas--cache-modes (yas--modes-to-activate)))
-    (let* ((candidates (list))
-           (show-key acm-backend-yas-show-trigger-keyword)
+    (let* ((show-key acm-backend-yas-show-trigger-keyword)
            ;; WORKAROUND backward compatibility for boolean value
            (form (concat "%s" (or (and (booleanp show-key) show-key " (%s)") show-key)))
            (match-templates (acm-backend-yas--template-sort
@@ -184,23 +189,24 @@ Default matching use snippet filename."
                                             (car (acm-backend-yas--template-cons s))))
                                          acm-backend-yas--cache)))
            (limit (min (length match-templates) acm-backend-yas-candidates-number)))
-      (dolist (template (cl-subseq match-templates 0 limit))
-        (let* ((pair (acm-backend-yas--template-cons template))
-               (match (car pair))
-               (display (format form
-                                match
-                                (propertize (cdr pair)
-                                            'face
-                                            'acm-backend-yas-extra-info-face)))
-               (content (yas--template-content template)))
-          (add-to-list 'candidates (list :key match
-                                         :icon "snippet"
-                                         :label match
-                                         :display-label display
-                                         :content content
-                                         :annotation "Yas-Snippet"
-                                         :backend "yas") t)))
-      candidates)))
+      (mapcar
+       (lambda (template)
+         (let* ((pair (acm-backend-yas--template-cons template))
+                (match (car pair))
+                (display (format form
+                                 match
+                                 (propertize (cdr pair)
+                                             'face
+                                             'acm-backend-yas-extra-info-face)))
+                (content (yas--template-content template)))
+           (list :key match
+                 :icon "snippet"
+                 :label match
+                 :displayLabel display
+                 :content content
+                 :annotation "Yas-Snippet"
+                 :backend "yas")))
+       (cl-subseq match-templates 0 limit)))))
 
 (defun acm-backend-yas-candidate-expand (candidate bound-start)
   (delete-region bound-start (point))

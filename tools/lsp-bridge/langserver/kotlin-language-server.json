@@ -4,19 +4,41 @@
   "command": [
     "kotlin-language-server"
   ],
-  "ignore-diagnostic": "# type: ignore",
+  "forceInlayHint": true,
   "settings": {
-    "kotlin.externalSources": {
-      "autoConvertToKotlin": true,
-      "useKlsScheme": true
-    },
-    "kotlin.debugAdapter": {
-      "path": "",
-      "enabled": true
-    } ,
-    "kotlin.completion.snippets.enabled": true,
-    "kotlin.linting.debounceTime": 250,
-    "kotlin.compiler.jvm.target": "11",
-    "kotlin.trace.server": "off"
+    "kotlin": {
+      "externalSources": {
+        "autoConvertToKotlin": true,
+        "useKlsScheme": true
+      },
+      "debugAdapter": {
+        "path": "",
+        "enabled": true
+      },
+      "completion": {
+        "snippets": {
+          "enabled": true
+        }
+      },
+      "linting": {
+        "debounceTime": 250
+      },
+      "compiler": {
+        "jvm": {
+          "target": "11"
+        }
+      },
+      "trace": {
+        "server": "off"
+      },
+      "languageServer": {
+        "path": "kotlin-language-server"
+      },
+      "inlayHints": {
+        "typeHints": true,
+        "parameterHints": true,
+        "chainedHints": true
+      }
+    }
   }
 }

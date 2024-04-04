@@ -9,11 +9,12 @@ class FindDefine(Handler):
     cancel_on_change = True
 
     def process_request(self, position) -> dict:
+        self.pos = position
         return dict(position=position)
 
     def process_response(self, response: Union[dict, list]) -> None:
         if not response:
-            message_emacs("No definition found.")
+            eval_in_emacs("lsp-bridge-find-def-fallback", self.pos)
             return
 
         file_info = response[0] if isinstance(response, list) else response
@@ -33,11 +34,11 @@ class FindDefine(Handler):
             raise NotImplementedError()
         elif file_uri.startswith("deno:"):
             # for deno
-            # Deno will return targetUri like "deno:asset/lib.deno.ns.d.ts", 
+            # Deno will return targetUri like "deno:asset/lib.deno.ns.d.ts",
             # so we need send server deno/virtualTextDocument to request virtual text document from Deno.
             self.file_action.send_server_request(self.file_action.single_server, "deno_uri_resolver", file_uri, start_pos)
         else:
             # for normal file uri
             filepath = uri_to_path(file_uri)
             self.file_action.create_external_file_action(filepath)
-            eval_in_emacs("lsp-bridge-define--jump", filepath, start_pos)
+            eval_in_emacs("lsp-bridge-define--jump", filepath, get_lsp_file_host(), start_pos)

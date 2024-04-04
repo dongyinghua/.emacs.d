@@ -126,6 +126,26 @@
   (interactive)
   (lsp-bridge-call-hierarchy--move -1))
 
+(defun lsp-bridge-call-hierarchy-preview-next ()
+  (interactive)
+  (with-selected-window (get-buffer-window "*lsp-bridge-code-action-preview*")
+    (scroll-up-line 5)))
+
+(defun lsp-bridge-call-hierarchy-preview-prev ()
+  (interactive)
+  (with-selected-window (get-buffer-window "*lsp-bridge-code-action-preview*")
+    (scroll-down-line 5)))
+
+(defun lsp-bridge-call-hierarchy-scroll-left ()
+  (interactive)
+  (with-selected-window (get-buffer-window "*lsp-bridge-code-action-preview*")
+    (scroll-left 5)))
+
+(defun lsp-bridge-call-hierarchy-scroll-right ()
+  (interactive)
+  (with-selected-window (get-buffer-window "*lsp-bridge-code-action-preview*")
+    (scroll-right 5)))
+
 (defun lsp-bridge-call-hierarchy-quit ()
   (interactive)
 
@@ -176,11 +196,18 @@
 (defvar lsp-bridge-call-hierarchy-mode-map
   (let ((map (make-sparse-keymap)))
     (define-key map (kbd "j") 'lsp-bridge-call-hierarchy-next)
-    (define-key map (kbd "C-n") 'lsp-bridge-call-hierarchy-next)
     (define-key map (kbd "k") 'lsp-bridge-call-hierarchy-prev)
+    (define-key map (kbd "C-n") 'lsp-bridge-call-hierarchy-next)
     (define-key map (kbd "C-p") 'lsp-bridge-call-hierarchy-prev)
+    (define-key map (kbd "<down>") 'lsp-bridge-call-hierarchy-next)
+    (define-key map (kbd "<up>") 'lsp-bridge-call-hierarchy-prev)
+    (define-key map (kbd "M-n") 'lsp-bridge-call-hierarchy-preview-next)
+    (define-key map (kbd "M-p") 'lsp-bridge-call-hierarchy-preview-prev)
+    (define-key map (kbd "M-b") #'lsp-bridge-call-hierarchy-scroll-right)
+    (define-key map (kbd "M-f") #'lsp-bridge-call-hierarchy-scroll-left)
+    (define-key map (kbd "m") 'lsp-bridge-call-hierarchy-select)
     (define-key map (kbd "RET") 'lsp-bridge-call-hierarchy-select)
-    (define-key map (kbd "ESC") 'lsp-bridge-call-hierarchy-quit)
+    (define-key map (kbd "<escape>") 'lsp-bridge-call-hierarchy-quit)
     (define-key map (kbd "q") 'lsp-bridge-call-hierarchy-quit)
     (define-key map (kbd "C-g") 'lsp-bridge-call-hierarchy-quit)
   map))

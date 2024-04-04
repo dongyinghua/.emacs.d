@@ -1,4 +1,4 @@
-;;; acm-backend-lsp.el --- LSP backend for acm  -*- lexical-binding: t -*-
+;;; acm-backend-lsp.el --- LSP backend for acm  -*- lexical-binding: t; no-byte-compile: t; -*-
 
 ;; Filename: acm-backend-lsp.el
 ;; Description: LSP backend for acm
@@ -108,31 +108,53 @@
   :type 'boolean
   :group 'acm-backend-lsp)
 
+(defcustom acm-backend-lsp-match-mode "normal"
+  "The match mode to filter completion candidates.
+
+normal: don't filter candidates.
+prefix: filter candidates with input prefix, note such as C++, after `std::', candidate's prefix is not `::'
+prefixCaseSensitive: filter candidates with input prefix, and case sensitive
+fuzzy: fitler candidates with fuzzy algorithm
+
+Recommand use `normal' that follow LSP server response, emacser's behavior typically does not adapt to LSP protocol."
+  :type 'string
+  :group 'acm-backend-lsp)
+
 (defvar acm-backend-lsp-fetch-completion-item-func nil)
 (defvar-local acm-backend-lsp-fetch-completion-item-ticker nil)
 
 (defun acm-backend-lsp-candidates (keyword)
-  (let* ((candidates (list)))
-    (when (and
-           (>= (length keyword) acm-backend-lsp-candidate-min-length)
-           (boundp 'acm-backend-lsp-items)
-           acm-backend-lsp-items
-           (boundp 'acm-backend-lsp-server-names)
-           acm-backend-lsp-server-names
-           (hash-table-p acm-backend-lsp-items))
-      ;; Sort multi-server items by
-      (dolist (server-name acm-backend-lsp-server-names)
-        (when-let* ((server-items (gethash server-name acm-backend-lsp-items)))
-          (maphash (lambda (k v)
-                     (add-to-list 'candidates v t))
-                   server-items))))
+  (let ((match-candidates
+         (acm-with-cache-candidates
+          acm-backend-lsp-cache-candidates
+          (let* ((candidates (list)))
+            (when (and
+                   (>= (length keyword) acm-backend-lsp-candidate-min-length)
+                   (boundp 'acm-backend-lsp-items)
+                   acm-backend-lsp-items
+                   (boundp 'acm-backend-lsp-server-names)
+                   acm-backend-lsp-server-names
+                   (hash-table-p acm-backend-lsp-items))
+              (dolist (server-name acm-backend-lsp-server-names)
+                (when-let* ((server-items (gethash server-name acm-backend-lsp-items)))
+                  (maphash (lambda (k v)
+                             (add-to-list 'candidates v t))
+                           server-items))))
 
-    ;; NOTE:
-    ;; lsp-bridge has sort candidate at Python side,
-    ;; please do not do secondary sorting here, elisp is very slow.
-    candidates))
+            ;; NOTE:
+            ;; lsp-bridge has sort candidate at Python side,
+            ;; please do not do secondary sorting here, elisp is very slow.
+            candidates))))
 
-(defun acm-backend-lsp-candidate-expand (candidate-info bound-start)
+    ;; When some LSP server very slow and other completion backend is fast,
+    ;; acm menu will render all backend candidates.
+    ;; Then old LSP candidates won't match `prefix' if new candidates haven't return.
+    ;; So we need filter old LSP candidates with `prefix' if `prefix' is not empty.
+    (if (string-equal keyword "")
+        match-candidates
+      (seq-filter (lambda (c) (acm-candidate-fuzzy-search keyword (plist-get c :label))) match-candidates))))
+
+(defun acm-backend-lsp-candidate-expand (candidate-info bound-start &optional preview)
   (let* ((label (plist-get candidate-info :label))
          (insert-text (plist-get candidate-info :insertText))
          (insert-text-format (plist-get candidate-info :insertTextFormat))
@@ -172,17 +194,30 @@
                    (not (string-prefix-p char-before-input insert-text)))
           (setq delete-start-pos (1+ delete-start-pos)))))
 
-    ;; Delete region.
-    (delete-region delete-start-pos delete-end-pos)
+    (if preview
+        ;; for candidate preview, we ignore `additional-text-edits' and `snippet'
+        (if snippet-fn
+            ;; for snippet, we only preview label
+            (acm-preview-create-overlay delete-start-pos delete-end-pos label)
+          (acm-preview-create-overlay delete-start-pos delete-end-pos
+                                      (or new-text insert-text label)))
 
-    ;; Insert candidate or expand snippet.
-    (funcall (or snippet-fn #'insert)
-             (or new-text insert-text label))
-
-    ;; Do `additional-text-edits' if return auto-imprt information.
-    (when (and acm-backend-lsp-enable-auto-import
-               (cl-plusp (length additional-text-edits)))
-      (acm-backend-lsp-apply-text-edits additional-text-edits))))
+      ;; Delete region.
+      (delete-region delete-start-pos delete-end-pos)
+      ;; Insert candidate or expand snippet.
+      (funcall (or snippet-fn #'insert)
+               (or new-text insert-text label))
+      ;; Indent last line of snippet, make sure it same as first line of snippet.
+      (when snippet-fn
+        (save-excursion
+          (when yas-snippet-end
+            (goto-char yas-snippet-end)
+            (goto-char (line-beginning-position))
+            (indent-according-to-mode))))
+      ;; Do `additional-text-edits' if return auto-imprt information.
+      (when (and acm-backend-lsp-enable-auto-import
+                 (cl-plusp (length additional-text-edits)))
+        (acm-backend-lsp-apply-text-edits additional-text-edits)))))
 
 (defun acm-backend-lsp-candidate-doc (candidate)
   ;; NOTE:
@@ -225,11 +260,24 @@ If optional MARKER, return a marker instead"
       (if marker (copy-marker (point-marker)) (point)))))
 
 (defun acm-backend-lsp-apply-text-edits (edits)
-  ;; NOTE:
-  ;; We need reverse edits before apply, otherwise the row inserted before will affect the position of the row inserted later.
-  (dolist (edit (reverse edits))
+  (dolist (edit (acm-backend-lsp-make-sure-descending edits))
     (let* ((range (plist-get edit :range)))
       (acm-backend-lsp-insert-new-text (plist-get range :start) (plist-get range :end) (plist-get edit :newText)))))
+
+(defun acm-backend-lsp-make-sure-descending (edits)
+  "If `edits' is increasing, reverse `edits', otherwise the row inserted before will affect the position of the row inserted later."
+  (if (<= (length edits) 1)
+      ;; Return origin value of `edits' if length 0 or 1.
+      edits
+    (let* ((first-element-range (plist-get (nth 0 edits) :range))
+           (second-element-range (plist-get (nth 1 edits) :range))
+           (first-element-pos (acm-backend-lsp-position-to-point (plist-get first-element-range :start)))
+           (second-element-pos (acm-backend-lsp-position-to-point (plist-get second-element-range :start))))
+      (if (< first-element-pos second-element-pos)
+          ;; Only reverse edits if `edits' is increasing.
+          (reverse edits)
+        ;; Otherwise return origin value of `edits'.
+        edits))))
 
 (defun acm-backend-lsp-snippet-expansion-fn ()
   "Compute a function to expand snippets.
@@ -247,7 +295,8 @@ Doubles as an indicator of snippet support."
       (insert new-text))))
 
 (defun acm-backend-lsp-clean ()
-  (setq-local acm-backend-lsp-items (make-hash-table :test 'equal)))
+  (setq-local acm-backend-lsp-items (make-hash-table :test 'equal))
+  (setq-local acm-backend-lsp-cache-candidates nil))
 
 (provide 'acm-backend-lsp)
 

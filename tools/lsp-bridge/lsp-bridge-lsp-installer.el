@@ -1,7 +1,7 @@
 ;;; lsp-bridge-lsp-installer.el --- LSP server installer   -*- lexical-binding: t -*-
 
 ;; Filename: lsp-bridge-lsp-installer.el
-;; Description: LSP server installer 
+;; Description: LSP server installer
 ;; Author: Andy Stewart <lazycat.manatee@gmail.com>
 ;; Maintainer: Andy Stewart <lazycat.manatee@gmail.com>
 ;; Copyright (C) 2022, Andy Stewart, all rights reserved.
@@ -10,12 +10,12 @@
 ;; Last-Updated: 2022-09-27 09:28:09
 ;;           By: Andy Stewart
 ;; URL: https://www.github.org/manateelazycat/lsp-bridge-lsp-installer
-;; Keywords: 
+;; Keywords:
 ;; Compatibility: GNU Emacs 28.1
 ;;
 ;; Features that might be required by this library:
 ;;
-;; 
+;;
 ;;
 
 ;;; This file is NOT part of GNU Emacs
@@ -39,8 +39,8 @@
 
 ;;; Commentary:
 ;;
-;; LSP server installer 
-;; 
+;; LSP server installer
+;;
 
 ;;; Installation:
 ;;
@@ -57,7 +57,7 @@
 
 ;;; Customize:
 ;;
-;; 
+;;
 ;;
 ;; All of the above can customize by:
 ;;      M-x customize-group RET lsp-bridge-lsp-installer RET
@@ -71,12 +71,12 @@
 
 ;;; Acknowledgements:
 ;;
-;; 
+;;
 ;;
 
 ;;; TODO
 ;;
-;; 
+;;
 ;;
 
 ;;; Require
@@ -86,10 +86,14 @@
 (defun lsp-bridge-install-omnisharp ()
   (interactive)
   (let* ((to-append (if (string= lsp-bridge-csharp-lsp-server "omnisharp-dotnet")
-			(if (eq system-type 'windows-nt)
-			    "omnisharp-win-x64-net6.0.zip"
-			  "omnisharp-linux-x64-net6.0.zip")
-		      "omnisharp-mono.zip"))
+                        (cond
+                         ((eq system-type 'windows-nt) "omnisharp-win-x64-net6.0.zip")
+                         ((eq system-type 'darwin)
+                          (if (eq (car (split-string system-configuration "-")) 'aarch64)
+			                        "omnisharp-osx-arm64-net6.0.zip"
+			                      "omnisharp-osx-x64-net6.0.zip"))
+                         (t "omnisharp-linux-x64-net6.0.zip"))
+		                  "omnisharp-mono.zip"))
 	(url (concat "https://github.com/OmniSharp/omnisharp-roslyn/releases/latest/download/" to-append))
         (down-des (if (eq system-type 'windows-nt)
                        (substitute-in-file-name (concat "\\$USERPROFILE\\AppData\\Local\\Temp\\" to-append))
@@ -102,6 +106,7 @@
     (unless (file-directory-p install-des)
       (make-directory install-des t))
     (call-process-shell-command (format "%s -xf %s -C %s" "tar" down-des install-des))
+    (call-process-shell-command (format "chmod +x %s" (format "%sOmniSharp" install-des)))
     ))
 
 (defconst tabnine-bridge--version-tempfile "version")
@@ -116,6 +121,10 @@
 the standard glibc-linked dynamic binary.
 Only useful on GNU/Linux.  Automatically set if NixOS is detected."
   :type 'boolean)
+
+(defcustom codeium-download-url-prefix "https://github.com/Exafunction/codeium/releases/download/language-server-v"
+   "codeium download url prefix"
+   :type 'string)
 
 (defun tabnine-bridge--get-target ()
   "Return TabNine's system configuration.  Used for finding the correct binary."
@@ -215,6 +224,89 @@ Only useful on GNU/Linux.  Automatically set if NixOS is detected."
         (delete-file bundle-path)
         (delete-file version-tempfile)
         (message "TabNine installation complete.")))))
+
+(defcustom codeium-bridge-folder (expand-file-name "~/.codeium")
+  "Path to Codeium binary folder.
+`lsp-bridge-install-update-codeium' will use this directory."
+  :type 'string)
+
+(defvar codeium-bridge-binary-version
+  (let ((version-file (concat (file-name-as-directory codeium-bridge-folder) "version")))
+    (string-trim (if (file-exists-p version-file)
+                     (with-temp-buffer
+                       (insert-file-contents version-file)
+                       (buffer-string))
+                   ""))))
+
+(defun lsp-bridge-codeium-auth ()
+  "Getting auth token for Codeium."
+  (interactive)
+  (lsp-bridge-call-async "codeium_auth"))
+
+(defun lsp-bridge-codeium-input-auth-token (auth-token)
+  "Inputting auth token for Codeium."
+  (interactive "sAuth token: ")
+  (lsp-bridge-call-async "codeium_get_api_key" auth-token))
+
+(defun lsp-bridge-install-update-codeium ()
+  "Install or update Codeium binary in `codeium-bridge-folder'."
+  (interactive)
+  (let* ((system-arch (car (split-string system-configuration "-")))
+         (arch (cond ((string= system-arch "x86_64")
+                      "x64")
+                     (t "arm")))
+         (platform (cond ((eq system-type 'gnu/linux)
+                        "linux")
+                       ((or (eq system-type 'ms-dos)
+                            (eq system-type 'windows-nt)
+                            (eq system-type 'cygwin))
+                        "windows")
+                       ((eq system-type 'darwin)
+                        "macos")))
+         (extension (if (or (eq system-type 'ms-dos)
+                            (eq system-type 'windows-nt)
+                            (eq system-type 'cygwin))
+                        "exe.gz"
+                      "gz"))
+         (binary-dir (file-name-as-directory codeium-bridge-folder))
+         (version-file (concat binary-dir "version"))
+         (version (with-current-buffer (url-retrieve-synchronously "https://api.github.com/repos/Exafunction/codeium/releases/latest")
+                    (re-search-forward "^{")
+                    (goto-char (1- (point)))
+                    (substring (car (last (split-string (gethash "name" (json-parse-buffer)) "-"))) 1)))
+         (file-name (format "language_server_%s_%s.%s"
+                            platform
+                            arch
+                            extension))
+         (compress-file (concat binary-dir file-name))
+         (binary-file (string-trim-right compress-file "\\.gz"))
+         ;; Binary file after rename
+         (last-binary-file (concat binary-dir "language_server"))
+         (download-url (concat codeium-download-url-prefix version "/" file-name)))
+    (make-directory binary-dir t)
+    (if (string= version codeium-bridge-binary-version)
+        (message "Don't need update.")
+      (url-copy-file download-url compress-file t)
+      (shell-command (format "gzip -d %s" compress-file))
+      (rename-file binary-file last-binary-file t)
+      (shell-command (format "chmod +x %s" last-binary-file))
+      (with-temp-buffer
+        (insert version)
+        (write-region (point-min) (point-max) version-file nil nil nil t))
+      (setq codeium-bridge-binary-version version)
+      (message "Done."))))
+
+(defun lsp-bridge-copilot-login ()
+  (interactive)
+  (lsp-bridge-call-async "copilot_login"))
+
+(defun lsp-bridge-copilot-logout ()
+  (interactive)
+  (lsp-bridge-call-async "copilot_logout"))
+
+(defun lsp-bridge-copilot-status ()
+  (interactive)
+  (lsp-bridge-call-async "copilot_status"))
 
 (provide 'lsp-bridge-lsp-installer)
 

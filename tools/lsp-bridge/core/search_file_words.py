@@ -33,7 +33,7 @@ class SearchFileWords:
         self.search_files = set()
         self.search_content_dict = {}
         self.search_words_thread = None
-        
+        (self.max_number, self.fuzzy_match, self.fuzzy_match_threshold) = get_emacs_vars(["acm-backend-search-file-words-max-number", "acm-backend-search-file-words-enable-fuzzy-match", "acm-backend-search-file-words-enable-fuzzy-match-threshold"])
         self.search_words_queue = queue.Queue()
         self.search_words_dispatcher_thread = threading.Thread(target=self.search_dispatcher)
         self.search_words_dispatcher_thread.start()
@@ -50,22 +50,42 @@ class SearchFileWords:
                 
         if add_queue:
             self.search_words_queue.put("search_words")
-            
-    def change_file(self, filepath, base64_string):
-        import base64
-        try:
-            content = base64.b64decode(base64_string).decode("utf-8")
-        except UnicodeDecodeError:
-            print('ignore non utf-8 file: %s' % filepath)
-            return
 
+    def index_file(self, filepath, content):
         self.search_files.add(filepath)
         self.search_content_dict[filepath] = content
-        
+
         if filepath not in self.files:
             self.files[filepath] = set()
-            self.search_words_queue.put("search_words")
-    
+
+        self.search_words_queue.put("search_words")
+
+    def load_file(self, filepath, from_file_server=False):
+        try:
+            if from_file_server:
+                content = get_file_content_from_file_server(filepath)
+            else:
+                with open(filepath) as f:
+                    content = f.read()
+        except:
+            return
+
+        self.index_file(filepath, content)
+
+    def change_buffer(self, buffer_name, start_pos, end_pos, change_text):
+        start_pos = epc_arg_transformer(start_pos)
+        end_pos = epc_arg_transformer(end_pos)
+
+        if len(start_pos) == 0 or len(end_pos) == 0:
+            return
+
+        if buffer_name in self.search_content_dict:
+            content = rebuild_content_from_diff(self.search_content_dict[buffer_name], start_pos, end_pos, change_text)
+        else:
+            content = get_emacs_func_result('get-buffer-content', buffer_name, True)
+
+        self.index_file(buffer_name, content)
+
     def close_file(self, filepath):
         if filepath in self.files:
             if filepath in self.search_files:
@@ -85,7 +105,7 @@ class SearchFileWords:
             all_words = set()
             for file, words in self.files.items():
                 all_words = all_words | words
-                
+
             search_candidates = self.search_word(prefix, all_words)
             candidates = []
             if len(search_candidates) > 0:
@@ -101,27 +121,38 @@ class SearchFileWords:
                 
                 candidates = list(map(lambda word: prefix[:-len(search_prefix)] + word, candidates))
                 
-
-            eval_in_emacs("lsp-bridge-search-backend--record-items", "file-words", candidates[:min(3, len(candidates))])
+            eval_in_emacs("lsp-bridge-search-backend--record-items", "search-file-words",
+                          list(map(lambda word: {
+                              "key": word,
+                              "icon": "search",
+                              "label": word,
+                              "displayLabel": word,
+                              "annotation": "Search Word",
+                              "backend": "search-file-words"
+                          }, candidates[:min(self.max_number, len(candidates))])))
         except:
             logger.error(traceback.format_exc())
             
     def search_word(self, prefix, all_words):
-        match_words = list(filter(lambda word: word.lower().startswith(prefix.lower()), all_words))
         candidates = []
-        if prefix.isupper():
-            candidates = list(map(lambda word: word.upper(), match_words))
+        if self.fuzzy_match:
+            from rapidfuzz import fuzz
+            match_words = list(map(lambda word: {'word':word, 'ratio':fuzz.ratio(prefix.lower(), word.lower())}, all_words))
+            match_words.sort(key=lambda x:x['ratio'], reverse=True)
+            for word in match_words:
+                if word['ratio'] >= self.fuzzy_match_threshold:
+                    candidates.append(word['word'])
+                else:
+                    break
         else:
-            candidates = list(map(lambda word: prefix + word[len(prefix):], match_words))
-            
-        candidates.sort(key=len, reverse=False)
-        
+            match_words = list(filter(lambda word: word.lower().startswith(prefix.lower()), all_words))
+            if prefix.isupper():
+                candidates = list(map(lambda word: word.upper(), match_words))
+            else:
+                candidates = list(map(lambda word: prefix + word[len(prefix):], match_words))
+            candidates.sort(key=len, reverse=False)
         return candidates
             
-    def rebuild_cache(self):
-        if len(self.search_files) > 0:
-            self.search_words_queue.put("search_words")
-    
     def search_dispatcher(self):
         try:
             while True:

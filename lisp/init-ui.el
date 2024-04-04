@@ -26,8 +26,8 @@
 	      ;; (add-hook 'window-setup-hook 'toggle-frame-maximized t)
 	      ;; 使用下面这种配置方法可以保证在使用emacs server和client时，也能保证在启动的时候窗口最大化
 	      ;; 问题的关键在于frame
-	      (add-to-list 'default-frame-alist '(fullscreen . maximized))
-
+	      ;; (add-to-list 'default-frame-alist '(fullscreen . maximized))
+	      
 	      ;; 关闭工具栏和右侧滑动
 	      ;; 正数表示t，非正数表示nil
 	      ;; 注：不知道为什么最基本的emacs不识别nil，就算用nil赋值，其值依旧是t

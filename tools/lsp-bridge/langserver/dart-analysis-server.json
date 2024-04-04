@@ -7,5 +7,12 @@
     "--client-id",
     "emacs.lsp-bridge"
   ],
-  "settings": {}
+  "settings": {
+		"dart": {
+			"completeFunctionCalls": true
+		}
+	},
+  "initializationOptions": {
+    "closingLabels": true
+  }
 }

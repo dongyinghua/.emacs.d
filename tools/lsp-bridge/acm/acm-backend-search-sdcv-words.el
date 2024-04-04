@@ -1,4 +1,4 @@
-;;; acm-backend-search-sdcv-words.el --- Path backend for acm  -*- lexical-binding: t -*-
+;;; acm-backend-search-sdcv-words.el --- Path backend for acm  -*- lexical-binding: t; no-byte-compile: t; -*-
 
 ;; Filename: acm-backend-search-sdcv-words.el
 ;; Description: Path backend for acm
@@ -106,14 +106,19 @@ you need set this value to `/usr/share/stardict/dic/stardict-oxford-gb-formated-
 (defvar-local acm-backend-search-sdcv-words-items nil)
 
 (defun acm-backend-search-sdcv-words-candidates (keyword)
-  acm-backend-search-sdcv-words-items)
+  (acm-with-cache-candidates
+   acm-backend-search-sdcv-words-cache-candiates
+   acm-backend-search-sdcv-words-items))
 
-(defun acm-backend-search-sdcv-words-candidate-expand (candidate-info bound-start)
-  (delete-region (beginning-of-thing 'word) (end-of-thing 'word))
-  (insert (plist-get candidate-info :display-label)))
+(defun acm-backend-search-sdcv-words-candidate-expand (candidate-info bound-start &optional preview)
+  (if preview
+      (acm-preview-create-overlay (beginning-of-thing 'word) (end-of-thing 'word) (plist-get candidate-info :displayLabel))
+    (delete-region (beginning-of-thing 'word) (end-of-thing 'word))
+    (insert (plist-get candidate-info :displayLabel))))
 
 (defun acm-backend-search-sdcv-words-clean ()
-  (setq-local acm-backend-search-sdcv-words-items nil))
+  (setq-local acm-backend-search-sdcv-words-items nil)
+  (setq-local acm-backend-search-sdcv-words-cache-candiates nil))
 
 (provide 'acm-backend-search-sdcv-words)
 
