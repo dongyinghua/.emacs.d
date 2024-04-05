@@ -90,7 +90,7 @@
 ;;Degug
 ;;(require 'init-dap)
 ;; 代码折叠
-(require 'init-yafolding)
+(require 'init-origami)
 ;;Language
 (require 'init-flycheck)
 ;;(require 'init-c)

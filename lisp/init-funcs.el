@@ -374,7 +374,12 @@ See `buffer-invisibility-spec'."
   (backward-char 3)
   )
 
+(defun dragonli-save-file()
+  "Save the current buffer."
+  (interactive)
+  (editorconfig-format-buffer)
+  (save-buffer)
+  )
 
 (provide 'init-funcs)
-
 ;;; init-funcs.el ends here

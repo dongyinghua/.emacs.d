@@ -12,7 +12,7 @@
 
 ;;修改快捷键映射
 (setq mac-option-modifier 'meta
-  mac-command-modifier 'super)
+      mac-command-modifier 'super)
 
 ;; ---------------------------------------------------------------------------
 ;;快捷键绑定
@@ -45,6 +45,8 @@
 (define-key global-map (kbd "C-x C-；") 'comment-line)
 
 (global-set-key (kbd "C-c f") 'dragonli-insert-in-line-formula-symbel-for-latex-formula)
+
+(define-key global-map (kbd "s-s") 'dragonli-save-file)
 
 (provide 'init-keybindings)
 
