@@ -148,12 +148,26 @@ For example, if the value is company, choicing the company-mode for completion."
   "Face for hi lock: `竹绿'."
   :group 'dragonli)
 
-;; ;; 青莲紫
+;; 青莲紫
 (defface hi-purple-custom
   '((t (:foreground "#8b2671")))
   "Face for hi lock: `青莲紫'."
   :group 'dragonli)
 
-(provide 'init-custom)
+;; 解决问题：
+;; error in process filter: font-lock-default-fontify-region: Symbol’s value as variable is void: font-lock-reference-face
+;; error in process filter: Symbol’s value as variable is void: font-lock-reference-face
+;; 参考https://github.com/emacs-ess/ESS/issues/1254
+;; 原因：font-lock-reference-face has been removed in Emacs 29 (it was previously obsolete). ess should use font-lock-constant-face instead.
+(defvar font-lock-reference-face 'font-lock-reference-face
+  "Face for references in an Rd file.")
+(defface font-lock-reference-face
+  '((default :inherit font-lock-keyword-face)
+    (((class color) (background dark))
+     (:foreground "lime green"))
+    (((class color)) (background light) (:foreground "dark green")))
+  "Face for references in an Rd file."
+  :version "0.0")
 
+(provide 'init-custom)
 ;;; init-custom.el ends here
