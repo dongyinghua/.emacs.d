@@ -19,7 +19,7 @@
   :hook (after-init . holo-layer-enable)
   :config
   ;; ⚠️ 如果用conda的话，需要把holo-layer-python-command 设成对应的python路径
-  (setq holo-layer-python-command "/Users/dragonli/miniconda3/bin/python3")
+  (setq holo-layer-python-command "/opt/homebrew/bin/python3") ;
   ;; 开启果冻光标的动画效果
   (setq holo-layer-enable-cursor-animation t)
   ;; 开启彩虹缩进功能

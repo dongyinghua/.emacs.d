@@ -362,17 +362,17 @@ See `buffer-invisibility-spec'."
 (defun dragonli-insert-in-line-formula-symbel-for-latex-formula ()
   "Insert `\(\)' at cursor point for latex formula in `org-mode' and `latex-mode'."
   (interactive)
-  (insert " \\(\\) ")
-  (backward-char 3)
+  (insert "\\(\\)")
+  (backward-char 2)
   )
 
-
-(defun dragonli-insert-inter-row-formula-symbel-for-latex-formula ()
-  "Insert `\[\]' at cursor point for latex formula in `org-mode' and `latex-mode'."
+(defun dragonli-insert-cite-for-latex-formula ()
+  "Insert `\\upcite{}' at cursor point for latex formula in `org-mode' and `latex-mode'."
   (interactive)
-  (insert " \\[\\] ")
-  (backward-char 3)
+  (insert "\\upcite{}")
+  (backward-char 1)
   )
+
 
 (defun dragonli-save-file()
   "Save the current buffer."
@@ -380,6 +380,31 @@ See `buffer-invisibility-spec'."
   (editorconfig-format-buffer)
   (save-buffer)
   )
+
+(defun my/check-projectile-cache-file ()
+  " 检查 projectile-cache-file 里的工程目录和文件是否存在， 如果不存在则删掉 "
+  (interactive)
+  (projectile-serialize-cache)   ;; 把 cache 写到文件里
+  (let* ((new-cache (with-temp-buffer
+                      (insert-file projectile-cache-file)
+                      (goto-char (point-min))
+                      (while (re-search-forward ")\\s-+\"\\(.*?\\)\"\\s-+(" nil t)
+                        ;; (message "prj : %S" (match-string 1))
+                        (let* ((prj-name (match-string 1)))
+                          (unless (file-exists-p prj-name)
+                            (message "clearing not found prj : %S" prj-name)
+                            (delete-region (- (point) (1- (length (match-string 0)))) (1- (point)))
+                            (backward-char 1)
+                            (when (re-search-forward "(\\(.*?\\))" nil nil)
+                              ;; (message "files : %s" (match-string 1))
+                              (delete-region (- (point) (length (match-string 0))) (point))
+                              ))))
+                      (buffer-string))))
+    (f-write-text new-cache 'utf-8 projectile-cache-file)
+    ;; 从文件更新到 cache 中, 这样在关闭emacs 后才不会使改动丢失
+    (setq projectile-projects-cache
+          (or (projectile-unserialize projectile-cache-file)
+              (make-hash-table :test 'equal)))))
 
 (provide 'init-funcs)
 ;;; init-funcs.el ends here

@@ -13,6 +13,7 @@
   :ensure nil
   :hook (prog-mode . copilot-mode)
   :config
+  ;; (global-copilot-mode)
   (setq copilot-indent-offset-warning-disable t) ;; 不打开这个会有警告，影响体验
   ;; complete by copilot first, then auto-complete
   (defun my-tab ()

@@ -1,4 +1,4 @@
-;;; init-keybindings.el -*- lexical-binding: t -*-
+;;; package --- init-keybindings.el -*- lexical-binding: t -*-
 
 ;;; Commentary:
 ;;
@@ -37,18 +37,17 @@
 (global-set-key (kbd "<f1>") 'open-init-file)
 (global-set-key (kbd "<f2>") 'open-init-org)
 
-(global-set-key (kbd "C-c C-e b") 'eval-buffer)
-
 ;; (global-unset-key (kbd "C-o"))
-
+(define-key global-map (kbd "C-c C-e b") 'eval-buffer)
 (define-key global-map (kbd "C-o") nil)
 (define-key global-map (kbd "C-x C-；") 'comment-line)
+(define-key global-map (kbd "M-》") 'end-of-buffer)
+(define-key global-map (kbd "M-《") 'beginning-of-buffer)
 
 (global-set-key (kbd "C-c f") 'dragonli-insert-in-line-formula-symbel-for-latex-formula)
+(global-set-key (kbd "C-c c") 'dragonli-insert-cite-for-latex-formula)
 
-(define-key global-map (kbd "s-s") 'dragonli-save-file)
+;; (define-key global-map (kbd "s-s") 'dragonli-save-file)
 
 (provide 'init-keybindings)
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; init-keybindings.el ends here

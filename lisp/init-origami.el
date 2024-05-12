@@ -9,10 +9,10 @@
 ;;; Code:
 (use-package origami
   :ensure t
+  :hook (prog-mode . origami-mode)
   :bind	("C-<tab>" . origami-toggle-node)
   :config
   (global-origami-mode)
-  (define-key origami-mode-map (kbd "C-<return>") 'origami-toggle-node)
   )
 
 (provide 'init-origami)

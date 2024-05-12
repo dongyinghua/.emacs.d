@@ -25,6 +25,10 @@
   ("C-c C-f a" . consul-org-agenda)
   :config
   (define-key org-mode-map (kbd "C-c C-，") 'org-insert-structure-template)
+
+  ;; 解决：Warning (org-element-cache): org-element--cache: Org parser error in slides.org::2206. Resetting.
+  ;; The error was: (error "Invalid search bound (wrong side of point)")
+  (customize-set-variable 'warning-suppress-log-types '((org-element-cache)))
   
   ;; 使 org-mode 中的 timestamp 格式为英文
   (setq system-time-locale "C")
@@ -58,7 +62,7 @@
 			 :message "you need install the programs: xelatex and dvisvgm."
 			 :image-input-type "xdv"
 			 :image-output-type "svg"
-			 :image-size-adjust (6.5 . 6.5) ; 调整 svg 的 size
+			 :image-size-adjust (4.5 . 4.5) ; 调整 svg 的 size
 			 :latex-compiler ("xelatex -interaction nonstopmode -no-pdf -output-directory %o %f")
 			 :image-converter ("dvisvgm %f -n -b min -c %S -o %O")))
 
@@ -256,7 +260,7 @@
      (latex . t)
      (plantuml . t)
      (R . t)))
-  
+
   ) ; use-package org ends here
 
 (use-package hi-lock
@@ -359,6 +363,7 @@
 (use-package ox-beamer
   :ensure nil
   :defer t
+  :hook (org-mode . (lambda () (require 'ox-beamer)))
   )
 
 ;; Reveal.js 幻灯片

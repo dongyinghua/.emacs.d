@@ -1,4 +1,4 @@
-;;; init-company.el --- Company-mode configuration
+;;; init-company.el --- Company-mode configuration -*- lexical-binding: t -*-
 
 ;;; Commentary:
 ;;
@@ -16,8 +16,9 @@
   ;; :init
   ;; (global-company-mode)
   :config
+  (setq company-global-modes '(not prog-mode))
   (setq company-minimum-prefix-length 2)
-  (setq company-idle-delay 0.0)
+  (setq company-idle-delay 1.0)
   (setq company-show-quick-access t) ; 给选项编号 (按快捷键 M-1、M-2 等等来进行选择).
   (setq company-selection-wrap-around t)
   (setq company-transformers '(company-sort-by-occurrence)) ; 根据选择的频率进行排序
@@ -59,6 +60,7 @@
     :hook (company-mode . company-posframe-mode)
     :config (setq company-tooltip-minimum-width 40))
   );; use-package company
+
 
 (provide 'init-company)
 ;;; init-company.el ends here

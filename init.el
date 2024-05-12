@@ -9,7 +9,7 @@
 
 ;;; Code:
 
-(require 'cl)
+;; (require 'cl)
 
 (when (version< emacs-version "25.1")
   (error "This requires Emacs 25.1 and above!"))
@@ -95,7 +95,7 @@
 (require 'init-flycheck)
 ;;(require 'init-c)
 ;;(require 'init-java)
-;;(require 'init-python)
+(require 'init-python)
 (require 'init-matlab)
 (require 'init-copilot)
 
@@ -108,7 +108,7 @@
 ;; 花里胡哨的配置
 (require 'init-holo-layer)
 
-
+(require 'init-eaf)
 
 (provide 'init)
 ;;; init.el ends here
