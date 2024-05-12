@@ -15,17 +15,29 @@
   :config
   ;; (setq eaf-python-command "/opt/homebrew/bin/python3")
   ;; (setq eaf-enable-debug t)
-  (require 'eaf-demo)
-  (require 'eaf-browser)
+  ;; (require 'eaf-demo)
   (require 'eaf-org)
-  (require 'eaf-pdf-viewer)
-  (require 'eaf-camera)
+  
+  ;; (require 'eaf-camera)
   (require 'eaf-image-viewer)
-  (require 'eaf-video-player)
+  ;; (require 'eaf-video-player)
+  ;; (require 'eaf-music-player)
+  ;; (require 'eaf-pyqterminal)
 
+  ;; eaf-file-manager
+  (require 'eaf-file-manager)
+  
+  ;; eaf-browser
+  (require 'eaf-browser)
+  (setq eaf-browser-dark-mode nil)
+  
   ;; eaf-pdf-viewer
   ;; 黑暗背景
+  (require 'eaf-pdf-viewer)
   (setq eaf-pdf-dark-mode nil)
+
+  ;; eaf-git
+  ;; (require 'eaf-git)
   
   ;; (setq eaf-internal-process-prog "clang")
   ;; (defalias 'browse-web #'eaf-open-browser)

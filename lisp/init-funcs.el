@@ -406,5 +406,26 @@ See `buffer-invisibility-spec'."
           (or (projectile-unserialize projectile-cache-file)
               (make-hash-table :test 'equal)))))
 
+(defun dragonli-eaf-search-bing-other-window ()
+  "Search the keyword in Bing by EAF in other window."
+  (interactive)
+  (setq keyword (read-from-minibuffer
+	      (concat
+	       (propertize "Which you want search: " 'face '(bold default)))))
+  ;; (concat "https://cn.bing.com/search?q" search)
+  (eaf-open-browser-other-window (concat "https://cn.bing.com/search?q=" keyword))
+  )
+
+(defun dragonli-eaf-search-bing ()
+  "Search the keyword in Bing by EAF in current window."
+  (interactive)
+  (setq keyword (read-from-minibuffer
+	      (concat
+	       (propertize "Which you want search: " 'face '(bold default)))))
+  ;; (concat "https://cn.bing.com/search?q" search)
+  (eaf-open-browser (concat "https://cn.bing.com/search?q=" keyword))
+  )
+
+
 (provide 'init-funcs)
 ;;; init-funcs.el ends here

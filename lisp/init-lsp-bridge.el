@@ -17,6 +17,8 @@
   (java-mode . lsp-bridge-mode)
   (Java//l-mode . lsp-bridge-mode)
   (matlab-mode . lsp-bridge-mode)
+  (python-mode . lsp-bridge-mode)
+  (cc-mode . lsp-bridge-mode)
   ;; :bind
   ;; ("C-c C-l d" . lsp-bridge-find-define)
   ;; ("C-c C-l j" . lsp-bridge-jump)

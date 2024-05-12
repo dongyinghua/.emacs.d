@@ -157,5 +157,7 @@ Emacs 有一个自带的 package 来高亮括号，那就是 `show-paren-mode'�
 ;; 自动保存
 (auto-save-visited-mode)
 
+;; 设置默认为左右分屏
+(setq split-width-threshold 1)
 (provide 'init-basic)
 ;;; init-basic.el ends here
