@@ -90,4 +90,5 @@ workspace/
 **/*.~undo-tree~
 *.el~
 **/*.el~
+eaf/
 #*#
