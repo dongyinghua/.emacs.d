@@ -28,7 +28,7 @@
   ;; (require 'lsp-bridge)
   ;;(global-lsp-bridge-mode)
   :config
-  (setq lsp-bridge-python-command "/opt/miniconda3/bin/python3")
+  ;; (setq lsp-bridge-python-command "/opt/miniconda3/bin/python3")
   ;; (lsp-bridge-install-tabnine)
   (setq acm-enable-tabnine t)
   (add-to-list 'lsp-bridge-single-lang-server-mode-list '(matlab-mode . "matlab-ls"))

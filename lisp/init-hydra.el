@@ -12,6 +12,24 @@
 (require 'init-custom)
 (require 'init-funcs)
 
+(use-package pretty-hydra
+  :ensure t
+  :init
+  (cl-defun pretty-hydra-title (title &optional icon-type icon-name
+                                      &key face height v-adjust)
+    "Add an icon in the hydra title."
+    (let ((face (or face `(:foreground ,(face-background 'highlight))))
+          (height (or height 1.0))
+          (v-adjust (or v-adjust 0.0)))
+      (concat
+       (when (and (icon-displayable-p) icon-type icon-name)
+         (let ((f (intern (format "all-the-icons-%s" icon-type))))
+           (when (fboundp f)
+             (concat
+              (apply f (list icon-name :face face :height height :v-adjust v-adjust))
+              " "))))
+       (propertize title 'face face)))))
+
 ;; Emacs commands launcher
 (with-no-warnings
   (pretty-hydra-define hydra-my-emacs-commands-launcher
@@ -176,7 +194,7 @@
       ("l h" cdlatex-command-help)
       ("l e" cdlatex-environment))
      )))
-(global-set-key (kbd "M-SPC") 'hydra-my-org-launcher/body)
+(global-set-key (kbd "s-SPC") 'hydra-my-org-launcher/body)
 
 (with-no-warnings
   (pretty-hydra-define hydra-undo-tree
@@ -189,7 +207,73 @@
       ("u" undo-tree-visualize "visualize" :exit t)))))
 (global-set-key (kbd "C-x C-u") 'hydra-undo-tree/body)
 
-(provide 'init-hydra)
+(with-eval-after-load 'hydra
+  ;; https://github.com/abo-abo/ace-window/wiki/Hydra
+  ;; hydra-frame-window is designed from `ace-window' and
+  ;; matches aw-dispatch-alist with a few extra
+  (defhydra hydra-frame-window (:color red :hint nil)
+    "
+^Frame^                 ^Window^      Window Size^^^^^^    ^Text Zoom^               (__)
+_0_: delete             _t_oggle        ^ ^ _k_ ^ ^            _=_                   (oo)
+_1_: delete others      _s_wap          _h_ ^+^ _l_            ^+^             /------\\/
+_2_: new                _d_elete        ^ ^ _j_ ^ ^            _-_            / |    ||
+_F_ullscreen            ^ ^             _b_alance^^^^          ^ ^        *  /\\---/\\  ~~  C-c w/C-x o w
+"
+    ("0" delete-frame :exit t)
+    ("1" delete-other-frames :exit t)
+    ("2" make-frame  :exit t)
+    ("b" balance-windows)
+    ("s" ace-swap-window)
+    ("F" toggle-frame-fullscreen)
+    ("t" toggle-window-split)
+    ("d" ace-delete-window :exit t)
+    ("-" text-scale-decrease)
+    ("=" text-scale-increase)
+    ("h" shrink-window-horizontally)
+    ("k" shrink-window)
+    ("j" enlarge-window)
+    ("l" enlarge-window-horizontally)
+    ("q" nil "quit"))
+  (bind-key "C-c w" #'hydra-frame-window/body))
 
+(with-eval-after-load 'hydra
+  ;; from: https://github.com/manateelazycat/awesome-tab
+  (defhydra awesome-fast-switch (:hint nil)
+    "
+ ^^^^Fast Move             ^^^^Tab                    ^^Search            ^^Misc
+-^^^^--------------------+-^^^^---------------------+-^^----------------+-^^---------------------------
+   ^_k_^   prev group    | _C-a_^^     select first | _b_ search buffer | _C-k_   kill buffer
+ _h_   _l_  switch tab   | _C-e_^^     select last  | _g_ search group  | _C-S-k_ kill others in group
+   ^_j_^   next group    | _C-j_^^     ace jump     | ^^                | ^^
+ ^^0 ~ 9^^ select window | _C-h_/_C-l_ move current | ^^                | ^^
+-^^^^--------------------+-^^^^---------------------+-^^----------------+-^^---------------------------
+"
+    ("h" awesome-tab-backward-tab)
+    ("j" awesome-tab-forward-group)
+    ("k" awesome-tab-backward-group)
+    ("l" awesome-tab-forward-tab)
+    ("0" my-select-window)
+    ("1" my-select-window)
+    ("2" my-select-window)
+    ("3" my-select-window)
+    ("4" my-select-window)
+    ("5" my-select-window)
+    ("6" my-select-window)
+    ("7" my-select-window)
+    ("8" my-select-window)
+    ("9" my-select-window)
+    ("C-a" awesome-tab-select-beg-tab)
+    ("C-e" awesome-tab-select-end-tab)
+    ("C-j" awesome-tab-ace-jump)
+    ("C-h" awesome-tab-move-current-tab-to-left)
+    ("C-l" awesome-tab-move-current-tab-to-right)
+    ("b" ivy-switch-buffer)
+    ("g" awesome-tab-counsel-switch-group)
+    ("C-k" kill-current-buffer)
+    ("C-S-k" awesome-tab-kill-other-buffers-in-current-group)
+    ("q" nil "quit"))
+  (bind-key "C-c C-a" #'awesome-fast-switch/body))
+
+(provide 'init-hydra)
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; init-hydra.el ends here

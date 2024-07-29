@@ -13,19 +13,12 @@
   (eaf-browser-enable-adblocker t)
   (browse-url-browser-function 'eaf-open-browser)
   :config
-  ;; (setq eaf-python-command "/opt/homebrew/bin/python3")
+  ;; (setq eaf-python-command "D:/develop/python3124/python.exe")
   ;; (setq eaf-enable-debug t)
   ;; (require 'eaf-demo)
   (require 'eaf-org)
   
-  ;; (require 'eaf-camera)
   (require 'eaf-image-viewer)
-  ;; (require 'eaf-video-player)
-  ;; (require 'eaf-music-player)
-  ;; (require 'eaf-pyqterminal)
-
-  ;; eaf-file-manager
-  (require 'eaf-file-manager)
   
   ;; eaf-browser
   (require 'eaf-browser)

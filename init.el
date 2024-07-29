@@ -36,33 +36,38 @@
   (add-hook 'emacs-startup-hook
             (lambda () (setq gc-cons-threshold normal-gc-cons-threshold))))
 
-
-;; Package Management
-(require 'init-packages)
-(require 'init-avy)
-
 ;; Refer to https://github.com/purcell/emacs.d
 ;; 提高Emacs启动速度
 (require 'init-benchmarking)
 
-(require 'init-exec-path) ; Set up $PATH. If you startup emacs in terminal, this is not necessary.
+;; Set up $PATH. If you startup emacs in terminal, this is not necessary.
+;; (require 'init-exec-path)
+
+;; Package Management
+(require 'init-packages)
+(require 'init-hydra)
+
+(require 'init-avy)
+(require 'init-orderless)
 
 ;; Key Bindings
 (require 'init-keybindings)
 
 ;; Emacs Basic Settings (Emacs内置功能的配置)
 (require 'init-basic)
-(require 'init-hydra)
+;; Emacs内置的outline-mode
 (require 'init-outline)
-
-;; Font Setting
-(require 'init-font)
-(require 'init-clipboard)
 
 (require 'init-dashboard) ; 要放到“init-ui”和“init-modeline”之前
 (require 'init-ui)
 (require 'init-doom-theme)
 (require 'init-modeline)
+
+;; ;; Font Setting
+(require 'init-font)
+(require 'init-clipboard)
+
+;; (require 'init-ace-window)
 
 (require 'init-persp)
 
@@ -71,42 +76,39 @@
 (require 'init-completion)
 (require 'init-company)
 (require 'init-tools)
-(require 'init-projectile)
-(require 'init-git)
-(require 'init-treemacs)
+;; (require 'init-projectile)
+;; (require 'init-git)
+;; (require 'init-treemacs)
 
-(require 'init-compile)
+;; (require 'init-compile)
 (require 'init-org)
-;;(require 'init-org-gtd)
+(require 'init-org-gtd)
 (require 'init-org-roam)
-
-(require 'init-yasnippet) ;;init-yasnippet需要在init-lsp-bridge前
-(require 'init-lsp-bridge)
-;; (require 'init-eglot)
-
-;;(require 'init-eshell)
-(require 'init-vterm)
-
-;;Degug
-;;(require 'init-dap)
-;; 代码折叠
-(require 'init-origami)
-;;Language
-(require 'init-flycheck)
-;;(require 'init-c)
-;;(require 'init-java)
-(require 'init-python)
-(require 'init-matlab)
-(require 'init-copilot)
 
 (require 'init-latex)
 (require 'init-markdown)
 
-;; (require 'init-pdf-tools)
-;;(require 'init-chatgpt-shell)
+;; (require 'init-yasnippet) ;;init-yasnippet需要在init-lsp-bridge前
+;; (require 'init-lsp-bridge)
+;; ;; (require 'init-eglot)
 
-;; 花里胡哨的配置
-(require 'init-holo-layer)
+;; ;;Degug
+;; ;;(require 'init-dap)
+;; ;; 代码折叠
+;; (require 'init-origami)
+;; ;;Language
+;; (require 'init-flycheck)
+;; ;;(require 'init-c)
+;; ;;(require 'init-java)
+;; (require 'init-python)
+;; (require 'init-matlab)
+(require 'init-copilot)
+(require 'init-kimi)
+;; ;; (require 'init-pdf-tools)
+;; ;;(require 'init-chatgpt-shell)
+
+;; ;; 花里胡哨的配置
+;; (require 'init-holo-layer)
 
 (require 'init-eaf)
 

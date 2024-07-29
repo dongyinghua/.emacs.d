@@ -7,9 +7,86 @@
 
 ;;; Code:
 
-(use-package org-gtd
-  :ensure nil
-  ) ;; use-package ends here
+;; (use-package org-gtd
+;;   :ensure nil
+;;   ) ;; use-package ends here
+
+;; org-mode for GTD
+;; todo dependencies
+;;(setq alert-default-style 'notifications)
+
+;; org-agenda
+(load-library "find-lisp")
+(setq org-agenda-files (find-lisp-find-files org-gtd-path "\.org$"))
+
+(setq-default org-refile-targets '((org-gtd-path-projects :maxlevel . 5)
+				   (org-gtd-path-todos :maxlevel . 5)
+				   (org-gtd-path-schedule :maxlevel . 5)
+				   (org-gtd-path-inbox :maxlevel . 5)
+				   ))
+;; (setq org-refile-targets '(("~/Documents/Org/GTD/Projects.org" :maxlevel . 5)
+;;                            ("~/Documents/Org/GTD/TODOs.org" :maxlevel . 5)
+;;                            ("~/Documents/Org/GTD/Schedule.org" :maxlevel . 5)
+;;                            ("~/Documents/Org/GTD/Inbox.org" :maxlevel . 5)
+;; 			     ("~/Documents/Org/org-roam-directory/2022070322_科研笔记.org" :maxlevel . 5)
+;;                            ))
+(setq-default org-deadline-warning-days 30)
+
+;; org-capture
+;; 快捷键“C-c x”
+(setq-default org-capture-templates
+	      '(("i" "Inbox" entry
+		 (file+headline org-gtd-path-inbox "Tasks")
+		 "* TODO %?\n  %i\n"
+		 :empty-lines 0)
+		("s" "Schedule" entry
+		 (file+headline org-gtd-path-schedule "Schedules")
+		 "* TODO %?\n  %i\n"
+		 :empty-lines 1)
+		("t" "TODOs" entry
+		 (file+headline org-gtd-path-todos "TODOs")
+		 "* TODO %?\n  %i\n"
+		 :empty-lines 1)
+		("p" "Projects" entry
+		 (file+headline org-gtd-path-projects "Projects")
+		 "* TODO %?\n  %i\n"
+		 :empty-lines 1)
+		)
+	      )
+
+;; 设置任务流程
+;; This is achieved by adding special markers ‘!’ (for a timestamp)
+;; or ‘@’ (for a note with timestamp) in parentheses after each keyword.
+(setq org-todo-keywords
+      '((sequence "DOING(i)" "TODO(t)" "HANGUP(h@/!)" "|" "DONE(d!)" "CANCEL(c@)"))
+      org-todo-keyword-faces '(("TODO" . (:foreground "#F4606C" :weight blod))
+			       ("DOING" . (:foreground "#19CAAD" :weight blod))
+			       ("HANGUP" . (:foreground "#F4606C" :weight bold))
+			       ("DONE" . (:foreground "#939391" :weight blod))
+			       ("CANCEL" . (:background "gray" :foreground "black"))))
+
+(setq org-priority-faces '((?A . error)
+                           (?B . warning)
+                           (?C . success)))
+
+;; need repeat task and properties
+(setq org-log-done t)
+(setq org-log-into-drawer t)
+
+(setq-default org-agenda-span 'day)
+;;(add-hook org-capture-mode-hook 'evil-mode)
+
+(setq-default org-agenda-custom-commands
+	      '(("i" "重要且紧急的事" ;; 不显示没有加org-todo-keywords以及keyword是DONE的任务
+		 ((tags-todo "+PRIORITY=\"A\"")))
+		;; ...other commands here
+		))
+
+(setq org-agenda-sorting-strategy
+      '((agenda habit-down time-up priority-down category-up)
+	(todo   priority-down category-up)
+	(tags   priority-down category-up)
+	(search category-up)))
 
 (provide 'init-org-gtd)
 ;;; init-org-gtd.el ends here

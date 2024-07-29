@@ -22,6 +22,9 @@
   :config
   ;; (require 'awesome-tab)
   ;; (awesome-tab-mode t)
+  ;; 调整宽度
+  (setq awesome-tab-height 100)
+  
   (defun awesome-tab-buffer-groups ()
     "`awesome-tab-buffer-groups' control buffers' group rules.
 Group awesome-tab with mode if buffer is derived from `eshell-mode' `emacs-lisp-mode' `dired-mode' `org-mode' `magit-mode'.

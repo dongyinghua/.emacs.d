@@ -21,12 +21,7 @@
 
 	      ;; 启动最大化，适配 Emacs 29
 	      ;; 以函数调用的方式写在配置文件中，就可以在启动时执行这些函数
-	      ;; (toggle-frame-maximized)
-	      ;; Start maximised (cross-platf)
-	      ;; (add-hook 'window-setup-hook 'toggle-frame-maximized t)
-	      ;; 使用下面这种配置方法可以保证在使用emacs server和client时，也能保证在启动的时候窗口最大化
-	      ;; 问题的关键在于frame
-	      ;; (add-to-list 'default-frame-alist '(fullscreen . maximized))
+	      (toggle-frame-maximized)
 	      
 	      ;; 关闭工具栏和右侧滑动
 	      ;; 正数表示t，非正数表示nil
@@ -46,7 +41,7 @@
 	      ;;eldoc-mode 显示函数或变量的信息
 
 	      ;; 虚拟化背景
-	      ;;(set-frame-parameter (selected-frame) 'alpha '(95 65))
+	      ;; (set-frame-parameter (selected-frame) 'alpha '(95 65))
 	      ))
 
 ;; 显示行号

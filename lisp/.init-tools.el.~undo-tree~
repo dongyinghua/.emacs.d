@@ -1,0 +1,15 @@
+(undo-tree-save-format-version . 1)
+"74c84c70952a43e628dd749c024cd466072b5db1"
+[nil nil nil nil (26274 4459 91047 0) 0 nil]
+([nil nil ((665 . 668) (t 26272 45471 0 0)) nil (26274 4459 91046 0) 0 nil])
+([nil nil ((nil rear-nonsticky nil 696 . 697) (nil fontified nil 668 . 697) (668 . 697)) nil (26274 4459 91046 0) 0 nil])
+([nil nil ((697 . 700)) nil (26274 4459 91045 0) 0 nil])
+([nil nil ((665 . 668)) nil (26274 4459 91045 0) 0 nil])
+([nil nil ((668 . 673)) nil (26274 4459 91044 0) 0 nil])
+([nil nil ((#("t" 0 1 (face font-lock-comment-face fontified t)) . -671) (undo-tree-id24 . -1) (#("x" 0 1 (face font-lock-comment-face fontified t)) . -672) (undo-tree-id25 . -1) 673) nil (26274 4459 91043 0) 0 nil])
+([nil nil ((671 . 675)) nil (26274 4459 91042 0) 0 nil])
+([nil nil ((675 . 676)) nil (26274 4459 91041 0) 0 nil])
+([nil nil ((#("s" 0 1 (face font-lock-comment-face fontified t)) . -675) (undo-tree-id0 . -1) (undo-tree-id1 . -1) (undo-tree-id2 . -1) (undo-tree-id3 . -1) (undo-tree-id4 . -1) (undo-tree-id5 . -1) (undo-tree-id6 . -1) (undo-tree-id7 . -1) (undo-tree-id8 . -1) (undo-tree-id9 . -1) (undo-tree-id10 . -1) (undo-tree-id11 . -1) (undo-tree-id12 . -1) (undo-tree-id13 . -1) (undo-tree-id14 . -1) (undo-tree-id15 . -1) (undo-tree-id16 . -1) (undo-tree-id17 . -1) (undo-tree-id18 . -1) (undo-tree-id19 . -1) (undo-tree-id20 . -1) (undo-tree-id21 . -1) (undo-tree-id22 . -1) (undo-tree-id23 . -1) 676) nil (26274 4459 91037 0) 0 nil])
+([nil nil ((#("5" 0 1 (fontified t)) . -704) (undo-tree-id26 . -1) (undo-tree-id27 . -1) (undo-tree-id28 . -1) (undo-tree-id29 . -1) (undo-tree-id30 . -1) (undo-tree-id31 . -1) (undo-tree-id32 . -1) (undo-tree-id33 . -1) (undo-tree-id34 . -1) (undo-tree-id35 . -1) (undo-tree-id36 . -1) (undo-tree-id37 . -1) (undo-tree-id38 . -1) (undo-tree-id39 . -1) (undo-tree-id40 . -1) (undo-tree-id41 . -1) (undo-tree-id42 . -1) (undo-tree-id43 . -1) (undo-tree-id44 . -1) 705 (t 26274 4459 0 0)) nil (26274 4464 183162 0) 0 nil])
+([nil current ((704 . 705)) nil (26274 4464 183143 0) 0 nil])
+nil

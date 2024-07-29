@@ -19,9 +19,6 @@
 	      ;; 取消emacs的自动备份
 	      (setq make-backup-files nil)
 
-	      ;; minibuffer模糊查找
-	      (setq completion-styles '(orderless))
-
 	      ;; 让鼠标滚动更好用
 	      (setq mouse-wheel-scroll-amount '(1 ((shift) . 1) ((control) . nil)))
 	      (setq mouse-wheel-progressive-speed nil)
@@ -48,6 +45,8 @@
 	      (setq hscroll-margin 1)
 	      ))
 
+(when (eq system-type 'windows-nt)
+  (setq default-directory "f:/"))
 
 (define-advice show-paren-function (:around (fn) fix-show-paren-function)
   "Highlight enclosing parens.
@@ -158,6 +157,12 @@ Emacs 有一个自带的 package 来高亮括号，那就是 `show-paren-mode'�
 (auto-save-visited-mode)
 
 ;; 设置默认为左右分屏
-(setq split-width-threshold 1)
+;; (setq split-width-threshold 1)
+
+;; 设置编码
+;; (setq default-buffer-file-coding-system 'utf-8)
+;; (set-default-coding-systems 'utf-8)
+(setq-default buffer-file-coding-system 'utf-8)
+
 (provide 'init-basic)
 ;;; init-basic.el ends here

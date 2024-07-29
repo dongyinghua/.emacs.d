@@ -10,9 +10,8 @@
 
 (require 'init-funcs)
 
-;;修改快捷键映射
-(setq mac-option-modifier 'meta
-      mac-command-modifier 'super)
+;; windows快捷键设置
+(setq w32-apps-modifier 'super)       ; 通过SharpKeys改成了 Applications
 
 ;; ---------------------------------------------------------------------------
 ;;快捷键绑定

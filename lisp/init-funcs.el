@@ -78,23 +78,11 @@ file to wdeired, and consult-location to occur-edit"
 ;; 子龙山人写的function一开始只能打开文件所在的文件夹，而不是该文件。
 ;; 原因在于他用了函数 file-name-directory，该函数是返回文件所在的文件夹的目录。
 ;; 把这个函数去除之后就可以了，所以我写了两个函数，一个是打开文件夹，一个是打开文件。
+;; 2024.7.24：换到win系统下，原来的函数无效了，所以在原有的基础上进行了改动，借鉴了spacemacs的函数spacemacs//open-in-external-app
 (defun consult-file-externally (file)
   "Open FILE externally using the default application of the system."
   (interactive "fOpen externally: ")
-  (if (and (eq system-type 'windows-nt)
-           (fboundp 'w32-shell-execute))
-      (shell-command-to-string (encode-coding-string (replace-regexp-in-string "/" "\\\\" (format "explorer.app %s" (file-name-directory (expand-file-name file)))) 'gbk))
-    (call-process (pcase system-type
-                    ('darwin "open")
-                    ('cygwin "cygstart")
-                    (_ "xdg-open"))
-		  nil 0 nil
-		  ;; another function that open the directory where the `file' is.
-		  ;; (file-name-directory (expand-file-name file))
-		  ;; (file-name-directory FILENAME)
-		  ;; Return the directory component in file name FILENAME. More details see "C-h f"
-		  (expand-file-name file))
-    )
+  (w32-shell-execute "open" (replace-regexp-in-string "/" "\\\\" (expand-file-name file)))
   )
 
 (defun consult-directory-externally (file)
@@ -102,7 +90,7 @@ file to wdeired, and consult-location to occur-edit"
   (interactive "fOpen externally: ")
   (if (and (eq system-type 'windows-nt)
 	   (fboundp 'w32-shell-execute))
-      (shell-command-to-string (encode-coding-string (replace-regexp-in-string "/" "\\\\" (format "explorer.exe %s" (file-name-directory (expand-file-name file)))) 'gbk))
+      (shell-command-to-string (encode-coding-string (replace-regexp-in-string "/" "\\\\" (format "Files.exe %s" (file-name-directory (expand-file-name file)))) 'gbk))
     (call-process (pcase system-type
 		    ('darwin "open")
 		    ('cygwin "cygstart")
@@ -161,6 +149,7 @@ Version: 2019-11-04 2021-07-21 2022-08-19 2023-02-28 2023-03-10"
   (setq truncate-lines nil)
   )
 
+
 ;; init-font.el
 (defun set-font (english-font chinese-font)
   "Function for setting fonts.
@@ -169,7 +158,7 @@ the names of the English and Chinese font of Emacs."
   (interactive)
   ;;Setting English Font
   (set-face-attribute
-   'default nil :family english-font :height 180 :weight 'normal)
+   'default nil :family english-font :height 120 :weight 'normal)
   ;;Chinese Font
   (dolist (charset '(kana han symbol cjk-misc bopomofo))
     (set-fontset-font (frame-parameter nil 'font)
@@ -410,8 +399,8 @@ See `buffer-invisibility-spec'."
   "Search the keyword in Bing by EAF in other window."
   (interactive)
   (setq keyword (read-from-minibuffer
-	      (concat
-	       (propertize "Which you want search: " 'face '(bold default)))))
+		 (concat
+		  (propertize "Which you want search: " 'face '(bold default)))))
   ;; (concat "https://cn.bing.com/search?q" search)
   (eaf-open-browser-other-window (concat "https://cn.bing.com/search?q=" keyword))
   )
@@ -420,12 +409,57 @@ See `buffer-invisibility-spec'."
   "Search the keyword in Bing by EAF in current window."
   (interactive)
   (setq keyword (read-from-minibuffer
-	      (concat
-	       (propertize "Which you want search: " 'face '(bold default)))))
+		 (concat
+		  (propertize "Which you want search: " 'face '(bold default)))))
   ;; (concat "https://cn.bing.com/search?q" search)
   (eaf-open-browser (concat "https://cn.bing.com/search?q=" keyword))
   )
 
+
+;; from: https://github.com/manateelazycat/awesome-tab
+;; winum users can use `winum-select-window-by-number' directly.
+(defun my-select-window-by-number (win-id)
+  "Use `ace-window' to select the window by using window index.
+WIN-ID : Window index."
+  (let ((wnd (nth (- win-id 1) (aw-window-list))))
+    (if wnd
+        (aw-switch-to-window wnd)
+      (message "No such window."))))
+
+(defun my-select-window ()
+  (interactive)
+  (let* ((event last-input-event)
+         (key (make-vector 1 event))
+         (key-desc (key-description key)))
+    (my-select-window-by-number
+     (string-to-number (car (nreverse (split-string key-desc "-")))))))
+
+;; hydra
+(defun toggle-window-split ()
+  (interactive)
+  (if (= (count-windows) 2)
+      (let* ((this-win-buffer (window-buffer))
+             (next-win-buffer (window-buffer (next-window)))
+             (this-win-edges (window-edges (selected-window)))
+             (next-win-edges (window-edges (next-window)))
+             (this-win-2nd (not (and (<= (car this-win-edges)
+                                         (car next-win-edges))
+                                     (<= (cadr this-win-edges)
+                                         (cadr next-win-edges)))))
+             (splitter
+              (if (= (car this-win-edges)
+                     (car (window-edges (next-window))))
+                  'split-window-horizontally
+                'split-window-vertically)))
+        (delete-other-windows)
+        (let ((first-win (selected-window)))
+          (funcall splitter)
+          (if this-win-2nd (other-window 1))
+          (set-window-buffer (selected-window) this-win-buffer)
+          (set-window-buffer (next-window) next-win-buffer)
+          (select-window first-win)
+          (if this-win-2nd (other-window 1))))
+    (user-error "`toggle-window-split' only supports two windows")))
 
 (provide 'init-funcs)
 ;;; init-funcs.el ends here

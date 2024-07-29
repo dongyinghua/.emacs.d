@@ -118,7 +118,7 @@
   (advice-add 'org-create-formula-image :around #'org-renumber-environment)
   
   
-  (org-zotxt-mode)
+  ;; (org-zotxt-mode)
   
   ;; To speed up startup, don't put to init section
   (setq org-modules nil)     ;; Faster loading
@@ -126,79 +126,6 @@
 
   (setq org-image-actual-width nil)
   (setq-default org-startup-with-inline-images t)
-
-  ;; org-mode for GTD
-  ;; todo dependencies
-  ;;(setq alert-default-style 'notifications)
-
-  ;; org-agenda
-  (load-library "find-lisp")
-  (setq org-agenda-files (find-lisp-find-files org-gtd-path "\.org$"))
-
-  (setq-default org-refile-targets '((org-gtd-path-projects :maxlevel . 5)
-				     (org-gtd-path-todos :maxlevel . 5)
-				     (org-gtd-path-schedule :maxlevel . 5)
-				     (org-gtd-path-inbox :maxlevel . 5)
-				     ("~/Documents/Org/org-roam-directory/2022070322_科研笔记.org" :maxlevel . 5)
-				     ))
-  ;; (setq org-refile-targets '(("~/Documents/Org/GTD/Projects.org" :maxlevel . 5)
-  ;;                            ("~/Documents/Org/GTD/TODOs.org" :maxlevel . 5)
-  ;;                            ("~/Documents/Org/GTD/Schedule.org" :maxlevel . 5)
-  ;;                            ("~/Documents/Org/GTD/Inbox.org" :maxlevel . 5)
-  ;; 			     ("~/Documents/Org/org-roam-directory/2022070322_科研笔记.org" :maxlevel . 5)
-  ;;                            ))
-  (setq-default org-deadline-warning-days 30)
-  
-  
-  ;; org-capture
-  ;; 快捷键“C-c x”
-  (setq-default org-capture-templates
-		'(("i" "Inbox" entry
-		   (file+headline org-gtd-path-inbox "Tasks")
-		   "* TODO %?\n  %i\n"
-		   :empty-lines 0)
-		  ("s" "Schedule" entry
-		   (file+headline org-gtd-path-schedule "Schedule")
-		   "* TODO %?\n  %i\n"
-		   :empty-lines 1)
-		  ("t" "TODOs" entry
-		   (file+headline org-gtd-path-todos "TODOs")
-		   "* TODO %?\n  %i\n"
-		   :empty-lines 1)
-		  ("p" "Projects" entry
-		   (file+headline org-gtd-path-projects "Projects")
-		   "* TODO %?\n  %i\n"
-		   :empty-lines 1)
-		  )
-		)
-
-  ;; 设置任务流程
-  ;; This is achieved by adding special markers ‘!’ (for a timestamp)
-  ;; or ‘@’ (for a note with timestamp) in parentheses after each keyword.
-  (setq org-todo-keywords
-	'((sequence "DOING(i)" "TODO(t)" "HANGUP(h@/!)" "|" "DONE(d!)" "CANCEL(c@)"))
-	org-todo-keyword-faces '(("TODO" . (:foreground "#F4606C" :weight blod))
-				 ("DOING" . (:foreground "#19CAAD" :weight blod))
-				 ("HANGUP" . (:foreground "#F4606C" :weight bold))
-				 ("DONE" . (:foreground "#939391" :weight blod))
-				 ("CANCEL" . (:background "gray" :foreground "black"))))
-
-  (setq org-priority-faces '((?A . error)
-                             (?B . warning)
-                             (?C . success)))
-
-  ;; need repeat task and properties
-  (setq org-log-done t)
-  (setq org-log-into-drawer t)
-
-  (setq-default org-agenda-span 'day)
-  ;;(add-hook org-capture-mode-hook 'evil-mode)
-
-  (setq-default org-agenda-custom-commands
-		'(("i" "重要且紧急的事" ;; 不显示没有加org-todo-keywords以及keyword是DONE的任务
-		   ((tags-todo "+PRIORITY=\"A\"")))
-		  ;; ...other commands here
-		  ))
   
   ;; org tag 对齐
 
@@ -239,12 +166,12 @@
   ;; 单独设置org标题字体大小，https://emacs-china.org/t/org/12869
   ;; 设置org标题1-8级的字体大小和颜色，颜色摘抄自monokai
   ;; 希望org-mode标题的字体大小和正文一致，设成1.0， 如果希望标题字体大一点可以设成1.2
-  ;; org-mode正文height为200
+  ;; org-mode正文height为120
   (custom-set-faces
-   '(org-level-1 ((t (:inherit outline-1 :height 215))))
-   '(org-level-2 ((t (:inherit outline-2 :height 205))))
-   '(org-level-3 ((t (:inherit outline-3 :height 200))))
-   '(org-level-4 ((t (:inherit outline-4 :height 200))))
+   '(org-level-1 ((t (:inherit outline-1 :height 160))))
+   '(org-level-2 ((t (:inherit outline-2 :height 150))))
+   '(org-level-3 ((t (:inherit outline-3 :height 140))))
+   '(org-level-4 ((t (:inherit outline-4 :height 140))))
    ) ;; end custom-set-faces
 
   (org-babel-do-load-languages
@@ -330,13 +257,13 @@
 				       nil
 				       t)))) ; use-package org-appear
 
-(use-package zotxt
-  :ensure t
-  :after org org-roam
-  :defer t
-  :hook
-  (org . org-zotxt-mode)
-  (org-roam-mode . org-zotxt-mode))
+;; (use-package zotxt
+;;   :ensure t
+;;   :after org org-roam
+;;   :defer t
+;;   :hook
+;;   (org . org-zotxt-mode)
+;;   (org-roam-mode . org-zotxt-mode))
 
 (use-package org-fragtog
   :ensure t
@@ -351,60 +278,83 @@
   :hook
   (org-mode . org-download-enable)
   (org-roam-mode . org-download-enable)
-  :init
+  :config
   (setq-default org-download-heading-lvl 4)
   (setq-default org-download-image-dir "./images")
-  (defun dummy-org-download-annotate-function (link)
-    "")
-  (setq org-download-annotate-function
-	'dummy-org-download-annotate-function)
+  ;; (defun dummy-org-download-annotate-function (link)
+  ;; "")
+  ;; (setq org-download-annotate-function
+  ;; 'dummy-org-download-annotate-function)
+  ;; (setq org-download-screenshot-method "imagemagick/convert -a -f %s")
+
+  (defun org-screenshot-on-windows11 ()
+    (interactive)
+    (setq full-file-name (file-name-sans-extension (file-name-nondirectory buffer-file-name)))
+    ;; 如果文件名的长度小于14,放到mainImage文件夹下面
+    (if (< (length full-file-name) 14)
+	(setq before-file-name-part "main")
+      ;;否则,判断文件中是否含有中文(专门给org roam做的优化,不通用,但是也不想改了)
+      (if (string-match "\\cc" full-file-name)
+          (setq before-file-name-part  (substring (file-name-sans-extension (file-name-nondirectory buffer-file-name)) 0 14))
+	(setq before-file-name-part (substring (file-name-sans-extension (file-name-nondirectory buffer-file-name)) 15))))
+    ;; 自己改动的地方，源代码：(setq imagefile (concat "./" before-file-name-part "Image/"))
+    (setq imagefile (concat "./images/" (org-get-heading) "/"))
+    (unless (file-exists-p imagefile)
+      (make-directory imagefile))
+    (setq filename (concat (make-temp-name (concat imagefile
+                                                   (format-time-string "%Y%m%d_%H%M%S_")))
+                           ".png"))
+    (shell-command (concat "powershell -command \"Add-Type -AssemblyName System.Windows.Forms;if ($([System.Windows.Forms.Clipboard]::ContainsImage())) {$image = [System.Windows.Forms.Clipboard]::GetImage();[System.Drawing.Bitmap]$image.Save('"
+                           filename "',[System.Drawing.Imaging.ImageFormat]::Png); Write-Output 'clipboard content saved as file'} else {Write-Output 'clipboard does not contain image data'}\""))
+    (insert (concat "[[file:" filename "]]"))
+    (org-display-inline-images))
   )
 
-(use-package ox-beamer
-  :ensure nil
-  :defer t
-  :hook (org-mode . (lambda () (require 'ox-beamer)))
-  )
+;; (use-package ox-beamer
+;;   :ensure nil
+;;   :defer t
+;;   :hook (org-mode . (lambda () (require 'ox-beamer)))
+;;   )
 
-;; Reveal.js 幻灯片
-(use-package org-re-reveal
-  :ensure t
-  ;;:defer t
-  ;;:hook (after-init . (lambda () (require 'org-re-reveal)))
-  :init
-  ;; reveal.js 的根目录
-  (setq org-re-reveal-root "file:///Users/dragonli/reveal.js"))
+;; ;; Reveal.js 幻灯片
+;; (use-package org-re-reveal
+;;   :ensure t
+;;   ;;:defer t
+;;   ;;:hook (after-init . (lambda () (require 'org-re-reveal)))
+;;   :init
+;;   ;; reveal.js 的根目录
+;;   (setq org-re-reveal-root "file:///Users/dragonli/reveal.js"))
 
 
-(use-package ox-hugo
-  :ensure t   ;Auto-install the package from Melpa
-  :pin melpa  ;`package-archives' should already have ("melpa" . "https://melpa.org/packages/")
-  :after ox)
+;; (use-package ox-hugo
+;;   :ensure t   ;Auto-install the package from Melpa
+;;   :pin melpa  ;`package-archives' should already have ("melpa" . "https://melpa.org/packages/")
+;;   :after ox)
 
-(with-eval-after-load 'org-capture
-  (defun org-hugo-new-subtree-post-capture-template ()
-    "Returns `org-capture' template string for new Hugo post.
-See `org-capture-templates' for more information."
-    (let* ((title (read-from-minibuffer "Post Title: ")) ;Prompt to enter the post title
-	   (fname (org-hugo-slug title)))
-      (mapconcat #'identity
-		 `(
-		   ,(concat "* TODO " title)
-		   ":PROPERTIES:"
-		   ,(concat ":EXPORT_FILE_NAME: " fname)
-		   ":END:"
-		   "\n\n")          ;Place the cursor here finally
-		 "\n")))
+;; (with-eval-after-load 'org-capture
+;;   (defun org-hugo-new-subtree-post-capture-template ()
+;;     "Returns `org-capture' template string for new Hugo post.
+;; See `org-capture-templates' for more information."
+;;     (let* ((title (read-from-minibuffer "Post Title: ")) ;Prompt to enter the post title
+;; 	   (fname (org-hugo-slug title)))
+;;       (mapconcat #'identity
+;; 		 `(
+;; 		   ,(concat "* TODO " title)
+;; 		   ":PROPERTIES:"
+;; 		   ,(concat ":EXPORT_FILE_NAME: " fname)
+;; 		   ":END:"
+;; 		   "\n\n")          ;Place the cursor here finally
+;; 		 "\n")))
 
-  (add-to-list 'org-capture-templates
-	       '("h"                ;`org-capture' binding + h
-		 "Hugo post"
-		 entry
-		 ;; It is assumed that below file is present in `org-directory'
-		 ;; and that it has a "Blog Ideas" heading. It can even be a
-		 ;; symlink pointing to the actual location of all-posts.org!
-		 (file+headline "/Users/dragonli/Documents/Blogs/myblog/all-blog.org" "Blog Ideas")
-		 (function org-hugo-new-subtree-post-capture-template))))
+;;   (add-to-list 'org-capture-templates
+;; 	       '("h"                ;`org-capture' binding + h
+;; 		 "Hugo post"
+;; 		 entry
+;; 		 ;; It is assumed that below file is present in `org-directory'
+;; 		 ;; and that it has a "Blog Ideas" heading. It can even be a
+;; 		 ;; symlink pointing to the actual location of all-posts.org!
+;; 		 (file+headline "/Users/dragonli/Documents/Blogs/myblog/all-blog.org" "Blog Ideas")
+;; 		 (function org-hugo-new-subtree-post-capture-template))))
 
 (provide 'init-org)
 ;;; init-org.el ends here
