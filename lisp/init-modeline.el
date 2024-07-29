@@ -24,7 +24,7 @@
   :defer t
   :hook (after-init . doom-modeline-mode)
   :config
-  (require 'all-the-icons)
+  ;; (require 'all-the-icons)
 
   ;; If non-nil, cause imenu to see `doom-modeline' declarations.
   ;; This is done by adjusting `lisp-imenu-generic-expression' to

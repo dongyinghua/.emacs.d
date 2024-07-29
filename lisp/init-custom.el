@@ -94,7 +94,7 @@ For example, if the value is company, choicing the company-mode for completion."
   :type 'string)
 
 ;; The prefix of the GTD files path.
-(defcustom org-gtd-path "/Users/dragonli/Library/Mobile Documents/iCloud~com~appsonthemove~beorg/Documents/org/"
+(defcustom org-gtd-path "C:/Users/dongyinghua/Nutstore/1/org_gtd"
   "The prefix of the GTD files."
   :group 'dragonli
   :type 'string)
@@ -113,7 +113,7 @@ For example, if the value is company, choicing the company-mode for completion."
   :type 'string)
 
 (defcustom org-gtd-path-schedule
-  (expand-file-name "Schedule.org" org-gtd-path)
+  (expand-file-name "Schedules.org" org-gtd-path)
   "The path of the Schedule.org."
   :group 'dragonli
   :type 'string)

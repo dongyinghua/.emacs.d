@@ -1,0 +1,26 @@
+ls
+git clone --depth=1 -b master https://github.com/emacs-eaf/emacs-application-framework.git  C:\Users\dongyinghua\AppData\Roaming\.emacs.d\site-lisp\emacs-application-framework
+git clone --depth=1 -b master https://github.com/emacs-eaf/emacs-application-framework.git  C:/Users/dongyinghua/AppData/Roaming/.emacs.d/site-lisp/emacs-application-framework
+ls
+rm -rf UsersdongyinghuaAppDataRoaming.emacs.dsite-lispemacs-application-framework/
+ls
+cd site-lisp/emacs-application-framework/
+ls
+chmod +x ./install-eaf.py
+ls
+chmod +x install-eaf.py
+chmod +x ./install-eaf.py
+chmod +x ./install-eaf.py
+node -v
+node
+node -v
+pip install epc
+git clone git@github.com:emacs-eaf/emacs-application-framework.git
+cd ../..
+cd tools/
+ls
+git clone git@github.com:karthink/gptel.git
+ls
+cd gptel/
+ls
+convert

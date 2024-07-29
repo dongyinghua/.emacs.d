@@ -58,7 +58,7 @@
     (setq dashboard-projects-backend 'projectile) ;; 读者可以暂时注释掉这一行，等安装了 projectile 后再使用
 
     ;; Set the banner
-    (setq dashboard-startup-banner "~/.emacs.d/Genshin.png")
+    (setq dashboard-startup-banner "~/.emacs.d/emacs-long.png")
     ;;(setq dashboard-startup-banner [VALUE])
     ;; Value can be
     ;; 'official which displays the official emacs logo
@@ -74,12 +74,15 @@
     ;; To disable shortcut "jump" indicators for each section, set
     (setq dashboard-show-shortcuts nil)
 
-    (setq dashboard-items '((agenda . 10)
+    (setq dashboard-items '(;;(agenda . 10)
                              ;;(projects . 10)
-                             ;;(recents  . 10)   ; 显示多少个最近文件
+                             (recents  . 10)   ; 显示多少个最近文件
 			     ; (bookmarks . 10) ; 显示多少个最近书签
 			     ))
 
+    ;; org agenda
+    (setq dashboard-week-agenda t)
+    
     ;; To add icons to the widget headings and their items:
     (setq dashboard-set-heading-icons t)
     (setq dashboard-set-file-icons t)

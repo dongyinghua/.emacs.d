@@ -67,6 +67,13 @@
   ("C-x C-r" . consult-recent-file)
   ("C-c C-p r" . consult-ripgrep)
   :config
+  ;;everyting
+;;consult-locate
+;; 配置搜索中文
+(progn
+  (setq consult-locate-args (encode-coding-string "es.exe -i -p -r" 'gbk))
+  (add-to-list 'process-coding-system-alist '("es" gbk . gbk))
+  )
   (setq
    consult-narrow-key "<"
    consult-line-numbers-widen t

@@ -12,10 +12,8 @@
   :defer t
   :ensure t
   :hook(text-mode . company-mode)
-  ;;(text-mode . company-mode)
-  ;; :init
-  ;; (global-company-mode)
   :config
+  (global-company-mode)
   (setq company-global-modes '(not prog-mode))
   (setq company-minimum-prefix-length 2)
   (setq company-idle-delay 1.0)

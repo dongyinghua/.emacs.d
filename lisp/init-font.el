@@ -18,11 +18,13 @@
 ;;       (s-font))))
 
 (setq-default english-font "Fira Code Retina")
-(setq-default chinese-font "Sarasa Term SC Light")
+(setq-default chinese-font "终端更纱黑体-简 Nerd")
 
 (if window-system
     (set-font english-font chinese-font))
 
-(provide 'init-font)
+;; 中文标点符号问题：https://emacs-china.org/t/emacs/18009/5
+;; (set-fontset-font t 'cjk-misc "Noto Sans CJK SC Regular")
 
+(provide 'init-font)
 ;;; init-font.el ends here
