@@ -44,7 +44,7 @@
            :unnarrowed t)))
 
   ;;org-roam-dailies-directory
-  (setq-default org-roam-dailies-directory "~/Documents/Org/org-roam-directory/diary")
+  (setq-default org-roam-dailies-directory "F:\\org\\org-roam-directory\\diary")
   (setq-default org-roam-dailies-capture-templates
 		'(("j" "journal" plain "* %?"
 		   :target (file+head "%<%Y-%m-%d-%a>-Diary.org"
@@ -103,6 +103,19 @@
   :hook (org-roam-mode . org-roam-bibtex-mode)
   :bind (:map org-mode-map
               (("C-c n a" . orb-note-actions))))
+
+(defun org-roam-get-keyword (name &optional file bound)
+  "Return keyword property NAME from an org FILE.
+FILE defaults to current file.
+Only scans up to BOUND bytes of the document."
+  (unless bound
+    (setq bound 1024))
+  (if file
+      (with-temp-buffer
+        ;; from insert-file-contents-literally to insert-file-contents
+        (insert-file-contents file nil 0 bound) 
+        (org-roam--get-keyword name))
+    (org-roam--get-keyword name bound)))
 
 (provide 'init-org-roam)
 ;;; init-org-roam.el ends here

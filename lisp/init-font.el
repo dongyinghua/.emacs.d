@@ -26,5 +26,7 @@
 ;; 中文标点符号问题：https://emacs-china.org/t/emacs/18009/5
 ;; (set-fontset-font t 'cjk-misc "Noto Sans CJK SC Regular")
 
+;; emoji
+
 (provide 'init-font)
 ;;; init-font.el ends here

@@ -170,7 +170,7 @@
       ("i t" org-toggle-inline-images "toggle images" :color amaranth)
       ("i d" org-display-inline-images)
       ("i D" org-download-delete)
-      ("i p" org-download-clipboard)
+      ("i p" org-screenshot-on-windows11)
       ("i r" org-download-rename-at-point) 
       )
      

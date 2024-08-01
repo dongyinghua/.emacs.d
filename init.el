@@ -44,6 +44,7 @@
 ;; (require 'init-exec-path)
 
 ;; Package Management
+(require 'init-encoding)
 (require 'init-packages)
 (require 'init-hydra)
 
@@ -67,8 +68,6 @@
 (require 'init-font)
 (require 'init-clipboard)
 
-;; (require 'init-ace-window)
-
 (require 'init-persp)
 
 ;; (require 'init-evil)
@@ -76,41 +75,20 @@
 (require 'init-completion)
 (require 'init-company)
 (require 'init-tools)
-;; (require 'init-projectile)
-;; (require 'init-git)
 ;; (require 'init-treemacs)
 
-;; (require 'init-compile)
 (require 'init-org)
-(require 'init-org-gtd)
 (require 'init-org-roam)
 
 (require 'init-latex)
 (require 'init-markdown)
 
-;; (require 'init-yasnippet) ;;init-yasnippet需要在init-lsp-bridge前
-;; (require 'init-lsp-bridge)
-;; ;; (require 'init-eglot)
-
-;; ;;Degug
-;; ;;(require 'init-dap)
-;; ;; 代码折叠
-;; (require 'init-origami)
-;; ;;Language
-;; (require 'init-flycheck)
-;; ;;(require 'init-c)
-;; ;;(require 'init-java)
-;; (require 'init-python)
-;; (require 'init-matlab)
 (require 'init-copilot)
-(require 'init-kimi)
-;; ;; (require 'init-pdf-tools)
-;; ;;(require 'init-chatgpt-shell)
-
-;; ;; 花里胡哨的配置
-;; (require 'init-holo-layer)
+;; (require 'init-kimi)
 
 (require 'init-eaf)
+
+(require 'init-fanyi)
 
 (provide 'init)
 ;;; init.el ends here

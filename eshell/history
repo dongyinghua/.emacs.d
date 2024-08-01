@@ -24,3 +24,25 @@ ls
 cd gptel/
 ls
 convert
+cd
+ls
+cd .emacs.d
+ls
+ls -a
+git status
+git branch
+cd
+cd .emacs.d/site-lisp/emacs-application-framework/app/
+ls
+git clone git@github.com:emacs-eaf/eaf-markmap.git
+git clone git@github.com:emacs-eaf/eaf-markmap.git
+cd
+cd dod
+ls
+cd c
+cd c:/
+ls
+cd Users/dongyinghua/Downloads/
+;s
+ls
+mv es.exe d:/emacs/emacs-29.4/bin/

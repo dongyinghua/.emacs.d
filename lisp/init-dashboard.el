@@ -74,9 +74,9 @@
     ;; To disable shortcut "jump" indicators for each section, set
     (setq dashboard-show-shortcuts nil)
 
-    (setq dashboard-items '(;;(agenda . 10)
+    (setq dashboard-items '((agenda . 20)
                              ;;(projects . 10)
-                             (recents  . 10)   ; 显示多少个最近文件
+                             ;; (recents  . 10)   ; 显示多少个最近文件
 			     ; (bookmarks . 10) ; 显示多少个最近书签
 			     ))
 

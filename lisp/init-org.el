@@ -29,23 +29,14 @@
   ;; 解决：Warning (org-element-cache): org-element--cache: Org parser error in slides.org::2206. Resetting.
   ;; The error was: (error "Invalid search bound (wrong side of point)")
   (customize-set-variable 'warning-suppress-log-types '((org-element-cache)))
+
+  ;; org for GTD
+  (require 'init-org-gtd)
   
   ;; 使 org-mode 中的 timestamp 格式为英文
   (setq system-time-locale "C")
   
-  ;; Add new template
-  ;;(add-to-list 'org-structure-template-alist '("n" . "note"))
-
-  ;; org-mode缩进
-  ;; org-bars-mode 开启时会自动开启 org-indent-mode
-  ;;(setq org-startup-indented t)
-
-  ;; https://apple.stackexchange.com/questions/277928/error-auctex-cannot-find-a-working-tex-distribution-macos-sierra
-  ;; (setenv "PATH" (concat (getenv "PATH") ":/Library/TeX/texbin/"))
-  ;; (setq exec-path (append exec-path '("/Library/TeX/texbin/")))
-
-  
-  ;; org latex
+  ;; Org LaTeX
   ;; 使用 XeLaTeX 程序进行编译转换
   (setq-default org-latex-compiler "xelatex")
   (setq-default org-latex-pdf-process '("xelatex %f"))
@@ -117,61 +108,22 @@
     (apply orig-func args))
   (advice-add 'org-create-formula-image :around #'org-renumber-environment)
   
-  
-  ;; (org-zotxt-mode)
-  
   ;; To speed up startup, don't put to init section
   (setq org-modules nil)     ;; Faster loading
   (setq org-startup-numerated t)
 
   (setq org-image-actual-width nil)
   (setq-default org-startup-with-inline-images t)
-  
-  ;; org tag 对齐
-
-  ;; org for beamer
-  (eval-after-load "ox-latex"
-
-    ;; update the list of LaTeX classes and associated header (encoding, etc.)
-    ;; and structure
-    '(add-to-list 'org-latex-classes
-		  `("beamer"
-		    ,(concat "\\documentclass[presentation]{beamer}\n"
-			     "[DEFAULT-PACKAGES]"
-			     "[PACKAGES]"
-			     "[EXTRA]\n")
-		    ("\\section{%s}" . "\\section*{%s}")
-		    ("\\subsection{%s}" . "\\subsection*{%s}")
-		    ("\\subsubsection{%s}" . "\\subsubsection*{%s}"))))
-  (setq-default org-latex-src-block-backend t)
-  ;;     (setq org-emphasis-alist (quote (("*" bold "<b>" "</b>")
-  ;;                                       ("/" italic "<i>" "</i>")
-  ;;                                       ("_" underline "<span
-  ;; style=\"text-decoration:underline;\">" "</span>")
-  ;;                                       ("=" org-code "<code>" "</code>"
-  ;;                                         verbatim)
-  ;;                                       ("~" org-verbatim "<code>" "</code>"
-  ;;                                         verbatim)
-  ;;                                       ("+" (:strike-through t) "<del>" "</del>")
-  ;;                                       ("@" org-warning "<b>" "</b>")))
-  ;;       org-export-latex-emphasis-alist (quote
-  ;;                                         (("*" "\\textbf{%s}" nil)
-  ;;                                           ("/" "\\emph{%s}" nil)
-  ;;                                           ("_" "\\underline{%s}" nil)
-  ;;                                           ("+" "\\texttt{%s}" nil)
-  ;;                                           ("=" "\\verb=%s=" nil)
-  ;;                                           ("~" "\\verb~%s~" t)
-  ;;                                           ("@" "\\alert{%s}" nil))))
 
   ;; 单独设置org标题字体大小，https://emacs-china.org/t/org/12869
   ;; 设置org标题1-8级的字体大小和颜色，颜色摘抄自monokai
   ;; 希望org-mode标题的字体大小和正文一致，设成1.0， 如果希望标题字体大一点可以设成1.2
-  ;; org-mode正文height为120
+  ;; org-mode正文height为140
   (custom-set-faces
-   '(org-level-1 ((t (:inherit outline-1 :height 160))))
-   '(org-level-2 ((t (:inherit outline-2 :height 150))))
-   '(org-level-3 ((t (:inherit outline-3 :height 140))))
-   '(org-level-4 ((t (:inherit outline-4 :height 140))))
+   '(org-level-1 ((t (:inherit outline-1 :height 190))))
+   '(org-level-2 ((t (:inherit outline-2 :height 160))))
+   '(org-level-3 ((t (:inherit outline-3 :height 150))))
+   '(org-level-4 ((t (:inherit outline-4 :height 150))))
    ) ;; end custom-set-faces
 
   (org-babel-do-load-languages
@@ -187,7 +139,9 @@
      (latex . t)
      (plantuml . t)
      (R . t)))
-
+  
+  ;; 标题下的列表就可以像标题一样折叠了
+  (setq org-cycle-include-plain-lists 'integrate)
   ) ; use-package org ends here
 
 (use-package hi-lock
@@ -199,13 +153,14 @@
   (add-hook 'org-mode-hook 'org-bold-highlight)
   )
 
-;; (use-package org-superstar
-;;   :if (and (display-graphic-p) (char-displayable-p ?◉))
-;;   :hook (org-mode . org-superstar-mode)
-;;   :config
-;;   (setq org-superstar-headline-bullets-list '("▼")) ; no bullets
-;;   (setq org-ellipsis " ▼ ")
-;;   )
+(use-package org-superstar
+  :ensure t
+  :if (and (display-graphic-p) (char-displayable-p ?◉))
+  :hook (org-mode . org-superstar-mode)
+  :config
+  (setq org-superstar-headline-bullets-list '("▼")) ; no bullets
+  (setq org-ellipsis " ▾")
+  )
 
 ;; https://github.com/casouri/valign
 ;; 表格对齐
@@ -257,14 +212,6 @@
 				       nil
 				       t)))) ; use-package org-appear
 
-;; (use-package zotxt
-;;   :ensure t
-;;   :after org org-roam
-;;   :defer t
-;;   :hook
-;;   (org . org-zotxt-mode)
-;;   (org-roam-mode . org-zotxt-mode))
-
 (use-package org-fragtog
   :ensure t
   :defer t
@@ -309,52 +256,6 @@
     (insert (concat "[[file:" filename "]]"))
     (org-display-inline-images))
   )
-
-;; (use-package ox-beamer
-;;   :ensure nil
-;;   :defer t
-;;   :hook (org-mode . (lambda () (require 'ox-beamer)))
-;;   )
-
-;; ;; Reveal.js 幻灯片
-;; (use-package org-re-reveal
-;;   :ensure t
-;;   ;;:defer t
-;;   ;;:hook (after-init . (lambda () (require 'org-re-reveal)))
-;;   :init
-;;   ;; reveal.js 的根目录
-;;   (setq org-re-reveal-root "file:///Users/dragonli/reveal.js"))
-
-
-;; (use-package ox-hugo
-;;   :ensure t   ;Auto-install the package from Melpa
-;;   :pin melpa  ;`package-archives' should already have ("melpa" . "https://melpa.org/packages/")
-;;   :after ox)
-
-;; (with-eval-after-load 'org-capture
-;;   (defun org-hugo-new-subtree-post-capture-template ()
-;;     "Returns `org-capture' template string for new Hugo post.
-;; See `org-capture-templates' for more information."
-;;     (let* ((title (read-from-minibuffer "Post Title: ")) ;Prompt to enter the post title
-;; 	   (fname (org-hugo-slug title)))
-;;       (mapconcat #'identity
-;; 		 `(
-;; 		   ,(concat "* TODO " title)
-;; 		   ":PROPERTIES:"
-;; 		   ,(concat ":EXPORT_FILE_NAME: " fname)
-;; 		   ":END:"
-;; 		   "\n\n")          ;Place the cursor here finally
-;; 		 "\n")))
-
-;;   (add-to-list 'org-capture-templates
-;; 	       '("h"                ;`org-capture' binding + h
-;; 		 "Hugo post"
-;; 		 entry
-;; 		 ;; It is assumed that below file is present in `org-directory'
-;; 		 ;; and that it has a "Blog Ideas" heading. It can even be a
-;; 		 ;; symlink pointing to the actual location of all-posts.org!
-;; 		 (file+headline "/Users/dragonli/Documents/Blogs/myblog/all-blog.org" "Blog Ideas")
-;; 		 (function org-hugo-new-subtree-post-capture-template))))
 
 (provide 'init-org)
 ;;; init-org.el ends here

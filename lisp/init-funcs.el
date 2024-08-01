@@ -158,14 +158,14 @@ the names of the English and Chinese font of Emacs."
   (interactive)
   ;;Setting English Font
   (set-face-attribute
-   'default nil :family english-font :height 120 :weight 'normal)
+   'default nil :family english-font :height 140 :weight 'normal)
   ;;Chinese Font
   (dolist (charset '(kana han symbol cjk-misc bopomofo))
     (set-fontset-font (frame-parameter nil 'font)
 		      charset
 		      (font-spec :family chinese-font)))
   ;; tune rescale so that Chinese character width = 2 * English character width
-  (setq face-font-rescale-alist '((english-font . 1.0) (chinese-font . 1.23)))
+  (setq face-font-rescale-alist '((english-font . 2.0) (chinese-font . 1.0)))
   )
 
 ;; (defun s-font(english-font chinese-font)

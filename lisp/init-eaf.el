@@ -29,6 +29,9 @@
   (require 'eaf-pdf-viewer)
   (setq eaf-pdf-dark-mode nil)
 
+  (require 'eaf-mindmap)
+
+  (require 'eaf-markmap)
   ;; eaf-git
   ;; (require 'eaf-git)
   

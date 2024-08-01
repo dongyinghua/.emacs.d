@@ -83,10 +83,30 @@
 		))
 
 (setq org-agenda-sorting-strategy
-      '((agenda habit-down time-up priority-down category-up)
+      '((agenda time-up habit-down priority-down category-up)
 	(todo   priority-down category-up)
 	(tags   priority-down category-up)
 	(search category-up)))
+
+;; appt
+(use-package appt
+  :ensure nil
+  :config
+  ;; 每小时同步一次appt,并且现在就开始同步
+  (run-at-time nil 3600 'org-agenda-to-appt)
+  ;; 更新agenda时，同步appt
+  (add-hook 'org-finalize-agenda-hook 'org-agenda-to-appt)
+  ;; 激活提醒
+  (appt-activate 1)
+  ;; 提前10分钟提醒
+  (setq appt-message-warning-time 5)
+  ;; 每5分钟提醒一次
+  (setq appt-display-interval 5)
+  ;; (appt-disp-window min-to-appt current-time appt-msg)
+  )
+
+;; 取消log
+(setq org-log-done nil)
 
 (provide 'init-org-gtd)
 ;;; init-org-gtd.el ends here

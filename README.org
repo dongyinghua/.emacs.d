@@ -1,5 +1,36 @@
-* 注意事项
-** doom-modeline图标乱码问题
+#+STARTUP: content
+* doom-modeline图标乱码问题
 - doom-modeline新版不支持all-the-icons了，改为支持nerd-icons
 - win下安装nerd-icons时，需要手动安装到win上：
   在官网下载Symbols Nerd Font
+* consult-locate
+** 简介
+1) 在Emacs上实现与windows的everything一样的功能
+2) 借鉴子龙山人的21天学会Emacs
+** 配置步骤
+1) 需要在everthing的官网下载es.exe，然后将es.exe放到emacs安装目录下的bin目录中
+2) 在配置文件中加上如下代码：
+   #+begin_src elisp
+     ;; 配置搜索中文
+     (progn
+       (setq consult-locate-args (encode-coding-string "es.exe -i -p -r" 'gbk))
+       (add-to-list 'process-coding-system-alist '("es" gbk . gbk)))
+   #+end_src
+** 使用拼音进行搜索
+1) 子龙山人的配置在使用consult相关命令时才会生效，例如consult-line、consult-locate、consult-ripgrep等
+2) 使用其他命令的情况下也会生效，例如find-file、org-insert-link等
+3) 可以使用命令toggle-chinese-search开启或关闭这个功能
+* 中文乱码问题
+** 问题描述
+1) 在`buffer-file-coding-system'设置为`utf-8'的前提下，创建org文件，创建后的org文件的编码为`utf-8'。但是重启Emacs后，之前创建的org文件编码变为`CHINESE-GBK'，同时文件中的中文显示为乱码。
+2) org roam创建的文件为CHINESE-GBK编码。
+3) 保存某些文件时Emacs让你选择当前文件编码。
+   
+** 解决方法
+1) 开启windows的“Beta 版：使用Unicode UTF-8 供全球语言支持”
+2) 在配置文件中加入如下代码（借鉴：[[https://emacs-china.org/t/emacs-utf-8/21143/28][🔗]]）：
+   #+begin_src elisp
+     (set-charset-priority 'unicode)
+     (prefer-coding-system 'utf-8)
+     (setq system-time-locale "C")
+   #+end_src

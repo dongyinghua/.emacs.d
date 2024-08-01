@@ -2,10 +2,16 @@
 ;;; This format is meant to be slightly human-readable;
 ;;; nevertheless, you probably don't want to edit it.
 ;;; -*- End Of Bookmark File Format Version Stamp -*-
-(("org-capture-last-stored"
- (filename . "f:/org/org_roam_directory/2024072910_emacs使用手册.org")
+(("org-refile-last-stored"
+ (filename . "c:/Users/dongyinghua/Nutstore/1/org_gtd/Projects.org")
+ (front-context-string . "*** DOING [#A] 找")
+ (rear-context-string . "2024-08-05 Mon>\n")
+ (position . 106)
+ (last-modified 26280 33938 4158 0))
+("org-capture-last-stored"
+ (filename . "f:/org/org_roam_directory/2024080111_csm_th系统学习笔记.org")
  (front-context-string)
- (rear-context-string . "itle: Emacs使用手册\n")
- (position . 98)
- (last-modified 26279 129 458414 0))
+ (rear-context-string . "e: CSM-TH系统学习笔记\n")
+ (position . 101)
+ (last-modified 26283 408 112359 0))
 )

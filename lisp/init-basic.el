@@ -159,10 +159,5 @@ Emacs 有一个自带的 package 来高亮括号，那就是 `show-paren-mode'�
 ;; 设置默认为左右分屏
 ;; (setq split-width-threshold 1)
 
-;; 设置编码
-;; (setq default-buffer-file-coding-system 'utf-8)
-;; (set-default-coding-systems 'utf-8)
-(setq-default buffer-file-coding-system 'utf-8)
-
 (provide 'init-basic)
 ;;; init-basic.el ends here

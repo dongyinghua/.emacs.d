@@ -7,3 +7,6 @@ https://www.beorgapp.com/manual/#keyboard-shortcuts
 https://emacs-china.org/t/topic/4266
 https://emacs-china.org/t/topic/4266
 https://emacs-china.org/t/win10-emacs-org-mode/21942/5
+https://emacs-china.org/t/emacs/7814/9
+https://www.thepaper.cn/newsDetail_forward_13376765
+https://emacs-china.org/t/emacs/7814
